@@ -7,7 +7,8 @@
 
 // string separator="^";
 
-void ObjectCodeWriter::ObjectCodeWriter(string objectCodeFile) {
+ObjectCodeWriter::ObjectCodeWriter(string objectCodeFile) {
+
     this ->objectCodeFile=objectCodeFile;
 
 }
