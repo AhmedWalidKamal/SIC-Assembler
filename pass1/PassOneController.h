@@ -1,0 +1,14 @@
+//
+// Created by amor2 on 5/1/2017.
+//
+
+#ifndef SIC_ASSEMBLER_PASSONECONTROLLER_H
+#define SIC_ASSEMBLER_PASSONECONTROLLER_H
+
+
+class PassOneController {
+
+};
+
+
+#endif //SIC_ASSEMBLER_PASSONECONTROLLER_H
