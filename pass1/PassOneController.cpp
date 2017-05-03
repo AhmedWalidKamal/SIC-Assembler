@@ -5,6 +5,13 @@
 #include "PassOneController.h"
 #include "../file/FileWriter.h"
 
+PassOneController::PassOneController(std::unordered_map<std::string,
+        std::pair<int, Format *>> &instructionTable,
+                                     std::unordered_map<std::string,
+                                             Directive *> &directiveTable) {
+
+}
+
 PassOneController::void execute(&symTable, fileReader) {
     FileWriter *fileWriter = new FileWriter("intermediate", "fancyExtension");
     while (fileReader has not finished reading) {

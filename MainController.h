@@ -11,6 +11,7 @@
 #include "file/FileReader.h"
 #include "directive/Directive.h"
 #include "pass1/PassOneController.h"
+#include "format/Format.h"
 
 class MainController {
 public:
@@ -19,17 +20,18 @@ public:
     void execute(std::string fileName);
 
 private:
-    std::unordered_map<std::string, std::pair<opCode *, format *> > instructionTable;
-    std::unordered_map<std::string, Directive *directve> directiveTable;
+
+    std::unordered_map<std::string, Directive *> directiveTable;
+    std::unordered_map<std::string, std::pair<int, Format *> > instructionTable;
     std::unordered_map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
-    FileWriter *objectFIleWriter;
+    FileWriter *objectFileWriter;
 
-    void setsourceFileReader(std::string fileName);
+    void setSourceFileReader(std::string fileName);
 
-    void initInstructionTable(std::unordered_map<std::string, std::pair<opCode *, format *>> *pMap);
+    void initDirectiveTable(std::unordered_map<std::string, Directive *> &directiveTable);
 
-    void initDirectiveTable(std::unordered_map<std::string, Directive *directive> *pMap);
+    void initInstructionTable(std::unordered_map<std::string, std::pair<int, Format *>> &instructionTable);
 };
 
 
