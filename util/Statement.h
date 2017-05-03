@@ -1,10 +1,15 @@
 //
-// Created by amor2 on 5/2/2017.
+// Created by Walid on 5/2/2017.
 //
 
 #ifndef SIC_ASSEMBLER_STATEMENT_H
 #define SIC_ASSEMBLER_STATEMENT_H
 
+
+#include "Label.h"
+#include "Mnemonic.h"
+#include "Operand.h"
+#include "Comment.h"
 
 class Statement {
 public:
@@ -14,7 +19,8 @@ public:
     int validate(params in pass1ctrl);
     bool operandIsNewLabel();
     bool operandHasLabel();
-    FancyObject *getFancyObject();
+
+//    FancyObject *getFancyObject();
 
 private:
     Label *label;

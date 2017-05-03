@@ -7,6 +7,9 @@
 
 
 class Directive {
+public:
+    virtual void execute() = 0;
+private:
 
 };
 

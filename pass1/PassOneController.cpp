@@ -15,7 +15,7 @@ PassOneController::PassOneController(std::unordered_map<std::string,
 PassOneController::void execute(&symTable, fileReader) {
     FileWriter *fileWriter = new FileWriter("intermediate", "fancyExtension");
     while (fileReader has not finished reading) {
-        Statement *statement = fileReader.getCurrentStatement();
+        Statement *statement = fileReader.getNextStatement();
         if (statement.isComment()) {
             write to intermediate file
         } else {

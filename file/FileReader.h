@@ -1,5 +1,5 @@
 //
-// Created by walid on 5/2/2017.
+// Created by Walid on 5/2/2017.
 //
 
 #ifndef SIC_ASSEMBLER_FILEREADER_H
@@ -10,14 +10,19 @@
 #include <bits/char_traits.h>
 #include <bits/allocator.h>
 #include <string>
+#include <fstream>
+#include "../util/Statement.h"
 
 class FileReader {
 
 public:
-    FileReader(std::basic_string<char, std::char_traits<char>, std::allocator<char>> basic_string);
+    FileReader(const std::string &fileName);
+
+    Statement *getNextStatement();
+    bool finishedReading();
 
 private:
-    std::string fileName;
+    std::ifstream sourceFileStream;
 };
 
 

@@ -26,6 +26,8 @@ private:
     std::unordered_map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
     FileWriter *objectFileWriter;
+    FileWriter *intermediateFileWriter;
+    FileWriter *listingFileWriter;
 
     void setSourceFileReader(std::string fileName);
 
