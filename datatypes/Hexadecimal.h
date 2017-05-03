@@ -6,8 +6,12 @@
 #define SIC_ASSEMBLER_HEXADECIMAL_H
 
 
-class Hexadecimal {
+#include <string>
+using namespace std;
 
+class Hexadecimal {
+public:
+    string intToHex(int number);
 };
 
 

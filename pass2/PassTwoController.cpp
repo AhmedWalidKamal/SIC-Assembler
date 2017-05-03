@@ -3,39 +3,46 @@
 //
 
 #include "PassTwoController.h"
+#include "../format/Format.h"
 #include <fstream>
 #include <sstream>
 #include <vector>
 #include <algorithm>
 
+string label="programName",mnemonic="start",operand="1000"; //TODO replace with fields from the statement.
+int size=1; //TODO : replace with the size of the vector of statements from pass1.
+
 string toLower(string word);
 
-PassTwoController::PassTwoController(string intermediateFile, string programLength, string objectFile) {
+PassTwoController::PassTwoController(string intermediateFile, int programLength, string objectFile,unordered_map<std::string, std::pair<int, Format *> > instructionTable,unordered_map<std::string, int> symbolTable) {
 
     this ->intermediateFile=intermediateFile;
     this ->programLength=programLength;
     this -> outputFile =objectFile;
-    this -> objectWriter= new ObjectCodeWriter(objectFile);
+    this -> objectWriter= new ObjectFileWriter(objectFile);
 }
 void PassTwoController::executePass2() {
-    string line;
-    vector<string> tokens;
-    ifstream infile(intermediateFile);
-    //gets line by line from the intermediate file.
-    while (getline(infile, line))
-    {
-        istringstream iss(line);
-        string token;
-        //splits the line by spaces into tokens and put them in a vector
-        while(iss >> token) {
-           tokens.push_back(token);
-        }
-        if(toLower(tokens[1])=="start"){
-            //tokens[1] is the program name & tokens[2] is the starting address.
-            objectWriter ->writeHeader(tokens[0],tokens[2],programLength);
-        }
-    }
+   for(int i=0;i<size;i++){
+       /*writes header to objectFile.*/
+       if(toLower(mnemonic)=="start"){
+           objectWriter->writeHeader(label,operand,programLength);
+       }
+       /*writes end record to object file with address of first executable instruction*/
+       else if(toLower(mnemonic)=="end"){
+         objectWriter->writeEndRecord(operand);
+       }
+       else{
+
+       }
+   }
+
+    /* after the loop on the program finishes
+     * 1-write modification records.
+     * 2-write the end record.*/
+
 }
+
+/*utility method to lower all the characters of a string */
 string toLower(string word){
     transform(word.begin(),word.end(),word.begin(),::tolower);
     return word;
