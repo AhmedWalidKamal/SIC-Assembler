@@ -6,7 +6,9 @@
 #define SIC_ASSEMBLER_FORMATTWO_H
 
 
-class FormatTwo {
+#include "Format.h"
+
+class FormatTwo : public Format {
 
 };
 

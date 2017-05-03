@@ -12,11 +12,11 @@ ObjectCodeWriter::ObjectCodeWriter(string objectCodeFile) {
     this ->objectCodeFile=objectCodeFile;
 
 }
-void ObjectCodeWriter::writeHeader( string sourceName, string startAddress,string length) {
+void ObjectCodeWriter::writeHeader(string sourceName, string startAddress,string length) {
     ofstream outFile;
     outFile.open (objectCodeFile);
     outFile<<"H"<<"^";
-    while(sourceName.length()<6){
+    while(sourceName.length()<6) {
         sourceName+=" ";
     }
     outFile<<sourceName<<"^";

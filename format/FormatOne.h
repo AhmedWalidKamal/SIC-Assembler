@@ -6,7 +6,9 @@
 #define SIC_ASSEMBLER_FORMATONE_H
 
 
-class FormatOne {
+#include "Format.h"
+
+class FormatOne : public Format {
 
 };
 

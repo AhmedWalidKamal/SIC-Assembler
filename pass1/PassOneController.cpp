@@ -3,7 +3,7 @@
 //
 
 #include "PassOneController.h"
-#include "../file/FileWriter.h"
+#include "../file/write/FileWriter.h"
 
 PassOneController::PassOneController(std::unordered_map<std::string,
         std::pair<int, Format *>> &instructionTable,

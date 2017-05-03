@@ -1,0 +1,14 @@
+//
+// Created by Walid on 5/3/2017.
+//
+
+#ifndef SIC_ASSEMBLER_LISTINGFILEWRITER_H
+#define SIC_ASSEMBLER_LISTINGFILEWRITER_H
+
+
+class ListingFileWriter {
+
+};
+
+
+#endif //SIC_ASSEMBLER_LISTINGFILEWRITER_H

@@ -6,7 +6,9 @@
 #define SIC_ASSEMBLER_FORMATTHREE_H
 
 
-class FormatThree {
+#include "Format.h"
+
+class FormatThree : public Format {
 
 };
 
