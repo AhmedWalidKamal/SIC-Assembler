@@ -10,13 +10,12 @@
 
 class Label {
 public:
-    Label(std::string label);
+   Label(std::string labelField);
 
-    const std::string &getLabel() const;
-    void setLabel(const std::string &label);
+    const std::string &getLabelField() const;
+    void setLabelField(const std::string &labelField);
 private:
-    std::string label;
-
+    std::string labelField;
 };
 
 

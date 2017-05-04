@@ -6,8 +6,17 @@
 #define SIC_ASSEMBLER_COMMENT_H
 
 
-class Comment {
+#include <string>
 
+class Comment {
+public:
+    Comment(std::string commentField);
+
+    const std::string &getComment() const;
+    void setComment(const std::string &commentField);
+
+private:
+    std::string commentField;
 };
 
 

@@ -4,14 +4,16 @@
 
 #include "Label.h"
 
-Label::Label(std::string label) {
-    Label::label = label;
+Label::Label(std::string labelField) {
+    Label::labelField = labelField;
 }
 
-const std::string &Label::getLabel() const {
-    return label;
+const std::string &Label::getLabelField() const {
+    return labelField;
 }
 
-void Label::setLabel(const std::string &label) {
-    Label::label = label;
+void Label::setLabelField(const std::string &labelField) {
+    Label::labelField = labelField;
 }
+
+
