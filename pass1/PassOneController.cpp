@@ -32,7 +32,7 @@ std::string PassOneController::execute(std::unordered_map<std::string, int> &sym
 //                if (statement.hasLabel()) {
 //                    update symTable with new label address
 //                }
-//                /// Other possible logic here.
+//                /// Other possible logic here. excution from statement Object
 //                if (statement.mnemonicIsDirective()) {
 //                    dirTable[statement.getMnemonic()].perform();
 //                } else {

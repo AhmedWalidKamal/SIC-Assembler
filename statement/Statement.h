@@ -40,6 +40,8 @@ public:
     int getStatementLocationPointer() const;
 
     void setStatementLocationPointer(int statementLocationPointer);
+
+    void execute(int& start, int& end, int& locationCounter);
 private:
     Label *label;
     Mnemonic *mnemonic;

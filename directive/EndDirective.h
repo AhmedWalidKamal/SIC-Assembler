@@ -10,6 +10,8 @@
 
 class EndDirective : public Directive {
 
+    public :
+    int execute(int& start, int& end, int& locationCounter,int incrementValue);
 };
 
 

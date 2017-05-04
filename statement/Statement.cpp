@@ -66,3 +66,17 @@ int Statement::getStatementLocationPointer() const {
 void Statement::setStatementLocationPointer(int statementLocationPointer) {
     Statement::statementLocationPointer = statementLocationPointer;
 }
+
+void Statement ::execute(int &start, int &end, int &locationCounter) {
+
+ //   if (statement.mnemonicIsDirective()) {
+//                 setStatementLocationPointer(dirTable[statement.getMnemonic()].execute());
+//                } else {
+//                    if (!statement.isFormatFour()) {
+//                  setStatementLocationPointer(instrTable.getFormat.updateLC());
+//                    } else {
+//
+//                    }
+//                }s
+
+}

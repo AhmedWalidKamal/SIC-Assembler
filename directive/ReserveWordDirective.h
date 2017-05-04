@@ -8,8 +8,10 @@
 #include "Directive.h"
 
 class ReserveWordDirective : public Directive {
-
+    public :
+    int execute(int &start, int &end, int &locationCounter, int incrementValue);
 };
+
 
 
 #endif //SIC_ASSEMBLER_RESERVEWORDDIRECTIVE_H

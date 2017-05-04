@@ -8,8 +8,10 @@
 
 class Directive {
 public:
-    virtual void execute() = 0;
+    virtual int execute(int& start, int& end, int& locationCounter,int incrementValue) = 0;
+
 private:
+
 
 };
 

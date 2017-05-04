@@ -3,3 +3,8 @@
 //
 
 #include "ByteDirective.h"
+
+int ByteDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
+    return locationCounter;
+
+}
