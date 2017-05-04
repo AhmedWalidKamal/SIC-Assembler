@@ -30,19 +30,32 @@ void ObjectFileWriter::writeHeader(string sourceName, string startAddress,int le
     //write the hexadecimal start address.
     outFile<<startAddress<<"^";
     //convert the length of the program from integer to hexadecimal.
-    outFile<<hexadecimalConverter->intToHex(length)<<"\n";
+    outFile<<hexadecimalConverter->intToHex(length);
 
 }
-void ObjectFileWriter::writeTextRecord(string startAddress, string objectCode, string recordLength) {
+void ObjectFileWriter::writeToTextRecord( string objectCode, string recordLength) {
 
 
 }
+
+void ObjectFileWriter::newTextRecord(string startAddress) {
+  outFile<<"\n"<<"T"<<"^"<< ;
+
+}
+
 void ObjectFileWriter::writeModRecord() {
 
 }
+
 void ObjectFileWriter::writeEndRecord(string startAddress) {
+    outFile<<"E"<<"^";
+    startAddress=fillZeros(startAddress,fieldLength);
+    //write address of first executable statement in the program.
+    outFile<<startAddress;
+    outFile.close();
 
 }
+
 string fillSpaces(string word,int size){
     while(word.length()<size) {
         word+=" ";

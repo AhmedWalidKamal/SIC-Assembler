@@ -16,7 +16,9 @@ public:
 
     void writeHeader(string sourceName,string startAddress,int length);
 
-    void writeTextRecord(string startAddress,string objectCode , string recordLength);
+    void writeToTextRecord(string objectCode , string recordLength);
+
+    void newTextRecord(string startAddress);
 
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
 

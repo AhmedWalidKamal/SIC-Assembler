@@ -15,7 +15,7 @@
 using namespace std;
 class PassTwoController {
 public:
-    PassTwoController(string intermediateFile,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> instructionTable,unordered_map<std::string, int> symbolTable);
+    PassTwoController(string intermediateFile,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> &instructionTable,unordered_map<std::string, int> &symbolTable);
     void executePass2();
 
 private:
@@ -23,11 +23,10 @@ private:
     string intermediateFile;
     string outputFile;
     int programLength;
-
-
-
-
-
+    string locationCounter;
+    Hexadecimal *hexadecimalConverter;
+    unordered_map<std::string, std::pair<int, Format *>> instructionTable;
+    unordered_map<std::string, int> symbolTable;
 
 };
 

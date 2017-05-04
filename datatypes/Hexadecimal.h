@@ -12,6 +12,7 @@ using namespace std;
 class Hexadecimal {
 public:
     string intToHex(int number);
+    unsigned long hexTodecimal(string hex);
 };
 
 
