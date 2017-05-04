@@ -11,7 +11,7 @@ PassOneController::PassOneController(std::unordered_map<std::string, Instruction
     this->instructionTable = instructionTable;
     this->directiveTable = directiveTable;
     locationCounter = 0;
-    startAddress = 0;
+    startAddress = -1;
     endAddress = -1; // Modified when END directive is reached.
 }
 
