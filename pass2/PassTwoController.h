@@ -23,8 +23,7 @@ private:
     string intermediateFile;
     string outputFile;
     int programLength;
-    string locationCounter;
-    Hexadecimal *hexadecimalConverter;
+    int locationCounter;
     unordered_map<std::string, std::pair<int, Format *>> instructionTable;
     unordered_map<std::string, int> symbolTable;
 
