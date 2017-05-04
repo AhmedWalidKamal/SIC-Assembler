@@ -13,8 +13,10 @@ public:
     Label(std::string label);
 
     const std::string &getLabel() const;
+    void setLabel(const std::string &label);
 private:
     std::string label;
+
 };
 
 
