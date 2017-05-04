@@ -9,51 +9,51 @@
 #include <vector>
 #include <algorithm>
 
-string label="Copy",mnemonic="start",operand="1000"; //TODO replace with fields from the statement.
+string label="Copy",mnemonic="START";int operand=4096; //TODO replace with fields from the statement.
 int size=1; //TODO : replace with the size of the vector of statements from pass1.
-
-string toLower(string word);
 
 string toString(int number) ;
 
+/*constructor*/
 PassTwoController::PassTwoController(string intermediateFile, int programLength, string objectFile, unordered_map<std::string, std::pair<int, Format *> > &instructionTable, unordered_map<std::string, int> &symbolTable) {
 
     this ->intermediateFile=intermediateFile;
     this ->programLength=programLength;
     this -> outputFile =objectFile;
     this -> objectWriter= new ObjectFileWriter(objectFile);
-    this->hexadecimalConverter=new Hexadecimal();
     this->instructionTable=instructionTable;
     this->symbolTable=symbolTable;
 }
+
+/*responsible for execution of pass2*/
 void PassTwoController::executePass2() {
    for(int i=0;i<size;i++){
        /*writes header to objectFile.*/
-       if(toLower(mnemonic)=="start"){
+       if(mnemonic=="START"){
            if(label.length()>6){
                //error program name does not fit
            }
          else{
-               this->locationCounter=operand;
+           locationCounter=operand;
            objectWriter->writeHeader(label,operand,programLength);
-           objectWriter->newTextRecord(operand); //initialize a new record
+           objectWriter->startNewRecord(operand); //initialize a new record
            }
        }
-       else if(toLower(mnemonic)=="byte"){
+       else if(mnemonic=="BYTE"){
 
        }
-       else if(toLower(mnemonic)=="word"){
+       else if(mnemonic=="WORD"){
 
        }
-       else if(toLower(mnemonic)=="resw"){
+       else if(mnemonic=="RESW"){
            //has no object code but force the start of a new record.
        }
-       else if(toLower(mnemonic)=="resb"){
+       else if(mnemonic=="RESB"){
            //has no object code but forces the start of a new record.
        }
        else{
            /*construct object code for the instruction*/
-         string objectCode=toString(instructionTable[mnemonic].first);//first opcode
+         /*string objectCode=toString(instructionTable[mnemonic].first);//first opcode
            if(operand.isLabel()){
                objectCode+=toString(symbolTable[operand]);
 
@@ -71,25 +71,19 @@ void PassTwoController::executePass2() {
 
 
     /*writes end record to object file with address of first executable instruction*/
-    if(toLower(mnemonic)=="end"){
+    /*if(mnemonic=="END"){
         if(operand.isLabel()){
             string address=toString(symbolTable[operand]);
             objectWriter->writeEndRecord(address);
         }
         else
             objectWriter->writeEndRecord(operand);
-    }
+    }*/
 
 }
-
+/*utility method convert integer to string*/
 string toString(int number) {
     ostringstream stream;
     stream << number;
     return stream.str();;
-}
-
-/*utility method to lower all the characters of a string */
-string toLower(string word){
-    transform(word.begin(),word.end(),word.begin(),::tolower);
-    return word;
 }
