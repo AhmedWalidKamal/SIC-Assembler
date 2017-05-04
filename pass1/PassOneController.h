@@ -23,5 +23,5 @@ private:
    // fileReader, instrMap, locationCounter, symTable, dirTable, start, end;
 };
 
-
 #endif //SIC_ASSEMBLER_PASSONECONTROLLER_H
+

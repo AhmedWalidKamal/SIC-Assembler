@@ -7,24 +7,26 @@
 
 
 #include <string>
-#include "ObjectCodeWriter.h"
+#include <unordered_map>
+#include "../file/write/ObjectFileWriter.h"
+#include "../format/Format.h"
+
 
 using namespace std;
 class PassTwoController {
 public:
-    PassTwoController(string intermediateFile,string programLength,string objectFile);
+    PassTwoController(string intermediateFile,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> &instructionTable,unordered_map<std::string, int> &symbolTable);
     void executePass2();
 
 private:
-    ObjectCodeWriter *objectWriter;
+    ObjectFileWriter *objectWriter;
     string intermediateFile;
     string outputFile;
-    string programLength;
-
-
-
-
-
+    int programLength;
+    string locationCounter;
+    Hexadecimal *hexadecimalConverter;
+    unordered_map<std::string, std::pair<int, Format *>> instructionTable;
+    unordered_map<std::string, int> symbolTable;
 
 };
 

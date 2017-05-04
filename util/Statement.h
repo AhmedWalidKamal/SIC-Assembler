@@ -30,5 +30,4 @@ private:
 
 };
 
-
 #endif //SIC_ASSEMBLER_STATEMENT_H

@@ -1,17 +1,18 @@
-////
-//// Created by Walid on 5/2/2017.
-////
 //
-//#include "Statement.h"
+// Created by Walid on 5/2/2017.
 //
-//// Constructor
-//public Statement() {
-//    initialize stuff
-//    set state object to initial state
-//}
-//int validate (params) {
-//
-//}
+
+#include "Statement.h"
+
+// Constructor
+public Statement() {
+    initialize stuff
+    set state object to initial state
+}
+int validate (params) {
+
+}
 bool Statement::isComment() {
     return label.startsWithComment();
 }
+
