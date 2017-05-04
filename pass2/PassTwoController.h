@@ -8,22 +8,21 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 #include "../file/write/ObjectFileWriter.h"
 #include "../format/Format.h"
-
+#include "../statement/Statement.h"
 
 using namespace std;
 class PassTwoController {
 public:
-    PassTwoController(string intermediateFile,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> &instructionTable,unordered_map<std::string, int> &symbolTable);
+    PassTwoController(vector<Statement> lines,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> &instructionTable,unordered_map<std::string, int> &symbolTable);
     void executePass2();
 
 private:
     ObjectFileWriter *objectWriter;
-    string intermediateFile;
     string outputFile;
     int programLength;
-    int locationCounter;
     unordered_map<std::string, std::pair<int, Format *>> instructionTable;
     unordered_map<std::string, int> symbolTable;
 
