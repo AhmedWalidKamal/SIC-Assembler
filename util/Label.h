@@ -6,8 +6,13 @@
 #define SIC_ASSEMBLER_LABEL_H
 
 
-class Label {
+#include <string>
 
+class Label {
+public:
+
+private:
+    std::string label;
 };
 
 

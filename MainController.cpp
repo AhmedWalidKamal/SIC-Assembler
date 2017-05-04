@@ -30,6 +30,6 @@ void MainController::initDirectiveTable(std::unordered_map<std::string,
 }
 
 void MainController::initInstructionTable(std::unordered_map<std::string,
-        std::pair<int, Format *>> &instructionTable) {
+        Instruction *> &instructionTable) {
 
 }

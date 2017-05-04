@@ -12,6 +12,7 @@
 #include "directive/Directive.h"
 #include "pass1/PassOneController.h"
 #include "format/Format.h"
+#include "util/Instruction.h"
 
 class MainController {
 public:
@@ -22,7 +23,7 @@ public:
 private:
 
     std::unordered_map<std::string, Directive *> directiveTable;
-    std::unordered_map<std::string, std::pair<int, Format *> > instructionTable;
+    std::unordered_map<std::string, Instruction *> instructionTable;
     std::unordered_map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
     FileWriter *objectFileWriter;
@@ -33,7 +34,7 @@ private:
 
     void initDirectiveTable(std::unordered_map<std::string, Directive *> &directiveTable);
 
-    void initInstructionTable(std::unordered_map<std::string, std::pair<int, Format *>> &instructionTable);
+    void initInstructionTable(std::unordered_map<std::string, Instruction *> &instructionTable);
 };
 
 

@@ -16,7 +16,7 @@ public:
     Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment);
 
     bool isComment();
-    int validate(params in pass1ctrl);
+    //int validate(params in pass1ctrl);
     bool operandIsNewLabel();
     bool operandHasLabel();
 
