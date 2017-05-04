@@ -20,14 +20,12 @@ public:
     bool operandIsNewLabel();
     bool operandHasLabel();
 
-//    FancyObject *getFancyObject();
-
 private:
     Label *label;
     Mnemonic *mnemonic;
     Operand *operand;
     Comment *comment;
-
+    int statementLocationPointer;
 };
 
 #endif //SIC_ASSEMBLER_STATEMENT_H

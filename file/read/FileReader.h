@@ -12,6 +12,7 @@
 #include <string>
 #include <fstream>
 #include "../../statement/Statement.h"
+#include "../../statement/util/StatementBuilder.h"
 
 class FileReader {
 
@@ -23,6 +24,7 @@ public:
 
 private:
     std::ifstream sourceFileStream;
+    StatementBuilder *builder;
 };
 
 
