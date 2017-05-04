@@ -12,7 +12,7 @@
 #include "directive/Directive.h"
 #include "pass1/PassOneController.h"
 #include "format/Format.h"
-#include "util/Instruction.h"
+#include "statement/Instruction.h"
 
 class MainController {
 public:

@@ -16,7 +16,7 @@ void MainController::setSourceFileReader(std::string fileName) {
 }
 
 void MainController::execute(std::string fileName) {
-    setSourceFileReader(fileName);
+    setSourceFileReader(fileName); // hello
     symbolTable.clear();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
