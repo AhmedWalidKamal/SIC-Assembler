@@ -11,7 +11,7 @@
 #include <bits/allocator.h>
 #include <string>
 #include <fstream>
-#include "../../util/Statement.h"
+#include "../../statement/Statement.h"
 
 class FileReader {
 

@@ -1,18 +1,21 @@
-////
-//// Created by walid on 5/1/2017.
-////
 //
-//#include "PassOneController.h"
-//#include "../file/write/FileWriter.h"
+// Created by Walid on 5/1/2017.
 //
-//PassOneController::PassOneController(std::unordered_map<std::string,
-//        std::pair<int, Format *>> &instructionTable,
-//                                     std::unordered_map<std::string,
-//                                             Directive *> &directiveTable) {
-//
-//}
-//
-//PassOneController::void execute(&symTable, fileReader) {
+
+#include "PassOneController.h"
+#include "../file/write/FileWriter.h"
+
+
+PassOneController::PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
+                                     std::unordered_map<std::string, Directive *> &directiveTable) {
+    this->instructionTable = instructionTable;
+    this->directiveTable = directiveTable;
+    locationCounter = 0;
+    startAddress = 0;
+    endAddress = -1; // Modified when END directive is reached.
+}
+
+std::string PassOneController::execute(std::unordered_map<std::string, int> &symbolTable, FileReader *fileReader) {
 //    FileWriter *fileWriter = new FileWriter("intermediate", "fancyExtension");
 //    while (fileReader has not finished reading) {
 //        Statement *statement = fileReader.getNextStatement();
@@ -29,24 +32,23 @@
 //                if (statement.hasLabel()) {
 //                    update symTable with new label address
 //                }
-//                statement.getFancyObject().execute();
 //                /// Other possible logic here.
-////                if (statement.mnemonicIsDirective()) {
-////                    dirTable[statement.getMnemonic()].perform();
-////                } else {
-////                    if (!statement.isFormatFour()) {
-////                        instrTable.getFormat.updateLC();
-////                    } else {
-////
-////                    }
-////                }
+//                if (statement.mnemonicIsDirective()) {
+//                    dirTable[statement.getMnemonic()].perform();
+//                } else {
+//                    if (!statement.isFormatFour()) {
+//                        instrTable.getFormat.updateLC();
+//                    } else {
+//
+//                    }
+//                }
 //                write statement to intermediate file
 //            }
 //        }
 //        loop over symTable making sure that every label has an address
 //        if any label does not have an address
-//
+
 //        calculate length
 //        fileReader.advance();
 //    }
-//}
+}

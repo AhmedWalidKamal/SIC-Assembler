@@ -10,17 +10,18 @@
 #include "../file/read/FileReader.h"
 #include "../format/Format.h"
 #include "../directive/Directive.h"
-#include "../util/Instruction.h"
+#include "../statement/Instruction.h"
 
 class PassOneController {
 public:
     PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
                           std::unordered_map<std::string, Directive *> &directiveTable);
 
-    //void execute(symTable, fileReader);
+    std::string execute(std::unordered_map<std::string, int> &symbolTable, FileReader *fileReader);
 private:
-
-   // fileReader, instrMap, locationCounter, symTable, dirTable, start, end;
+    std::unordered_map<std::string, Directive *> directiveTable;
+    std::unordered_map<std::string, Instruction *> instructionTable;
+    int locationCounter, startAddress, endAddress;
 };
 
 #endif //SIC_ASSEMBLER_PASSONECONTROLLER_H

@@ -17,11 +17,11 @@ void MainController::setSourceFileReader(std::string fileName) {
 }
 
 void MainController::execute(std::string fileName) {
-    setSourceFileReader(fileName); // hello
+    setSourceFileReader(fileName);
     symbolTable.clear();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-    //std::string intermediateFile = passOne.execute(&symbolTable, &sourceFileReader);
+    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader);
     //PassTwoController *passTwo = new PassTwoController(intermediateFile); // salma takes from here.
 }
 

@@ -3,3 +3,7 @@
 //
 
 #include "Label.h"
+
+const std::string &Label::getLabel() const {
+    return label;
+}

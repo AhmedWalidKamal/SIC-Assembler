@@ -5,6 +5,7 @@
 #include <vector>
 #include <iostream>
 #include <cstdlib>
+#include <algorithm>
 #include "FileReader.h"
 #include "../../statement/Statement.h"
 
@@ -25,7 +26,9 @@ Statement *FileReader::getNextStatement() {
 
     std::string currentLine;
     std::getline(sourceFileStream, currentLine);
-    /// Don't forget to change everything to uppercase
+    std::transform(currentLine.begin(), currentLine.end(), currentLine.begin(),
+                   [](unsigned char c) { return std::toupper(c); });
+
     /// TODO: Fetch the data from the currentLine string into the objects
 
     return new Statement(currentLabel, currentMnemonic, currentOperand, currentComment);

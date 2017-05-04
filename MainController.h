@@ -13,6 +13,9 @@
 #include "pass1/PassOneController.h"
 #include "format/Format.h"
 #include "statement/Instruction.h"
+#include "file/write/ObjectFileWriter.h"
+#include "file/write/IntermediateFileWriter.h"
+#include "file/write/ListingFileWriter.h"
 
 class MainController {
 public:
@@ -26,9 +29,9 @@ private:
     std::unordered_map<std::string, Instruction *> instructionTable;
     std::unordered_map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
-    FileWriter *objectFileWriter;
-    FileWriter *intermediateFileWriter;
-    FileWriter *listingFileWriter;
+    ObjectFileWriter *objectFileWriter;
+    IntermediateFileWriter *intermediateFileWriter;
+    ListingFileWriter *listingFileWriter;
 
     void setSourceFileReader(std::string fileName);
 
