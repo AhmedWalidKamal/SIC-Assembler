@@ -7,8 +7,6 @@
 #include <string>
 #include "../../datatypes/Hexadecimal.h"
 
-using namespace std;
-
 class ObjectFileWriter {
 
 public:
@@ -19,25 +17,23 @@ public:
     //writes the whole text record.
     void writeTextRecord();
     //writes only one instruction to the text record.
-    void writeTextRecord(int objectCode ,bool isIndexed, int address);
+    void writeTextRecord(int opCode ,bool isIndexed, int address,int locationCounter);
     //special case of instructions like WORD,BYTE..;
-    void writeTextRecord(string address);
+    void writeTextRecord(int address);
     //writes the start of a new record
     void startNewRecord(int startAddress);
-
+    /*to be implemented for SIC/XE only*/
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
 
-    void writeEndRecord(string startAddress);
+    void writeEndRecord(int startAddress);
 
 private:
     string objectCodeFile;
     Hexadecimal *hexadecimalConverter;
     string record;
     string recordLength;
-   // string previousAddress;
     int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
     int MAXRECORDLEN=60;
-
     string SEPARATOR="^";
 };
 
