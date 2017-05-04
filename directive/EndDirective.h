@@ -8,7 +8,7 @@
 
 #include "Directive.h"
 
-class EndDirective : Directive {
+class EndDirective : public Directive {
 
 };
 

@@ -7,7 +7,7 @@
 
 #include "Directive.h"
 
-class WordDirective : Directive {
+class WordDirective : public Directive {
 
 };
 

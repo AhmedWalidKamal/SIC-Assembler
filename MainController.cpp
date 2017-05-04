@@ -5,6 +5,7 @@
 #include "MainController.h"
 #include "pass1/PassOneController.h"
 #include "pass2/PassTwoController.h"
+#include "util/Initialization.h"
 
 MainController::MainController() {
     initDirectiveTable(directiveTable);
@@ -26,10 +27,10 @@ void MainController::execute(std::string fileName) {
 
 void MainController::initDirectiveTable(std::unordered_map<std::string,
         Directive *> &directiveTable) {
-
+    Initialization::initInstructionTable(instructionTable);
 }
 
 void MainController::initInstructionTable(std::unordered_map<std::string,
         Instruction *> &instructionTable) {
-
+    Initialization::initDirectiveTable(directiveTable);
 }

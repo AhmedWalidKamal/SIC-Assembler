@@ -7,7 +7,7 @@
 
 #include "Directive.h"
 
-class ReserveWordDirective : Directive {
+class ReserveWordDirective : public Directive {
 
 };
 

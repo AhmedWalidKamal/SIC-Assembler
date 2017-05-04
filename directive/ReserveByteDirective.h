@@ -7,7 +7,7 @@
 
 #include "Directive.h"
 
-class ReserveByteDirective : Directive {
+class ReserveByteDirective : public Directive {
 
 };
 
