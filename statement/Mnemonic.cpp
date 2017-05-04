@@ -3,3 +3,15 @@
 //
 
 #include "Mnemonic.h"
+
+Mnemonic::Mnemonic(std::string mnemonicField) {
+    Mnemonic::mnemonicField = mnemonicField;
+}
+
+const std::string &Mnemonic::getMnemonicField() const {
+    return mnemonicField;
+}
+
+void Mnemonic::setMnemonicField(const std::string &mnemonicField) {
+    Mnemonic::mnemonicField = mnemonicField;
+}

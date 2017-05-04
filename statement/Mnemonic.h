@@ -6,8 +6,18 @@
 #define SIC_ASSEMBLER_MNEMONIC_H
 
 
-class Mnemonic {
+#include <string>
 
+class Mnemonic {
+public:
+    Mnemonic(std::string mnemonicField);
+
+private:
+    std::string mnemonicField;
+public:
+    const std::string &getMnemonicField() const;
+
+    void setMnemonicField(const std::string &mnemonicField);
 };
 
 

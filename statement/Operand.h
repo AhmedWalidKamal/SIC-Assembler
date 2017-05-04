@@ -9,18 +9,22 @@
 class Operand {
 
 public:
-    Operand (std::string operand);
+    Operand (std::string operandField);
     std::string getValue();
     void setIntValue(int transformMethod);
     int getintValue();
-    // change value to newLabel in Statment Object
+    // change value to newLabel in Statement Object
     bool isLabel();
     bool isRegister();
     bool isConstant();
 
 
 private:
-    std::string operand;
+    std::string operandField;
+public:
+    const std::string &getOperandField() const;
+
+    void setOperandField(const std::string &operandField);
 };
 
 
