@@ -9,6 +9,6 @@ FixedFormatBuilder::FixedFormatBuilder() {
 }
 
 void FixedFormatBuilder::buildStatement(std::string line) {
-    
+
 }
 
