@@ -20,12 +20,20 @@ public:
     void executePass2();
 
 private:
+    void executeStart(Statement statement);
+    void executeInstruction(Statement statement);
+    void executeRES(string locationCounter);
+    void executeWord(Statement statement);
+    void executeByte(Statement statement);
+    void executeEnd(Statement statement);
     ObjectFileWriter *objectWriter;
+    Hexadecimal *hexadecimalConverter;
     string outputFile;
     int programLength;
     unordered_map<std::string, std::pair<int, Format *>> instructionTable;
     unordered_map<std::string, int> symbolTable;
-
+    vector<Statement> statements;
+    int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
 };
 
 

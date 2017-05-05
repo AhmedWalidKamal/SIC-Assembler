@@ -19,4 +19,11 @@ string Hexadecimal::intToHex(int number) {
     reverse(s.begin(), s.end());
     return s;
 }
-
+string Hexadecimal::stringToHex(string s) {
+    string hex;
+    for(int i=0;i<s.length();i++){
+        int ascii=s[i]-'0';
+        hex+=intToHex(ascii);
+    }
+    return hex;
+}
