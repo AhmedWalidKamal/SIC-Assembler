@@ -11,7 +11,10 @@
 //}
 
 Statement::Statement() {
-
+    Statement::label = nullptr;
+    Statement::mnemonic = nullptr;
+    Statement::operand = nullptr;
+    Statement::comment = nullptr;
 }
 
 Statement::Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment) {
@@ -67,7 +70,7 @@ void Statement::setStatementLocationPointer(int statementLocationPointer) {
     Statement::statementLocationPointer = statementLocationPointer;
 }
 
-void Statement ::execute(int &start, int &end, int &locationCounter) {
+void Statement::execute(int &start, int &end, int &locationCounter) {
 
  //   if (statement.mnemonicIsDirective()) {
 //                 setStatementLocationPointer(dirTable[statement.getMnemonic()].execute());

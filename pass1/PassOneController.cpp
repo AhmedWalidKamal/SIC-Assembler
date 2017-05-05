@@ -8,8 +8,8 @@
 
 PassOneController::PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
                                      std::unordered_map<std::string, Directive *> &directiveTable) {
-    this->instructionTable = instructionTable;
-    this->directiveTable = directiveTable;
+    PassOneController::instructionTable = instructionTable;
+    PassOneController::directiveTable = directiveTable;
     locationCounter = 0;
     startAddress = -1;
     endAddress = -1; // Modified when END directive is reached.

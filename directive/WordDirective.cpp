@@ -6,5 +6,4 @@
 
 int WordDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
     return locationCounter;
-
 }
