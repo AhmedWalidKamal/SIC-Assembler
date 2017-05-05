@@ -7,10 +7,10 @@
 #include "../validate/LabelValidationState.h"
 
 Statement::Statement() {
-    Statement::label = nullptr;
-    Statement::mnemonic = nullptr;
-    Statement::operand = nullptr;
-    Statement::comment = nullptr;
+    Statement::label = new Label("");
+    Statement::mnemonic = new Mnemonic("");
+    Statement::operand = new Operand("");
+    Statement::comment = new Comment("");
 }
 
 Statement::Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment) {
@@ -78,10 +78,10 @@ void Statement::execute(int &start, int &end, int &locationCounter) {
 
 }
 
-int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
-                        const std::map<std::string, Directive *> &directiveTable,
-                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-                        const int &locationCounter) {
-    State *state = new LabelValidationState();
-    return 0;
-}
+//int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
+//                        const std::map<std::string, Directive *> &directiveTable,
+//                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+//                        const int &locationCounter) {
+//    State *state = new LabelValidationState();
+//    return 0;
+//}
