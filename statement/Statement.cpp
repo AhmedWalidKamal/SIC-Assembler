@@ -83,5 +83,7 @@ int Statement::validate(const std::map<std::string, Instruction *> &instructionT
                         const std::map<std::string, int> &symbolTable, const int &start, const int &end,
                         const int &locationCounter) {
     State *state = new LabelValidationState();
+    state->validate(instructionTable,directiveTable,symbolTable, start,end,locationCounter,this);
+    
     return 0;
 }
