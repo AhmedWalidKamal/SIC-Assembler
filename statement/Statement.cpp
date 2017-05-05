@@ -78,10 +78,13 @@ void Statement::execute(int &start, int &end, int &locationCounter) {
 
 }
 
-//int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
-//                        const std::map<std::string, Directive *> &directiveTable,
-//                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-//                        const int &locationCounter) {
-//    State *state = new LabelValidationState();
-//    return 0;
-//}
+int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
+                        const std::map<std::string, Directive *> &directiveTable,
+                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                        const int &locationCounter) {
+    State *state = new LabelValidationState();
+    state->validate(instructionTable,directiveTable,symbolTable, start,end,locationCounter,this);
+    
+    return 0;
+}
+

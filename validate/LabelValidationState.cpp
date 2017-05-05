@@ -9,7 +9,7 @@ int LabelValidationState::validate(const std::map<std::string, Instruction *> &i
                                    const std::map<std::string, Directive *> &directiveTable,
                                    const std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                    const int &locationCounter, Statement *statement) {
-    if (symbolTable[statement->getLabel()].exists()) {
+    if (symbolTable.find(statement->getLabel()->getLabelField()) == symbolTable.end() ) {
         return -1; // duplicate label.
     }
     if (!statement->getLabel()->isValid()) {
