@@ -48,4 +48,3 @@ void Initialization::initDirectiveTable(std::map<std::string, Directive *> &dire
     directiveTable["RESB"] = new ReserveByteDirective();
     directiveTable["RESW"] = new ReserveWordDirective();
 }
->>>>>>> 52c09488ec490e1eb07bf61c0b391577700b9eeb
