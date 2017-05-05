@@ -36,4 +36,3 @@ void MainController::initInstructionTable(std::map<std::string,
         Instruction *> &instructionTable) {
     Initialization::initDirectiveTable(directiveTable);
 }
->>>>>>> 52c09488ec490e1eb07bf61c0b391577700b9eeb

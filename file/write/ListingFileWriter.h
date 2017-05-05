@@ -12,14 +12,15 @@
 class ListingFileWriter {
 public:
     //constructor
-   ListingFileWriter(std::string listingFile);
+   ListingFileWriter(const std::string &fileName, const std::string fileExtension);
 
     void writeInitialLine();
     void writeLine(int lineNumber,Statement sourceStatement,std::string objectCode);
 
 private:
-    Hexadecimal *converter;
-    StringUtil *stringUtil;
+    std::ofstream outputFileStream;
+    const std::string fileName;
+    const std::string fileExtension;
 };
 
 

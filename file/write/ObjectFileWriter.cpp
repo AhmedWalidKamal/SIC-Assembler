@@ -11,16 +11,14 @@ std::ofstream outFile;
 ObjectFileWriter::ObjectFileWriter(std::string objectCodeFile) {
 
     this ->objectCodeFile=objectCodeFile;
-    this->hexadecimalConverter=new Hexadecimal();
-    this->stringUtil=new StringUtil();
     outFile.open (objectCodeFile);
 }
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress,std::string length) {
 
     outFile<<"H"<<"^";
-    sourceName=stringUtil->fillSpaces(sourceName,FIELD_LENGTH);
+    sourceName=StringUtil::fillSpaces(sourceName,FIELD_LENGTH);
     outFile<<sourceName<<"^";
-    startAddress=stringUtil->fillZeros(startAddress,FIELD_LENGTH);
+    startAddress=StringUtil::fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress<<"^";
     outFile<<length<<"\n";
     newRecord=true;
@@ -29,7 +27,7 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
 }
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
-    recordLength=hexadecimalConverter->intToHex(3*record.length());
+    recordLength=Hexadecimal::intToHex(3*record.length());
     outFile<<recordLength<<record<<"\n";
 
 }
@@ -37,7 +35,7 @@ void ObjectFileWriter::writeTextRecord() {
 
 /*performs writing of typical case of instruction object code*/
 void ObjectFileWriter::writeTextRecord(std::string objectCode,std::string locationCounter) {
-    objectCode=stringUtil->fillZeros(objectCode,FIELD_LENGTH);
+    objectCode=StringUtil::fillZeros(objectCode,FIELD_LENGTH);
     //check if after adding this instruction object code will fit or i need to start a new record.
      if(objectCode.length()+record.length()>MAX_RECORD_LEN||newRecord){
          writeTextRecord();
@@ -53,14 +51,14 @@ void ObjectFileWriter::startNewRecord(std::string startAddress) {
     if(newRecord){
      record="";
      outFile<<"T"<<"^";
-     outFile<<stringUtil->fillZeros(startAddress,FIELD_LENGTH)<<"^";
+     outFile<<StringUtil::fillZeros(startAddress,FIELD_LENGTH)<<"^";
     }
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {
     writeTextRecord();
     outFile<<"E"<<"^";
-    startAddress=stringUtil->fillZeros(startAddress,FIELD_LENGTH);
+    startAddress=StringUtil::fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress;
     outFile.close();
 

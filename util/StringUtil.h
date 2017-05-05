@@ -10,10 +10,10 @@
 class StringUtil {
 
 public:
-    std::string fillSpaces(std::string,int length);
-    std::string fillZeros(std::string word,int size);
-    std::string drawLine(int length);
-    std::string toString(int num);
+    static std::string fillSpaces(std::string,int length);
+    static std::string fillZeros(std::string word,int size);
+    static std::string drawLine(int length);
+    static std::string toString(int num);
 };
 
 

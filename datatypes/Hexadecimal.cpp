@@ -6,7 +6,7 @@
 #include <algorithm>
 #include "Hexadecimal.h"
 
-std::string Hexadecimal::intToHex(int number) {
+static std::string Hexadecimal::intToHex(int number) {
     std::ostringstream stream;
     const char *hex = "0123456789ABCDEF";
     while (number > 0) {
@@ -18,7 +18,7 @@ std::string Hexadecimal::intToHex(int number) {
     reverse(s.begin(), s.end());
     return s;
 }
-std::string Hexadecimal::stringToHex(std::string s) {
+static std::string Hexadecimal::stringToHex(std::string s) {
     std::string hex;
     for(int i=0;i<s.length();i++){
         int ascii=s[i]-'0';

@@ -22,8 +22,6 @@ public:
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
     bool newRecord=false;
 private:
-    Hexadecimal *hexadecimalConverter;
-    StringUtil *stringUtil;
     std::string objectCodeFile;
     std::string record;
     std::string recordLength;
