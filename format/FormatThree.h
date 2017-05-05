@@ -9,7 +9,8 @@
 #include "Format.h"
 
 class FormatThree : public Format {
-
+public:
+    void execute();
 };
 
 

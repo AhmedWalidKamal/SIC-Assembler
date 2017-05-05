@@ -11,13 +11,15 @@
 
 FileReader::FileReader(const std::string &fileName) {
     this->sourceFileStream.open(fileName);
-    //std::cout << "File name is: " << fileName << std::endl;
+    std::cout << "File name is: " << fileName << std::endl;
     if (sourceFileStream.fail()) {
         std::cout << "Couldn't open file." << std::endl;
         exit(1);
     }
     // This could be changed in the future to a FreeFormatBuilder if desired.
     builder = new FixedFormatBuilder();
+
+    /// File prints correctly, but i think there's an error in the file reading line by line.
 }
 
 Statement *FileReader::getNextStatement() {

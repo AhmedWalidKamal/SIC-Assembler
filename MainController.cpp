@@ -25,12 +25,12 @@ void MainController::execute(std::string fileName) {
     //PassTwoController *passTwo = new PassTwoController(intermediateFile); // salma takes from here.
 }
 
-void MainController::initDirectiveTable(std::unordered_map<std::string,
+void MainController::initDirectiveTable(std::map<std::string,
         Directive *> &directiveTable) {
     Initialization::initInstructionTable(instructionTable);
 }
 
-void MainController::initInstructionTable(std::unordered_map<std::string,
+void MainController::initInstructionTable(std::map<std::string,
         Instruction *> &instructionTable) {
     Initialization::initDirectiveTable(directiveTable);
 }

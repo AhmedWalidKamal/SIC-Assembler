@@ -2,12 +2,14 @@
 // Created by Walid on 5/1/2017.
 //
 
+#include <iostream>
 #include "PassOneController.h"
 #include "../file/write/FileWriter.h"
+#include "../format/FormatThree.h"
 
 
-PassOneController::PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
-                                     std::unordered_map<std::string, Directive *> &directiveTable) {
+PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
+                                     std::map<std::string, Directive *> &directiveTable) {
     PassOneController::instructionTable = instructionTable;
     PassOneController::directiveTable = directiveTable;
     locationCounter = 0;

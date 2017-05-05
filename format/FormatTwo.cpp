@@ -3,3 +3,7 @@
 //
 
 #include "FormatTwo.h"
+
+void FormatTwo::execute() {
+
+}

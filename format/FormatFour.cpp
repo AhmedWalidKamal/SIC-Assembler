@@ -3,3 +3,7 @@
 //
 
 #include "FormatFour.h"
+
+void FormatFour::execute() {
+
+}

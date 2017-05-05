@@ -25,8 +25,8 @@ public:
 
 private:
 
-    std::unordered_map<std::string, Directive *> directiveTable;
-    std::unordered_map<std::string, Instruction *> instructionTable;
+    std::map<std::string, Instruction *> instructionTable;
+    std::map<std::string, Directive *> directiveTable;
     std::unordered_map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
     ObjectFileWriter *objectFileWriter;
@@ -35,9 +35,9 @@ private:
 
     void setSourceFileReader(std::string fileName);
 
-    void initDirectiveTable(std::unordered_map<std::string, Directive *> &directiveTable);
+    void initDirectiveTable(std::map<std::string, Directive *> &directiveTable);
 
-    void initInstructionTable(std::unordered_map<std::string, Instruction *> &instructionTable);
+    void initInstructionTable(std::map<std::string, Instruction *> &instructionTable);
 };
 
 

@@ -9,7 +9,8 @@
 #include "Format.h"
 
 class FormatTwo : public Format {
-
+public:
+    void execute();
 };
 
 

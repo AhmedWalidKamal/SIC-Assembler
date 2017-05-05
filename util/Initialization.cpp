@@ -11,7 +11,7 @@
 #include "../directive/ReserveWordDirective.h"
 #include "../format/FormatThree.h"
 
-void Initialization::initInstructionTable(std::unordered_map<std::string, Instruction *> &instructionTable) {
+void Initialization::initInstructionTable(std::map<std::string, Instruction *> &instructionTable) {
     instructionTable["ADD"] = new Instruction("ADD", 24, new FormatThree(), 1);
     instructionTable["AND"] = new Instruction("AND", 64, new FormatThree(), 1);
     instructionTable["COMP"] = new Instruction("COMP", 40, new FormatThree(), 1);
@@ -39,7 +39,7 @@ void Initialization::initInstructionTable(std::unordered_map<std::string, Instru
     instructionTable["WD"] = new Instruction("WD", 220, new FormatThree(), 1);
 }
 
-void Initialization::initDirectiveTable(std::unordered_map<std::string, Directive *> &directiveTable) {
+void Initialization::initDirectiveTable(std::map<std::string, Directive *> &directiveTable) {
     directiveTable["START"] = new StartDirective();
     directiveTable["END"] = new EndDirective();
     directiveTable["WORD"] = new WordDirective();

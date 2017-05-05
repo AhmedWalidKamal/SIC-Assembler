@@ -3,12 +3,8 @@
 //
 
 #include "Statement.h"
-
-// Constructor
-//public Statement() {
-//    initialize stuff
-//    set state object to initial state
-//}
+#include "../validate/State.h"
+#include "../validate/LabelValidationState.h"
 
 Statement::Statement() {
     Statement::label = nullptr;
@@ -24,10 +20,8 @@ Statement::Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment
     Statement::comment = comment;
 }
 
-//int validate (params) {
-//}
 bool Statement::isComment() {
-//    return label.startsWithComment();
+    return label->startsWithComment();
 }
 
 Label *Statement::getLabel() const {
@@ -82,4 +76,12 @@ void Statement::execute(int &start, int &end, int &locationCounter) {
 //                    }
 //                }s
 
+}
+
+int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
+                        const std::map<std::string, Directive *> &directiveTable,
+                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                        const int &locationCounter) {
+    State *state = new LabelValidationState();
+    return 0;
 }

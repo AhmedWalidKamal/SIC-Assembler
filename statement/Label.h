@@ -13,6 +13,9 @@ public:
    Label(std::string labelField);
 
     const std::string &getLabelField() const;
+    bool startsWithComment();
+    bool isEmpty();
+    bool isValid();
     void setLabelField(const std::string &labelField);
 private:
     std::string labelField;

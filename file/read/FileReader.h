@@ -5,10 +5,6 @@
 #ifndef SIC_ASSEMBLER_FILEREADER_H
 #define SIC_ASSEMBLER_FILEREADER_H
 
-
-#include <bits/basic_string.h>
-#include <bits/char_traits.h>
-#include <bits/allocator.h>
 #include <string>
 #include <fstream>
 #include "../../statement/Statement.h"

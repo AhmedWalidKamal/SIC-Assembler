@@ -3,3 +3,7 @@
 //
 
 #include "FormatThree.h"
+
+void FormatThree::execute() {
+
+}
