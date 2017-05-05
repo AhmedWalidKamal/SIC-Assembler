@@ -17,7 +17,7 @@
 
 class PassTwoController {
 public:
-    PassTwoController(vector<bool> hasLabel,vector<int>operandsValues,vector<Statement> &lines,int programLength,std::string objectFile,std::string listingFile,unordered_map<std::string, int > &instructionTable,unordered_map<std::string, int> &symbolTable);
+    PassTwoController(std::vector<bool> hasLabel,std::vector<int>operandsValues,std::vector<Statement> &lines,int programLength,std::string objectFile,std::string listingFile,std::unordered_map<std::string, int > &instructionTable,std::unordered_map<std::string, int> &symbolTable);
     void executePass2();
 
 private:
@@ -32,11 +32,11 @@ private:
     Hexadecimal *hexadecimalConverter;
     int programLength;
     std::string objectCode;
-    unordered_map<std::string, int> instructionTable;
-    unordered_map<std::string, int> symbolTable;
-    vector<Statement> statements;
-    vector<int>operandsValues;
-    vector<bool> hasLabel;
+    std::unordered_map<std::string, int> instructionTable;
+    std::unordered_map<std::string, int> symbolTable;
+    std::vector<Statement> statements;
+    std::vector<int>operandsValues;
+    std::vector<bool> hasLabel;
     int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
 };
 

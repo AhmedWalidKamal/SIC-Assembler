@@ -6,20 +6,21 @@
 #include <iostream>
 #include "ObjectFileWriter.h"
 
-ofstream outFile;
+std::ofstream outFile;
 
 ObjectFileWriter::ObjectFileWriter(std::string objectCodeFile) {
 
     this ->objectCodeFile=objectCodeFile;
     this->hexadecimalConverter=new Hexadecimal();
+    this->stringUtil=new StringUtil();
     outFile.open (objectCodeFile);
 }
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress,std::string length) {
 
     outFile<<"H"<<"^";
-    sourceName=fillSpaces(sourceName,FIELD_LENGTH);
+    sourceName=stringUtil->fillSpaces(sourceName,FIELD_LENGTH);
     outFile<<sourceName<<"^";
-    startAddress=fillZeros(startAddress,FIELD_LENGTH);
+    startAddress=stringUtil->fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress<<"^";
     outFile<<length<<"\n";
     newRecord=true;
@@ -35,8 +36,8 @@ void ObjectFileWriter::writeTextRecord() {
 
 
 /*performs writing of typical case of instruction object code*/
-void ObjectFileWriter::writeTextRecord(string objectCode,string locationCounter) {
-    objectCode=fillZeros(objectCode,FIELD_LENGTH);
+void ObjectFileWriter::writeTextRecord(std::string objectCode,std::string locationCounter) {
+    objectCode=stringUtil->fillZeros(objectCode,FIELD_LENGTH);
     //check if after adding this instruction object code will fit or i need to start a new record.
      if(objectCode.length()+record.length()>MAX_RECORD_LEN||newRecord){
          writeTextRecord();
@@ -48,18 +49,18 @@ void ObjectFileWriter::writeTextRecord(string objectCode,string locationCounter)
 
 }
 
-void ObjectFileWriter::startNewRecord(string startAddress) {
+void ObjectFileWriter::startNewRecord(std::string startAddress) {
     if(newRecord){
      record="";
      outFile<<"T"<<"^";
-     outFile<<fillZeros(startAddress,FIELD_LENGTH)<<"^";
+     outFile<<stringUtil->fillZeros(startAddress,FIELD_LENGTH)<<"^";
     }
 }
 
-void ObjectFileWriter::writeEndRecord(string startAddress) {
+void ObjectFileWriter::writeEndRecord(std::string startAddress) {
     writeTextRecord();
     outFile<<"E"<<"^";
-    startAddress=fillZeros(startAddress,FIELD_LENGTH);
+    startAddress=stringUtil->fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress;
     outFile.close();
 
@@ -70,15 +71,4 @@ void ObjectFileWriter::writeModRecord() {
 
 }
 
-string ObjectFileWriter:: fillSpaces(std::string word,int size){
-    while(word.length()<size) {
-        word+=" ";
-    }
-    return word;
-}
-string ObjectFileWriter:: fillZeros(std::string word,int size){
-    while(word.length()<size) {
-        word="0"+word;
-    }
-    return word;
-}
+

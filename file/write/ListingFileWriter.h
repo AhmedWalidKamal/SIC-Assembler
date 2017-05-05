@@ -8,7 +8,7 @@
 #include <fstream>
 #include "../../statement/Statement.h"
 #include "../../datatypes/Hexadecimal.h"
-
+#include "../../util/StringUtil.h"
 class ListingFileWriter {
 public:
     //constructor
@@ -19,10 +19,7 @@ public:
 
 private:
     Hexadecimal *converter;
-    std::string fillSpaces(std::string,int length);
-    std::string fillZeros(std::string word,int size);
-    std::string drawLine(int length);
-    std::string toString(int num);
+    StringUtil *stringUtil;
 };
 
 

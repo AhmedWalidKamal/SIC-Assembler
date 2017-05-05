@@ -6,10 +6,13 @@
 #define SIC_ASSEMBLER_STATEMENT_H
 
 
+#include <map>
 #include "Label.h"
 #include "Mnemonic.h"
 #include "Operand.h"
 #include "Comment.h"
+#include "Instruction.h"
+#include "../directive/Directive.h"
 
 class Statement {
 public:
@@ -17,7 +20,10 @@ public:
     Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment);
 
     bool isComment();
-    //int validate(params in pass1ctrl);
+//    int validate(const std::map<std::string, Instruction *> &instructionTable,
+//                 const std::map<std::string, Directive *> &directiveTable,
+//                 const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+//                 const int &locationCounter);
     //bool operandIsNewLabel();
     //bool operandHasLabel();
 

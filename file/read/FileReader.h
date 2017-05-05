@@ -5,10 +5,6 @@
 #ifndef SIC_ASSEMBLER_FILEREADER_H
 #define SIC_ASSEMBLER_FILEREADER_H
 
-
-#include <bits/basic_string.h>
-#include <bits/char_traits.h>
-#include <bits/allocator.h>
 #include <string>
 #include <fstream>
 #include "../../statement/Statement.h"
@@ -24,6 +20,18 @@ public:
 
 private:
     std::ifstream sourceFileStream;
+    std::string fileName;
+public:
+    const std::string &getFileName() const;
+
+    void setFileName(const std::string &fileName);
+
+    const std::string &getFileExtension() const;
+
+    void setFileExtension(const std::string &fileExtension);
+
+private:
+    std::string fileExtension;
     StatementBuilder *builder;
 };
 

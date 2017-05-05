@@ -8,13 +8,14 @@
 
 #include <string>
 #include <unordered_map>
+#include <map>
 #include "../statement/Instruction.h"
 #include "../directive/Directive.h"
 
 class Initialization {
 public:
-    static void initInstructionTable(std::unordered_map<std::string, Instruction *> &instructionTable);
-    static void initDirectiveTable(std::unordered_map<std::string, Directive *> &directiveTable);
+    static void initInstructionTable(std::map<std::string, Instruction *> &instructionTable);
+    static void initDirectiveTable(std::map<std::string, Directive *> &directiveTable);
 
 private:
     Initialization () {}

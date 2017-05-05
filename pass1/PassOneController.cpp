@@ -2,12 +2,15 @@
 // Created by Walid on 5/1/2017.
 //
 
+#include <iostream>
 #include "PassOneController.h"
 #include "../file/write/FileWriter.h"
+#include "../format/FormatThree.h"
+#include "../file/write/IntermediateFileWriter.h"
 
 
-PassOneController::PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
-                                     std::unordered_map<std::string, Directive *> &directiveTable) {
+PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
+                                     std::map<std::string, Directive *> &directiveTable) {
     PassOneController::instructionTable = instructionTable;
     PassOneController::directiveTable = directiveTable;
     locationCounter = 0;
@@ -16,13 +19,14 @@ PassOneController::PassOneController(std::unordered_map<std::string, Instruction
 }
 
 std::string PassOneController::execute(std::unordered_map<std::string, int> &symbolTable, FileReader *fileReader) {
-//    FileWriter *fileWriter = new FileWriter("intermediate", "fancyExtension");
-//    while (fileReader has not finished reading) {
-//        Statement *statement = fileReader.getNextStatement();
-//        if (statement.isComment()) {
-//            write to intermediate file
-//        } else {
-//            int errorType = statement.validate(&symTable, instTable, dirTable, start, end); // errorType maps to each error to be printerd.
+    IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
+                                                                                std::string(".int"));
+    while (!fileReader->finishedReading()) {
+        Statement *statement = fileReader->getNextStatement();
+        if (statement->isComment()) {
+            // write line to intermediate file.
+        } else {
+//            int errorType = statement.validate(&symTable, instTable, dirTable, start, end);
 //            if (error) {
 //                write error to intermediate file
 //            } else {
@@ -32,7 +36,7 @@ std::string PassOneController::execute(std::unordered_map<std::string, int> &sym
 //                if (statement.hasLabel()) {
 //                    update symTable with new label address
 //                }
-//                /// Other possible logic here. excution from statement Object
+//                /// Other possible logic here. execution from statement Object
 //                if (statement.mnemonicIsDirective()) {
 //                    dirTable[statement.getMnemonic()].perform();
 //                } else {
@@ -43,12 +47,12 @@ std::string PassOneController::execute(std::unordered_map<std::string, int> &sym
 //                    }
 //                }
 //                write statement to intermediate file
-//            }
-//        }
+            }
+        }
 //        loop over symTable making sure that every label has an address
 //        if any label does not have an address
-
+//
 //        calculate length
 //        fileReader.advance();
-//    }
 }
+

@@ -3,3 +3,7 @@
 //
 
 #include "FormatOne.h"
+
+void FormatOne::execute() {
+
+}

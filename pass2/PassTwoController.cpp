@@ -9,7 +9,7 @@
 #include <iostream>
 
 /*constructor*/
-PassTwoController::PassTwoController(vector<bool> hasLabel,vector<int>operandsValues,vector<Statement> &statements, int programLength, string objectFile ,string listingFile, std::unordered_map<std::string, int> &instructionTable, unordered_map<std::string, int> &symbolTable) {
+PassTwoController::PassTwoController(std::vector<bool> hasLabel,std::vector<int>operandsValues,std::vector<Statement> &statements, int programLength, std::string objectFile ,std::string listingFile, std::unordered_map<std::string, int> &instructionTable, std::unordered_map<std::string, int> &symbolTable) {
 
     this->hasLabel=hasLabel;
     this->operandsValues=operandsValues;
@@ -26,7 +26,7 @@ PassTwoController::PassTwoController(vector<bool> hasLabel,vector<int>operandsVa
 /*responsible for execution of pass2*/
 void PassTwoController::executePass2() {
     listingWriter->writeInitialLine();
-    string mnemonic;
+    std::string mnemonic;
     for (int i = 0; i < statements.size() - 1; i++) {
         if (!statements[i].isComment()) {
             mnemonic = statements[i].getMnemonic()->getMnemonicField();
@@ -56,7 +56,7 @@ void PassTwoController::executePass2() {
 }
 
 void PassTwoController::executeStart(Statement statement,int i) {
-    string label=statement.getLabel()->getLabelField();
+    std::string label=statement.getLabel()->getLabelField();
     int operand=operandsValues[i];
     //int operand=statement.getOperand()->getintValue();
      if (label.length() > 6) {
@@ -67,12 +67,12 @@ void PassTwoController::executeStart(Statement statement,int i) {
 }
 /*typical case of instruction*/
 std::string PassTwoController::executeInstruction(Statement statement,int i) {
-    string mnemonic=statement.getMnemonic()->getMnemonicField();
-    string objectCode=hexadecimalConverter->intToHex(instructionTable[mnemonic]);//opCode//change later b map of string ,instruction msh string int
+    std::string mnemonic=statement.getMnemonic()->getMnemonicField();
+    std::string objectCode=hexadecimalConverter->intToHex(instructionTable[mnemonic]);//opCode//change later b map of string ,instruction msh string int
     bool isIndexed=false;//statement.getOperand().isIndexed();TODO after method isIndexed is added to operand class
     //if (statement.getOperand()->isLabel()) {
     if(hasLabel[i]){
-        string label = statement.getOperand()->getOperandField();
+        std::string label = statement.getOperand()->getOperandField();
         if(isIndexed){
             //1 is added to leftmost bit of address if indexed which is equal to 32768 in decimal and 8000 in hexa
             objectCode+=hexadecimalConverter->intToHex(symbolTable[label]+INDEXINGVALUE);
@@ -93,14 +93,14 @@ void PassTwoController::executeRES() {
 
 }
 std::string PassTwoController::executeWord(Statement statement,int i) {
-    string address=hexadecimalConverter->intToHex(operandsValues[i]);
+    std::string address=hexadecimalConverter->intToHex(operandsValues[i]);
     //string address=hexadecimalConverter->intToHex(statement.getOperand()->getintValue());
-    string location=hexadecimalConverter->intToHex(statement.getStatementLocationPointer());
+    std::string location=hexadecimalConverter->intToHex(statement.getStatementLocationPointer());
     objectWriter->writeTextRecord(address,location);
     return address;
 }
 std::string PassTwoController::executeByte(Statement statement) {
-    string address;
+    std::string address;
     bool flag=false;
     if(flag){ //does is constant indicates it is in form X'..' not C'..'?? TODO check this line
        // address=hexadecimalConverter->intToHex(statement.getOperand()->getintValue());
@@ -115,7 +115,7 @@ std::string PassTwoController::executeByte(Statement statement) {
 void PassTwoController::executeEnd(Statement statement) {
     if(hasLabel[statements.size()-1]){
     //if(statements[statements.size()-1].getOperand()->isLabel()){
-        string operand=statements[statements.size()-1].getOperand()->getOperandField();
+        std::string operand=statements[statements.size()-1].getOperand()->getOperandField();
         objectWriter->writeEndRecord(hexadecimalConverter->intToHex(symbolTable[operand]));
     }
     else{

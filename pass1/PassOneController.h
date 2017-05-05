@@ -7,6 +7,7 @@
 
 
 #include <unordered_map>
+#include <map>
 #include "../file/read/FileReader.h"
 #include "../format/Format.h"
 #include "../directive/Directive.h"
@@ -14,13 +15,13 @@
 
 class PassOneController {
 public:
-    PassOneController(std::unordered_map<std::string, Instruction *> &instructionTable,
-                          std::unordered_map<std::string, Directive *> &directiveTable);
+    PassOneController(std::map<std::string, Instruction *> &instructionTable,
+                          std::map<std::string, Directive *> &directiveTable);
 
     std::string execute(std::unordered_map<std::string, int> &symbolTable, FileReader *fileReader);
 private:
-    std::unordered_map<std::string, Directive *> directiveTable;
-    std::unordered_map<std::string, Instruction *> instructionTable;
+    std::map<std::string, Instruction *> instructionTable;
+    std::map<std::string, Directive *> directiveTable;
     int locationCounter, startAddress, endAddress;
 };
 
