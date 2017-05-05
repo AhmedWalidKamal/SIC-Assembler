@@ -12,27 +12,31 @@
 #include "../file/write/ObjectFileWriter.h"
 #include "../format/Format.h"
 #include "../statement/Statement.h"
+#include "../statement/Operand.h"
+#include "../file/write/ListingFileWriter.h"
 
-using namespace std;
 class PassTwoController {
 public:
-    PassTwoController(vector<Statement> lines,int programLength,string objectFile,unordered_map<std::string, std::pair<int, Format *>> &instructionTable,unordered_map<std::string, int> &symbolTable);
+    PassTwoController(vector<bool> hasLabel,vector<int>operandsValues,vector<Statement> &lines,int programLength,std::string objectFile,std::string listingFile,unordered_map<std::string, int > &instructionTable,unordered_map<std::string, int> &symbolTable);
     void executePass2();
 
 private:
-    void executeStart(Statement statement);
-    void executeInstruction(Statement statement);
-    void executeRES(string locationCounter);
-    void executeWord(Statement statement);
-    void executeByte(Statement statement);
+    void executeStart(Statement statement,int i);
+    std::string executeInstruction(Statement statement,int i);
+    void executeRES();
+    std::string executeWord(Statement statement,int i);
+    std::string executeByte(Statement statement);
     void executeEnd(Statement statement);
     ObjectFileWriter *objectWriter;
+    ListingFileWriter *listingWriter;
     Hexadecimal *hexadecimalConverter;
-    string outputFile;
     int programLength;
-    unordered_map<std::string, std::pair<int, Format *>> instructionTable;
+    std::string objectCode;
+    unordered_map<std::string, int> instructionTable;
     unordered_map<std::string, int> symbolTable;
     vector<Statement> statements;
+    vector<int>operandsValues;
+    vector<bool> hasLabel;
     int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
 };
 

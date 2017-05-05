@@ -6,17 +6,23 @@
 #define SIC_ASSEMBLER_LISTINGFILEWRITER_H
 #include <string>
 #include <fstream>
+#include "../../statement/Statement.h"
+#include "../../datatypes/Hexadecimal.h"
 
 class ListingFileWriter {
 public:
     //constructor
-   ListingFileWriter(string listingFile);
+   ListingFileWriter(std::string listingFile);
 
     void writeInitialLine();
-    void writeLine(int lineNumber,string locationCounter,Statement sourceStatement,string objectCode);
+    void writeLine(int lineNumber,Statement sourceStatement,std::string objectCode);
 
 private:
-    string listingFile;
+    Hexadecimal *converter;
+    std::string fillSpaces(std::string,int length);
+    std::string fillZeros(std::string word,int size);
+    std::string drawLine(int length);
+    std::string toString(int num);
 };
 
 

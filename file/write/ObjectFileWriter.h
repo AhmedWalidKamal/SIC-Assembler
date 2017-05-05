@@ -18,19 +18,21 @@ public:
     void writeTextRecord();
     //writes only one instruction to the text record.
     void writeTextRecord(string objectCode,string locationCounter);
-    //writes the start of a new record
-    void startNewRecord(string startAddress);
     void writeEndRecord(string startAddress);
-    /*to be implemented for SIC/XE only*/
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
-
+    bool newRecord=false;
 private:
-    string objectCodeFile;
     Hexadecimal *hexadecimalConverter;
+    string objectCodeFile;
     string record;
     string recordLength;
-    int MAXRECORDLEN=60;
+    int MAX_RECORD_LEN=60;
     string SEPARATOR="^";
+    int FIELD_LENGTH=6;
+    //writes the start of a new record
+    void startNewRecord(string startAddress);
+    std::string fillSpaces(std::string,int length);
+    std::string fillZeros(std::string,int length);
 };
 
 

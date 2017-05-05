@@ -3,7 +3,9 @@
 //
 
 #include "Operand.h"
-
+Operand::Operand() {
+    Operand::operandField = "";
+}
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
 }
