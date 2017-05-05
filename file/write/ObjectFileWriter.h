@@ -13,26 +13,22 @@ public:
     //constructor
     ObjectFileWriter(string objectCodeFile);
 
-    void writeHeader(string sourceName,int startAddress,int length);
+    void writeHeader(string sourceName,string startAddress,string length);
     //writes the whole text record.
     void writeTextRecord();
     //writes only one instruction to the text record.
-    void writeTextRecord(int opCode ,bool isIndexed, int address,int locationCounter);
-    //special case of instructions like WORD,BYTE..;
-    void writeTextRecord(int address);
+    void writeTextRecord(string objectCode,string locationCounter);
     //writes the start of a new record
-    void startNewRecord(int startAddress);
+    void startNewRecord(string startAddress);
+    void writeEndRecord(string startAddress);
     /*to be implemented for SIC/XE only*/
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
-
-    void writeEndRecord(int startAddress);
 
 private:
     string objectCodeFile;
     Hexadecimal *hexadecimalConverter;
     string record;
     string recordLength;
-    int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
     int MAXRECORDLEN=60;
     string SEPARATOR="^";
 };
