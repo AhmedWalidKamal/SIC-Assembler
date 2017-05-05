@@ -9,6 +9,7 @@
 class Operand {
 
 public:
+
     Operand(std::string operandField);
     void setIntValue(int transformMethod);
     int getintValue();

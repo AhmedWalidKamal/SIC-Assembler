@@ -4,7 +4,6 @@
 
 #include <regex>
 #include "Operand.h"
-
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
 }
