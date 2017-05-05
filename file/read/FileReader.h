@@ -20,6 +20,18 @@ public:
 
 private:
     std::ifstream sourceFileStream;
+    std::string fileName;
+public:
+    const std::string &getFileName() const;
+
+    void setFileName(const std::string &fileName);
+
+    const std::string &getFileExtension() const;
+
+    void setFileExtension(const std::string &fileExtension);
+
+private:
+    std::string fileExtension;
     StatementBuilder *builder;
 };
 

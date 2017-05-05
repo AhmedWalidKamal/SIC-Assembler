@@ -6,7 +6,19 @@
 #define SIC_ASSEMBLER_INTERMEDIATEFILEWRITER_H
 
 
+#include <string>
+#include <fstream>
+
 class IntermediateFileWriter {
+public:
+    IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
+
+public:
+    void writeLine(std::string line);
+private:
+    std::ofstream outputFileStream;
+    const std::string fileName;
+    const std::string fileExtension;
 
 };
 

@@ -11,6 +11,8 @@
 
 FileReader::FileReader(const std::string &fileName) {
     this->sourceFileStream.open(fileName);
+    FileReader::fileName = fileName;
+    /// I need to check that extension is .asm and store it in the private field.
     std::cout << "File name is: " << fileName << std::endl;
     if (sourceFileStream.fail()) {
         std::cout << "Couldn't open file." << std::endl;
@@ -33,4 +35,20 @@ Statement *FileReader::getNextStatement() {
 
 bool FileReader::finishedReading() {
     return this->sourceFileStream.eof();
+}
+
+const std::string &FileReader::getFileName() const {
+    return fileName;
+}
+
+void FileReader::setFileName(const std::string &fileName) {
+    FileReader::fileName = fileName;
+}
+
+const std::string &FileReader::getFileExtension() const {
+    return fileExtension;
+}
+
+void FileReader::setFileExtension(const std::string &fileExtension) {
+    FileReader::fileExtension = fileExtension;
 }
