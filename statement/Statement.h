@@ -17,7 +17,6 @@
 class Statement {
 public:
     Statement();
-    Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment);
 
     bool isComment();
 

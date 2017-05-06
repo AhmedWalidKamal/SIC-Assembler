@@ -23,6 +23,6 @@ void EndDirective::validate(std::map<std::string, Instruction *> &instructionTab
     }
     if (!statement->getOperand()->getOperandField().empty()) {
         SingleOperandValidateState *state = new SingleOperandValidateState();
-        state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+        state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
     }
 }

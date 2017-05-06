@@ -21,7 +21,7 @@ void StartDirective::validate(std::map<std::string, Instruction *> &instructionT
         throw ErrorHandler::missing_label_at_start;
     }
     SingleOperandValidateState *state = new SingleOperandValidateState();
-    state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+    state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
     if (statement->getOperand()->isLabel()) {
         throw ErrorHandler::undefined_symbol_at_start;
     }

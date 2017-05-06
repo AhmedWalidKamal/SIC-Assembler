@@ -29,36 +29,35 @@ std::string PassOneController::execute(std::map<std::string, int> &symbolTable, 
             // write line to intermediate file.
         } else {
             try {
-                statement->validate(instructionTable, directiveTable, symbolTable, startAddress, endAddress, locationCounter);
+                statement->validate(instructionTable, directiveTable, symbolTable,
+                                    startAddress, endAddress, locationCounter);
             } catch (ErrorHandler::Error error) {
                 /// Write error in file instead of printing it to console, or both?
                 std::cerr << ErrorHandler::errors[error] << std::endl;
+                continue;
             }
-
-//            if (error) {
-//                write error to intermediate file
+            /// If no error logic:
+//            if (statement.operandIsNewLabel()) {
+//                update symTable without address
+//            }
+//            if (statement.hasLabel()) {
+//                update symTable with new label address
+//            }
+//            /// Other possible logic here. execution from statement Object
+//            if (statement.mnemonicIsDirective()) {
+//                dirTable[statement.getMnemonic()].perform();
 //            } else {
-//                if (statement.operandIsNewLabel()) {
-//                    update symTable without address
-//                }
-//                if (statement.hasLabel()) {
-//                    update symTable with new label address
-//                }
-//                /// Other possible logic here. execution from statement Object
-//                if (statement.mnemonicIsDirective()) {
-//                    dirTable[statement.getMnemonic()].perform();
+//                if (!statement.isFormatFour()) {
+//                    instrTable.getFormat.updateLC();
 //                } else {
-//                    if (!statement.isFormatFour()) {
-//                        instrTable.getFormat.updateLC();
-//                    } else {
 //
-//                    }
 //                }
-//                write statement to intermediate file
-            }
+//            }
+//            write statement to intermediate file
         }
-        std::cout << "Finished Reading!!!";
-        exit(0);
+    }
+//        std::cout << "Finished Reading!!!";
+//        exit(0);
 //        loop over symTable making sure that every label has an address
 //        if any label does not have an address
 //

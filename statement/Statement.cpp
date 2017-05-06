@@ -13,13 +13,6 @@ Statement::Statement() {
     Statement::comment = new Comment("");
 }
 
-Statement::Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment) {
-    Statement::label = label;
-    Statement::mnemonic = mnemonic;
-    Statement::operand = operand;
-    Statement::comment = comment;
-}
-
 bool Statement::isComment() {
     return label->startsWithComment();
 }
