@@ -3,6 +3,7 @@
 //
 
 #include "ReserveWordDirective.h"
+#include "../error/ErrorHandler.h"
 
 int ReserveWordDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
 
@@ -11,9 +12,11 @@ int ReserveWordDirective :: execute(int& start, int& end, int& locationCounter,i
     return currentLocationCounter;
 }
 
-//int ReserveWordDirective::validate(const std::map<std::string, Instruction *> &instructionTable,
-//                                   const std::map<std::string, Directive *> &directiveTable,
-//                                   const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-//                                   const int &locationCounter, Statement *statement) {
-//    return statement->getOperand()->isDecimalAddress();
-//}
+void ReserveWordDirective::validate(std::map<std::string, Instruction *> &instructionTable,
+//                         const std::map<std::string, Directive *> &directiveTable,
+                                    std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                                    const int &locationCounter, Statement *statement) {
+    if (!statement->getOperand()->isDecimalAddress()) {
+        throw ErrorHandler::invalid_operand;
+    }
+}

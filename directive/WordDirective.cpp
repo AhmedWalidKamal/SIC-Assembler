@@ -3,6 +3,7 @@
 //
 
 #include "WordDirective.h"
+#include "../error/ErrorHandler.h"
 
 int WordDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
     return locationCounter;
@@ -12,12 +13,12 @@ WordDirective::WordDirective() {
 
 }
 
-//int WordDirective::validate(const std::map<std::string, Instruction *> &instructionTable,
-//                            const std::map<std::string, Directive *> &directiveTable,
-//                            const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-//                            const int &locationCounter, Statement *statement) {
-//    if (!statement->getOperand()->isDecimalValue()) {
-//        return error; // operand not decimal value
-//    }
-//    return 0;
-//}
+void
+WordDirective::validate(std::map<std::string, Instruction *> &instructionTable,
+//                         const std::map<std::string, Directive *> &directiveTable,
+                        std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                        const int &locationCounter, Statement *statement) {
+    if (!statement->getOperand()->isDecimalValue()) {
+        throw ErrorHandler::invalid_operand;
+    }
+}
