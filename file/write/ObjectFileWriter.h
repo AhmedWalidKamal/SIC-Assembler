@@ -11,7 +11,7 @@ class ObjectFileWriter {
 
 public:
     //constructor
-    ObjectFileWriter(std::string objectCodeFile);
+    ObjectFileWriter(const std::string &fileName, const std::string fileExtension);
 
     void writeHeader(std::string sourceName,std::string startAddress,std::string length);
     //writes the whole text record.
@@ -22,7 +22,9 @@ public:
     void writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
     bool newRecord=false;
 private:
-    std::string objectCodeFile;
+    std::ofstream objectFileStream;
+    const std::string fileName;
+    const std::string fileExtension;
     std::string record;
     std::string recordLength;
     int MAX_RECORD_LEN=60;

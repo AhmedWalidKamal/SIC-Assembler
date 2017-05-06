@@ -20,7 +20,7 @@ public:
     void writeLine(int lineNumber,Statement statement);
     void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
 private:
-    std::ofstream outputFileStream;
+    std::ofstream intermediateFileStream;
     const std::string fileName;
     const std::string fileExtension;
     const int LABEL_BOUND=9;

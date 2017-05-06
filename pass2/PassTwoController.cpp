@@ -3,20 +3,25 @@
 //
 
 #include "PassTwoController.h"
+#include "../error/ErrorHandler.h"
 #include <fstream>
 #include <sstream>
 #include <algorithm>
 #include <iostream>
 
 /*constructor*/
-PassTwoController::PassTwoController(std::vector<bool> hasLabel,std::vector<int>operandsValues,std::vector<Statement> &statements, int programLength, std::string objectFile ,std::string listingFile, std::unordered_map<std::string, int> &instructionTable, std::unordered_map<std::string, int> &symbolTable) {
+PassTwoController::PassTwoController(std::vector<bool> hasLabel,std::vector<int>operandsValues,std::vector<Statement> &statements, int programLength,
+                                     const std::string &objectName, const std::string objectExtension ,const std::string &listingName,
+                                     const std::string listingExtension, std::unordered_map<std::string, int> &instructionTable,
+                                     std::unordered_map<std::string, int> &symbolTable)
+        : objectName(objectName), objectExtension(objectExtension),listingName(objectName), listingExtension(objectExtension) {
 
     this->hasLabel=hasLabel;
     this->operandsValues=operandsValues;
     this->statements=statements;
     this ->programLength=programLength;
-    this ->objectWriter= new ObjectFileWriter(objectFile);
-    this->listingWriter=new ListingFileWriter(listingFile);
+    this ->objectWriter= new ObjectFileWriter(objectName,objectExtension);
+    this->listingWriter=new ListingFileWriter(listingName,listingExtension);
     this->hexadecimalConverter=new Hexadecimal();
     this->instructionTable=instructionTable;
     this->symbolTable=symbolTable;
@@ -30,18 +35,23 @@ void PassTwoController::executePass2() {
     for (int i = 0; i < statements.size() - 1; i++) {
         if (!statements[i].isComment()) {
             mnemonic = statements[i].getMnemonic()->getMnemonicField();
-            /*writes header to objectFile.*/
-            if (mnemonic == "START") {
-                executeStart(statements[i],i);
-            }else if (mnemonic == "BYTE") {
-                objectCode=executeByte(statements[i]);
-            }else if (mnemonic == "WORD") {
-               objectCode=executeWord(statements[i],i);
-            }else if (mnemonic == "RESW" || mnemonic == "RESB") {
-               //has no object code but force the start of a new record.
+            try{
+              /*writes header to objectFile.*/
+              if (mnemonic == "START") {
+                 executeStart(statements[i],i);
+              }else if (mnemonic == "BYTE") {
+                 objectCode=executeByte(statements[i]);
+              }else if (mnemonic == "WORD") {
+                 objectCode=executeWord(statements[i],i);
+              }else if (mnemonic == "RESW" || mnemonic == "RESB") {
+                //has no object code but force the start of a new record.
                 executeRES();
-            } else {
-                objectCode=executeInstruction(statements[i],i);
+              } else {
+                 objectCode=executeInstruction(statements[i],i);
+              }
+            }catch(ErrorHandler::Error error){
+                //write the error to listing file.
+                listingWriter->writeError(error);
             }
         }
         listingWriter->writeLine(i*5,statements[i],objectCode);
@@ -59,16 +69,17 @@ void PassTwoController::executeStart(Statement statement,int i) {
     std::string label=statement.getLabel()->getLabelField();
     int operand=operandsValues[i];
     //int operand=statement.getOperand()->getintValue();
-     if (label.length() > 6) {
-        //error program name does not fit
-     } else {
-         objectWriter->writeHeader(label, hexadecimalConverter->intToHex(operand), hexadecimalConverter->intToHex(programLength));
-     }
+    /*if source name more than 6 characters ..error*/
+     if (label.length() > MAX_SOURCENAME_LENGTH)
+        throw ErrorHandler::invalid_source_name;
+
+     objectWriter->writeHeader(label, hexadecimalConverter->intToHex(operand), hexadecimalConverter->intToHex(programLength));
 }
 /*typical case of instruction*/
 std::string PassTwoController::executeInstruction(Statement statement,int i) {
-    std::string mnemonic=statement.getMnemonic()->getMnemonicField();
-    std::string objectCode=hexadecimalConverter->intToHex(instructionTable[mnemonic]);//opCode//change later b map of string ,instruction msh string int
+    std::string mnemonic;
+    mnemonic=statement.getMnemonic()->getMnemonicField();
+    std::string objectCode=hexadecimalConverter->intToHex(instructionTable[mnemonic]);//TODO opCode//change later b map of string ,instruction msh string int
     bool isIndexed=false;//statement.getOperand().isIndexed();TODO after method isIndexed is added to operand class
     //if (statement.getOperand()->isLabel()) {
     if(hasLabel[i]){
@@ -92,13 +103,19 @@ void PassTwoController::executeRES() {
     objectWriter->newRecord=true;
 
 }
+
 std::string PassTwoController::executeWord(Statement statement,int i) {
     std::string address=hexadecimalConverter->intToHex(operandsValues[i]);
     //string address=hexadecimalConverter->intToHex(statement.getOperand()->getintValue());
+    //Error if word length > 3 bytes.
+    if(address.length()>MAX_WORD_LENGTH)
+        throw ErrorHandler::address_out_of_range;
+
     std::string location=hexadecimalConverter->intToHex(statement.getStatementLocationPointer());
     objectWriter->writeTextRecord(address,location);
     return address;
 }
+
 std::string PassTwoController::executeByte(Statement statement) {
     std::string address;
     bool flag=false;
@@ -108,6 +125,10 @@ std::string PassTwoController::executeByte(Statement statement) {
     else {
         address=hexadecimalConverter->stringToHex(statement.getOperand()->getOperandField());
     }
+    //max length for BYTE is 14 hexadecimal digits.
+    if(address.length()>MAX_BYTE_LENGTH)
+        throw ErrorHandler::address_out_of_range;
+
     objectWriter->writeTextRecord(address,hexadecimalConverter->intToHex(statement.getStatementLocationPointer()));
     return address;
 }

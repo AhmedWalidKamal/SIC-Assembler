@@ -9,17 +9,21 @@
 #include "../../statement/Statement.h"
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"
+#include "../../error/ErrorHandler.h"
+
 class ListingFileWriter {
 public:
     //constructor
-   ListingFileWriter( std::string fileName);
+   ListingFileWriter(const std::string &fileName, const std::string fileExtension);
 
     void writeInitialLine();
     void writeLine(int lineNumber,Statement sourceStatement,std::string objectCode);
+    void writeError(ErrorHandler::Error error);
 
 private:
-    std::ofstream outputFileStream;
+    std::ofstream listFileStream;
     const std::string fileName;
+    const std::string fileExtension;
     const int LABEL_BOUND=9;
     const int MNEMONIC_BOUND=7;
     const int OPERAND_BOUND=17;
