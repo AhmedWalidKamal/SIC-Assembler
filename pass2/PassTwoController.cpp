@@ -37,13 +37,13 @@ void PassTwoController::executePass2() {
             mnemonic = statements[i].getMnemonic()->getMnemonicField();
             try {
                 /*writes header to objectFile.*/
-                if (mnemonic == "START") {
+                if (mnemonic == START) {
                     executeStart(statements[i], i);
-                } else if (mnemonic == "BYTE") {
+                } else if (mnemonic == BYTE) {
                     objectCode = executeByte(statements[i]);
-                } else if (mnemonic == "WORD") {
+                } else if (mnemonic == WORD) {
                     objectCode = executeWord(statements[i], i);
-                } else if (mnemonic == "RESW" || mnemonic == "RESB") {
+                } else if (mnemonic == RESW || mnemonic == RESB) {
                     //has no object code but force the start of a new record.
                     executeRES();
                 } else {
@@ -59,7 +59,7 @@ void PassTwoController::executePass2() {
     }
     mnemonic = statements[statements.size() - 1].getMnemonic()->getMnemonicField();
     /*writes end record to object file with address of first executable instruction*/
-    if (mnemonic == "END") {
+    if (mnemonic == END) {
         executeEnd(statements[statements.size() - 1]);
         listingWriter->writeLine(statements.size() * 5, statements[statements.size() - 1], objectCode);
     }
@@ -87,7 +87,7 @@ std::string PassTwoController::executeInstruction(Statement statement, int i) {
     //if (statement.getOperand()->isLabel()) {
     if (hasLabel[i]) {
         std::string operand = statement.getOperand()->getOperandField();
-        if(symbolTable[operand]==-1)
+        if (symbolTable[operand] == -1)
             throw ErrorHandler::undeclared_label;
         if (isIndexed) {
             //1 is added to leftmost bit of address if indexed which is equal to 32768 in decimal and 8000 in hexa
@@ -140,7 +140,7 @@ void PassTwoController::executeEnd(Statement statement) {
     if (hasLabel[statements.size() - 1]) {
         //if(statements[statements.size()-1].getOperand()->isLabel()){
         std::string operand = statements[statements.size() - 1].getOperand()->getOperandField();
-        if(symbolTable[operand]==-1)
+        if (symbolTable[operand] == -1)
             throw ErrorHandler::undeclared_label;
         objectWriter->writeEndRecord(hexadecimalConverter->intToHex(symbolTable[operand]));
     } else {
