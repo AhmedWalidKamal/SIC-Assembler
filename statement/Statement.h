@@ -24,6 +24,11 @@ public:
                  std::map<std::string, Directive *> &directiveTable,
                  std::map<std::string, int> &symbolTable, const int &start, const int &end,
                  const int &locationCounter);
+
+    void execute(int& start, int& end, int& locationCounter,
+                 std::map<std::string, Directive *> &directiveTable,
+                 std::map<std::string, Instruction *> &instructionTable);
+
     //bool operandIsNewLabel();
     //bool operandHasLabel();
 
@@ -47,7 +52,6 @@ public:
 
     void setStatementLocationPointer(int statementLocationPointer);
 
-    void execute(int& start, int& end, int& locationCounter);
 private:
     Label *label;
     Mnemonic *mnemonic;

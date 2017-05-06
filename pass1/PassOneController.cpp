@@ -9,6 +9,7 @@
 #include "../format/FormatThree.h"
 #include "../file/write/IntermediateFileWriter.h"
 #include "../error/ErrorHandler.h"
+#include "../util/Program.h"
 
 
 PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
@@ -20,7 +21,8 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
     endAddress = -1; // Modified when END directive is reached.
 }
 
-std::string PassOneController::execute(std::map<std::string, int> &symbolTable, FileReader *fileReader) {
+std::string PassOneController::execute(std::map<std::string, int> &symbolTable,
+                                       FileReader *fileReader, Program *program) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     while (!fileReader->finishedReading()) {
@@ -37,31 +39,34 @@ std::string PassOneController::execute(std::map<std::string, int> &symbolTable, 
                 continue;
             }
             /// If no error logic:
-//            if (statement.operandIsNewLabel()) {
-//                update symTable without address
-//            }
-//            if (statement.hasLabel()) {
-//                update symTable with new label address
-//            }
-//            /// Other possible logic here. execution from statement Object
-//            if (statement.mnemonicIsDirective()) {
-//                dirTable[statement.getMnemonic()].perform();
-//            } else {
-//                if (!statement.isFormatFour()) {
-//                    instrTable.getFormat.updateLC();
-//                } else {
-//
-//                }
-//            }
-//            write statement to intermediate file
+            /// Updating SymTable
+            if (statement->getOperand()->isLabel()) {
+                symbolTable[statement->getOperand()->getOperandField()] = -1; // -1 indicating variable not declared yet.
+            }
+            if (!statement->getLabel()->isEmpty()) {
+                symbolTable[statement->getLabel()->getLabelField()] = locationCounter;
+            }
+
+            /// Updating LC
+            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
+
+            /// Writing to file
+            // Write current line in intermediate file.
         }
     }
 //        std::cout << "Finished Reading!!!";
 //        exit(0);
-//        loop over symTable making sure that every label has an address
-//        if any label does not have an address
-//
-//        calculate length
-//        fileReader.advance();
+        //loop over symTable making sure that every label has an address
+        //if any label does not have an address
+
+    /// Check this agian.
+    if (startAddress == -1 && endAddress == -1) {
+        program->setProgramLength(locationCounter);
+    } else if (endAddress == -1) {
+        program->setProgramLength(locationCounter - startAddress);
+    } else {
+        program->setProgramLength(endAddress - startAddress);
+    }
+
 }
 

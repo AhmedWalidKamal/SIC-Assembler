@@ -8,6 +8,7 @@
 #include "pass1/PassOneController.h"
 #include "pass2/PassTwoController.h"
 #include "util/Initialization.h"
+#include "util/Program.h"
 
 MainController::MainController() {
     initDirectiveTable(directiveTable);
@@ -21,9 +22,10 @@ void MainController::setSourceFileReader(std::string fileName) {
 void MainController::execute(std::string fileName) {
     setSourceFileReader(fileName);
     symbolTable.clear();
+    Program *program = new Program();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader);
+    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader, program);
     //PassTwoController *passTwo = new PassTwoController(intermediateFile); // salma takes from here.
 }
 
