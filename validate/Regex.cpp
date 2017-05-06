@@ -13,4 +13,4 @@ std::regex Regex :: integerAddress("(\\+)?[0-9]+(\\s*)");
 std::regex Regex :: hexaAddress("0X'[A-F0-9]+'(\\s*)");
 std::regex Regex :: literalString("C'\\w+'(\\s*)");
 std::regex Regex :: literalHexa("X'[A-F0-9]+'(\\s*)");
-std::regex Regex :: star("(\*)(\\s*)");
+std::regex Regex :: star("\\*(\\s*)");
