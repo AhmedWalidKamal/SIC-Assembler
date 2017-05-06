@@ -10,10 +10,15 @@
 class Regex {
 
  public :
-    const std::string isEmpty;
-    static const std :: regex label;
 
-
+    static std :: regex isEmpty;
+    static std :: regex isLabel;
+    static std::regex integerValue;
+    static std::regex integerAddress;
+    static std::regex hexaAddress;
+    static std::regex Indexed;
+    static std::regex literalString;
+    static std::regex literalHexa;
 };
 
 
