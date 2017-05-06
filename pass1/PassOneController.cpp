@@ -58,10 +58,13 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             lineNumber++;
         }
         lineNumber++;
+        if (statement->getMnemonic()->getMnemonicField() == "END") {
+            break;
+        }
     }
-//        std::cout << "Finished Reading!!!";
-//        exit(0);
-
+    if (!fileReader->finishedReading()) {
+        intermediateFileWriter->writeError(ErrorHandler::code_after_end);
+    }
     /// Check this agian.
     if (startAddress == -1 && endAddress == -1) {
         program->setProgramLength(locationCounter);
