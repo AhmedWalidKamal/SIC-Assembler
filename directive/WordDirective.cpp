@@ -6,7 +6,9 @@
 #include "../error/ErrorHandler.h"
 
 int WordDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
-    return locationCounter;
+    int currentLocationCounter = locationCounter;
+    locationCounter += incrementValue;
+    return currentLocationCounter;
 }
 
 void
