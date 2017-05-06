@@ -10,6 +10,7 @@
 #include <fstream>
 #include <unordered_map>
 #include "../../statement/Statement.h"
+#include "../../error/ErrorHandler.h"
 
 class IntermediateFileWriter {
 public:
@@ -21,6 +22,8 @@ public:
     void writeLine(int lineNumber, Statement statement);
 
     void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
+
+    void writeError(ErrorHandler::Error error);
 
 private:
     std::ofstream intermediateFileStream;

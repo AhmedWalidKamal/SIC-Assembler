@@ -87,6 +87,8 @@ std::string PassTwoController::executeInstruction(Statement statement, int i) {
     //if (statement.getOperand()->isLabel()) {
     if (hasLabel[i]) {
         std::string label = statement.getOperand()->getOperandField();
+        if(symbolTable[label]==-1)
+            throw ErrorHandler::undeclared_label;
         if (isIndexed) {
             //1 is added to leftmost bit of address if indexed which is equal to 32768 in decimal and 8000 in hexa
             objectCode += hexadecimalConverter->intToHex(symbolTable[label] + INDEXINGVALUE);
@@ -138,6 +140,8 @@ void PassTwoController::executeEnd(Statement statement) {
     if (hasLabel[statements.size() - 1]) {
         //if(statements[statements.size()-1].getOperand()->isLabel()){
         std::string operand = statements[statements.size() - 1].getOperand()->getOperandField();
+        if(symbolTable[operand]==-1)
+            throw ErrorHandler::undeclared_label;
         objectWriter->writeEndRecord(hexadecimalConverter->intToHex(symbolTable[operand]));
     } else {
         int operand = operandsValues[statements.size() - 1];
