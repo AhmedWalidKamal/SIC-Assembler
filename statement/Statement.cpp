@@ -73,7 +73,7 @@ void Statement::execute(int &start, int &end, int &locationCounter,
         locationCounter = directiveTable[getMnemonic()->getMnemonicField()]
                 ->execute(start, end, locationCounter, incrementValue);
     } else {
-        instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute();
+        instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute(locationCounter);
     }
 }
 

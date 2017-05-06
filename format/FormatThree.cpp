@@ -4,6 +4,6 @@
 
 #include "FormatThree.h"
 
-void FormatThree::execute() {
-
+void FormatThree::execute(int &locationCounter) {
+    locationCounter += 3;
 }

@@ -10,7 +10,7 @@
 
 class FormatTwo : public Format {
 public:
-    void execute();
+    void execute(int &locationCounter);
 };
 
 
