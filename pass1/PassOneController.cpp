@@ -30,7 +30,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     while (!fileReader->finishedReading()) {
         Statement *statement = fileReader->getNextStatement();
         if (statement->isComment()) {
-            // write line to intermediate file.
+            intermediateFileWriter->writeComment(lineNumber, statement->getStatementField());
         } else {
             try {
                 statement->validate(instructionTable, directiveTable, symbolTable,
@@ -38,6 +38,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             } catch (ErrorHandler::Error error) {
                 intermediateFileWriter->writeError(error);
                 std::cerr << ErrorHandler::errors[error] << std::endl;
+                lineNumber++;
                 continue;
             }
             /// If no error logic:
@@ -48,7 +49,6 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = locationCounter;
             }
-
             /// Updating LC
             statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
 
@@ -56,6 +56,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }
+        lineNumber++;
     }
 //        std::cout << "Finished Reading!!!";
 //        exit(0);
@@ -68,6 +69,5 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     } else {
         program->setProgramLength(endAddress - startAddress);
     }
-
 }
 
