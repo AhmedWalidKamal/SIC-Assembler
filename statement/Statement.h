@@ -14,12 +14,12 @@
 #include "Instruction.h"
 #include "../directive/Directive.h"
 
+class Directive;
 class Statement {
 public:
     Statement();
 
     bool isComment();
-
     void validate(std::map<std::string, Instruction *> &instructionTable,
                  std::map<std::string, Directive *> &directiveTable,
                  std::map<std::string, int> &symbolTable, const int &start, const int &end,

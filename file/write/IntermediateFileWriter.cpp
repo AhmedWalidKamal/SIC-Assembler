@@ -55,7 +55,6 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
                                << Hexadecimal::intToHex(it->second) << "\n";
         it++;
     }
-
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {

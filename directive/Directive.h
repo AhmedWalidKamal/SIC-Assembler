@@ -11,7 +11,10 @@
 #include "../statement/Instruction.h"
 #include "../statement/Statement.h"
 
+class Statement;
+
 class Directive {
+
 public:
     virtual int execute(int& start, int& end, int& locationCounter,int incrementValue) = 0;
     virtual void validate(std::map<std::string, Instruction *> &instructionTable,

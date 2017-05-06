@@ -71,7 +71,7 @@ void Statement::execute(int &start, int &end, int &locationCounter,
     if (directiveTable.find(getMnemonic()->getMnemonicField()) != directiveTable.end()) {
         /// Calculate increment value here.
         locationCounter = directiveTable[getMnemonic()->getMnemonicField()]
-                ->execute(start, end, locationCounter, incrementValue);
+                ->execute(start, end, locationCounter, 3 /*insert increment value here*/);
     } else {
         instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute(locationCounter);
     }
