@@ -16,10 +16,10 @@ int MnemonicValidateState::validate(std::map<std::string, Instruction *> &instru
         //statement->setMnemonicToInstruction();
         if (instructionTable[statement->getMnemonic()->getMnemonicField()]->getNumberOfOperands() == 0) {
             EmptyOperandValidateState *state = new EmptyOperandValidateState();
-            state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+            state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
         } else {
             SingleOperandValidateState *state = new SingleOperandValidateState();
-            state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+            state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
         }
     } else if (directiveTable.find(statement->getMnemonic()->getMnemonicField()) != directiveTable.end()) {
         //statement->setMnemonicToDirective();

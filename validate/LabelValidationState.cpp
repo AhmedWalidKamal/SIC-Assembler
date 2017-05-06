@@ -24,5 +24,5 @@ void LabelValidationState::validate(std::map<std::string, Instruction *> &instru
         throw ErrorHandler::label_is_mnemonic;
     }
     MnemonicValidateState *state = new MnemonicValidateState();
-    state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+    state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
 }
