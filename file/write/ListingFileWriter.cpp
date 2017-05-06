@@ -18,20 +18,20 @@ void ListingFileWriter::writeInitialLine() {
     listFileStream << StringUtil::drawLine(LINE_LENGTH) << "\n";
 }
 
-void ListingFileWriter::writeLine(int lineNumber, Statement statement, std::string objectCode) {
+void ListingFileWriter::writeLine(int lineNumber, Statement *statement, std::string objectCode) {
 
     std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
-    std::string locationCounter = StringUtil::fillSpaces(Hexadecimal::intToHex(statement.getStatementLocationPointer()),
+    std::string locationCounter = StringUtil::fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
                                                          SPACE_BOUND);
-    std::string label = StringUtil::fillSpaces(statement.getLabel()->getLabelField(), LABEL_BOUND);
-    std::string mnemonic = StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
+    std::string label = StringUtil::fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
+    std::string mnemonic = StringUtil::fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
     std::string operand;
-    if (statement.getOperand()->isLabel())
-        operand = statement.getOperand()->getOperandField();
+    if (statement->getOperand()->isLabel())
+        operand = statement->getOperand()->getOperandField();
     else
-        operand = statement.getOperand()->getintValue();
+        operand = statement->getOperand()->getintValue();
     operand = StringUtil::fillSpaces(operand, OPERAND_BOUND);
-    std::string comment = StringUtil::fillSpaces(statement.getComment()->getComment(), COMMENT_BOUND);
+    std::string comment = StringUtil::fillSpaces(statement->getComment()->getComment(), COMMENT_BOUND);
 
     if (objectCode.length() > 0)
         objectCode = StringUtil::fillZeros(objectCode, 6);
@@ -43,4 +43,10 @@ void ListingFileWriter::writeLine(int lineNumber, Statement statement, std::stri
 void ListingFileWriter::writeError(ErrorHandler::Error error) {
     listFileStream << "ERROR: " ;
     listFileStream<< ErrorHandler::errors[error] << "\n";
+}
+
+void ListingFileWriter::writeComment(int lineNumber, std::string line) {
+    // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
+    std::string lineNum=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    listFileStream<<lineNum<<line<<"\n";
 }

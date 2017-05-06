@@ -17,7 +17,7 @@
 
 class PassTwoController {
 public:
-    PassTwoController(std::vector<bool> hasLabel, std::vector<int> operandsValues, std::vector<Statement> &lines,
+    PassTwoController(std::vector<bool> hasLabel, std::vector<int> operandsValues, std::vector<Statement> *statements,
                       int programLength,
                       const std::string &objectName, const std::string objectExtension, const std::string &listingName,
                       const std::string listingExtension, std::unordered_map<std::string, int> &instructionTable,
@@ -26,17 +26,17 @@ public:
     void executePass2();
 
 private:
-    void executeStart(Statement statement, int i);
+    void executeStart(Statement *statement, int i);
 
-    std::string executeInstruction(Statement statement, int i);
+    std::string executeInstruction(Statement *statement, int i);
 
     void executeRES();
 
-    std::string executeWord(Statement statement, int i);
+    std::string executeWord(Statement *statement, int i);
 
-    std::string executeByte(Statement statement);
+    std::string executeByte(Statement *statement);
 
-    void executeEnd(Statement statement);
+    void executeEnd(Statement *statement);
 
     ObjectFileWriter *objectWriter;
     ListingFileWriter *listingWriter;
@@ -45,7 +45,7 @@ private:
     std::string objectCode;
     std::unordered_map<std::string, int> instructionTable;
     std::unordered_map<std::string, int> symbolTable;
-    std::vector<Statement> statements;
+    std::vector<Statement> *statements;
     std::vector<int> operandsValues;
     std::vector<bool> hasLabel;
     const int INDEXINGVALUE = 32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.

@@ -11,17 +11,20 @@
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"
 #include "../../error/ErrorHandler.h"
+#include "FileWriter.h"
 
-class ListingFileWriter {
+class ListingFileWriter: public FileWriter {
 public:
     //constructor
     ListingFileWriter(const std::string &fileName, const std::string fileExtension);
 
     void writeInitialLine();
 
-    void writeLine(int lineNumber, Statement sourceStatement, std::string objectCode);
+    void writeLine(int lineNumber, Statement *sourceStatement, std::string objectCode);
 
     void writeError(ErrorHandler::Error error);
+
+    void writeComment(int lineNumber, std::string line);
 
 private:
     std::ofstream listFileStream;

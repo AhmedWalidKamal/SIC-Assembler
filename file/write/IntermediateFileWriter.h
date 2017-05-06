@@ -11,8 +11,9 @@
 #include <unordered_map>
 #include "../../statement/Statement.h"
 #include "../../error/ErrorHandler.h"
+#include "FileWriter.h"
 
-class IntermediateFileWriter {
+class IntermediateFileWriter : public FileWriter {
 public:
     IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
 

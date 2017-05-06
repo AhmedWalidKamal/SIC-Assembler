@@ -59,6 +59,7 @@ void IntermediateFileWriter::writeSymbolTable(std::unordered_map<std::string, in
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {
-    intermediateFileStream << "ERROR: " << ErrorHandler::errors[error] << "\n";
+    intermediateFileStream << "ERROR: " ;
+    intermediateFileStream<< ErrorHandler::errors[error] << "\n";
 }
 
