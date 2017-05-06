@@ -11,6 +11,7 @@
 class Hexadecimal {
 public:
     static std::string intToHex(int number);
+
     static std::string stringToHex(std::string s);
 };
 

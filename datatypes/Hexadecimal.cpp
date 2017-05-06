@@ -18,11 +18,12 @@ static std::string Hexadecimal::intToHex(int number) {
     reverse(s.begin(), s.end());
     return s;
 }
+
 static std::string Hexadecimal::stringToHex(std::string s) {
     std::string hex;
-    for(int i=0;i<s.length();i++){
-        int ascii=(int)s[i];
-        hex+=intToHex(ascii);
+    for (int i = 0; i < s.length(); i++) {
+        int ascii = (int) s[i];
+        hex += intToHex(ascii);
     }
     return hex;
 }
