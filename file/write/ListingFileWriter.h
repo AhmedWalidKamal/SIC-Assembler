@@ -13,7 +13,7 @@
 #include "../../error/ErrorHandler.h"
 #include "FileWriter.h"
 
-class ListingFileWriter: public FileWriter {
+class ListingFileWriter {
 public:
     //constructor
     ListingFileWriter(const std::string &fileName, const std::string fileExtension);

@@ -6,6 +6,7 @@
 #define SIC_ASSEMBLER_OBJECTFILEWRITER_H
 
 #include <string>
+#include <fstream>
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"
 

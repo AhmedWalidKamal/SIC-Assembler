@@ -13,7 +13,7 @@
 #include "../../error/ErrorHandler.h"
 #include "FileWriter.h"
 
-class IntermediateFileWriter : public FileWriter {
+class IntermediateFileWriter {
 public:
     IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
 
