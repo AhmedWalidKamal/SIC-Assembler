@@ -27,7 +27,7 @@ private:
 
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
-    std::unordered_map<std::string, int> symbolTable;
+    std::map<std::string, int> symbolTable;
     FileReader *sourceFileReader;
     ObjectFileWriter *objectFileWriter;
     IntermediateFileWriter *intermediateFileWriter;

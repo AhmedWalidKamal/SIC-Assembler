@@ -10,8 +10,8 @@
 
 class Hexadecimal {
 public:
-    std::string intToHex(int number);
-    std::string stringToHex(std::string s);
+    static std::string intToHex(int number);
+    static std::string stringToHex(std::string s);
 };
 
 

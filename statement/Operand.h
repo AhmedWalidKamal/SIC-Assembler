@@ -30,7 +30,7 @@ public:
 
 private:
     std::string operandField;
-    enum type;
+//    enum type;
     int locationCounterIncrement;
 public:
     int getLocationCounterIncrement() const;

@@ -23,7 +23,7 @@ void MainController::execute(std::string fileName) {
     symbolTable.clear();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-//    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader);
+    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader);
     //PassTwoController *passTwo = new PassTwoController(intermediateFile); // salma takes from here.
 }
 
@@ -36,4 +36,3 @@ void MainController::initInstructionTable(std::map<std::string,
         Instruction *> &instructionTable) {
     Initialization::initDirectiveTable(directiveTable);
 }
->>>>>>> 52c09488ec490e1eb07bf61c0b391577700b9eeb

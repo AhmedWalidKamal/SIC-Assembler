@@ -4,16 +4,21 @@
 
 #include "LabelValidationState.h"
 #include "../statement/Statement.h"
+#include "../error/ErrorHandler.h"
+#include "MnemonicValidateState.h"
 
-int LabelValidationState::validate(const std::map<std::string, Instruction *> &instructionTable,
-                                   const std::map<std::string, Directive *> &directiveTable,
+void LabelValidationState::validate(const std::map<std::string, Instruction *> &instructionTable,
+ //                                  const std::map<std::string, Directive *> &directiveTable,
                                    const std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                    const int &locationCounter, Statement *statement) {
-    if (symbolTable.find(statement->getLabel()->getLabelField()) == symbolTable.end() ) {
-        return -1; // duplicate label.
+
+    //throw ErrorHandler::invalid_label;
+    if (symbolTable.find(statement->getLabel()->getLabelField()) != symbolTable.end()) {
+        throw ErrorHandler::duplicate_label;
     }
     if (!statement->getLabel()->isValid()) {
-        return -2; // invalid label.
+        throw ErrorHandler::invalid_label;
     }
-    return MnemonicValidationState.validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
+    MnemonicValidateState *state = new MnemonicValidateState();
+    state->validate(instructionTable, symbolTable, start, end, locationCounter, statement)
 }

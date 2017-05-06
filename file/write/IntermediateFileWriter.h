@@ -8,13 +8,17 @@
 
 #include <string>
 #include <fstream>
+#include <unordered_map>
+#include "../../statement/Statement.h"
 
 class IntermediateFileWriter {
 public:
     IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
 
 public:
-    void writeLine(std::string line);
+    void writeInitialLine();
+    void writeLine(int lineNumber,Statement statement);
+    void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
 private:
     std::ofstream outputFileStream;
     const std::string fileName;
