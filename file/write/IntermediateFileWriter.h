@@ -19,11 +19,13 @@ public:
 public:
     void writeInitialLine();
 
-    void writeLine(int lineNumber, Statement statement);
+    void writeStatement(int lineNumber, Statement *statement);
 
     void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
 
     void writeError(ErrorHandler::Error error);
+
+    void writeComment(int lineNumber, std::string line);
 
 private:
     std::ofstream intermediateFileStream;

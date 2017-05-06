@@ -57,6 +57,13 @@ private:
     Mnemonic *mnemonic;
     Operand *operand;
     Comment *comment;
+    std::string statementField;
+public:
+    const std::string &getStatementField() const;
+
+    void setStatementField(const std::string &statementField);
+
+private:
     int statementLocationPointer;
 };
 

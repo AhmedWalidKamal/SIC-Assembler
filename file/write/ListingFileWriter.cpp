@@ -41,5 +41,5 @@ void ListingFileWriter::writeLine(int lineNumber, Statement statement, std::stri
 }
 
 void ListingFileWriter::writeError(ErrorHandler::Error error) {
-    listFileStream << ErrorHandler::errors[error] << "\n";
+    listFileStream << "ERROR: " << ErrorHandler::errors[error] << "\n";
 }

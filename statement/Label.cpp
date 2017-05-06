@@ -16,11 +16,6 @@ void Label::setLabelField(const std::string &labelField) {
     Label::labelField = labelField;
 }
 
-/// Check this.
-bool Label::startsWithComment() {
-    return Label::labelField.front() == '.';
-}
-
 bool Label::isEmpty() {
     return regex_match(labelField,regex.isEmpty);
 }

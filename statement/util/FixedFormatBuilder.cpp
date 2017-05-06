@@ -12,6 +12,7 @@ void FixedFormatBuilder::buildStatement(std::string line) {
     // Here i guess we need a new statement each time, that's why it could be better as a pointer.
     // or should i make a new statement in the constructor?
     statement = new Statement();
+    statement->setStatementField(line);
     /// Replace indices here with static const variables.
     if (canSetLabel(line)) {
         statement->setLabel(new Label(line.substr(0, 9)));

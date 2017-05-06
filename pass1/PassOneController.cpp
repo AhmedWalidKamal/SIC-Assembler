@@ -16,15 +16,17 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
                                      std::map<std::string, Directive *> &directiveTable) {
     PassOneController::instructionTable = instructionTable;
     PassOneController::directiveTable = directiveTable;
-    locationCounter = 0;
-    startAddress = -1;
-    endAddress = -1; // Modified when END directive is reached.
+    PassOneController::lineNumber = 1;
+    PassOneController::locationCounter = 0;
+    PassOneController::startAddress = -1;
+    PassOneController::endAddress = -1; // Modified when END directive is reached.
 }
 
 void PassOneController::execute(std::map<std::string, int> &symbolTable,
                                        FileReader *fileReader, Program *program) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
+    intermediateFileWriter->writeInitialLine();
     while (!fileReader->finishedReading()) {
         Statement *statement = fileReader->getNextStatement();
         if (statement->isComment()) {
@@ -34,7 +36,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
                 statement->validate(instructionTable, directiveTable, symbolTable,
                                     startAddress, endAddress, locationCounter);
             } catch (ErrorHandler::Error error) {
-                /// Write error in file instead of printing it to console, or both?
+                intermediateFileWriter->writeError(error);
                 std::cerr << ErrorHandler::errors[error] << std::endl;
                 continue;
             }
@@ -51,7 +53,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
 
             /// Writing to file
-            // Write current line in intermediate file.
+            intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }
     }

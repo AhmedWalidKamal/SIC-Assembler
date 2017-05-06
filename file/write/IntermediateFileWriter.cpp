@@ -23,18 +23,21 @@ void IntermediateFileWriter::writeInitialLine() {
 
 // Writes line to intermediate file "FIXED FORMAT APPLIED".
 
-void IntermediateFileWriter::writeLine(int lineNumber, Statement statement) {
-
+void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement) {
     std::string line = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
-    std::string locationCounter = StringUtil::fillSpaces(StringUtil::toString(statement.getStatementLocationPointer()),
+    std::string locationCounter = StringUtil::fillSpaces(StringUtil::toString(statement->getStatementLocationPointer()),
                                                          SPACE_BOUND);
-    std::string label = StringUtil::fillSpaces(statement.getLabel()->getLabelField(), LABEL_BOUND);
-    std::string mnemonic = StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
-    std::string operand = StringUtil::fillSpaces(statement.getOperand()->getOperandField(), OPERAND_BOUND);
-    std::string comment = statement.getComment()->getComment();
+    std::string label = StringUtil::fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
+    std::string mnemonic = StringUtil::fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
+    std::string operand = StringUtil::fillSpaces(statement->getOperand()->getOperandField(), OPERAND_BOUND);
+    std::string comment = statement->getComment()->getComment();
     intermediateFileStream << line << locationCounter << label << mnemonic << operand << comment << "\n";
-
 }
+
+void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
+    // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
+}
+
 
 void IntermediateFileWriter::writeSymbolTable(std::unordered_map<std::string, int> &symbolTable) {
 
@@ -54,5 +57,6 @@ void IntermediateFileWriter::writeSymbolTable(std::unordered_map<std::string, in
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {
-    intermediateFileStream << ErrorHandler::errors[error] << "\n";
+    intermediateFileStream << "ERROR: " << ErrorHandler::errors[error] << "\n";
 }
+

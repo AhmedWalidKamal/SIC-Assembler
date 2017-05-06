@@ -13,7 +13,6 @@ public:
    Label(std::string labelField);
 
     const std::string &getLabelField() const;
-    bool startsWithComment();
     // to be called in passOne before addinglabel to SymbolTable
     bool isEmpty();
     bool isValid();

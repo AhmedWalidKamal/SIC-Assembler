@@ -24,7 +24,7 @@ public:
 private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
-    int locationCounter, startAddress, endAddress;
+    int locationCounter, startAddress, endAddress, lineNumber;
 };
 
 #endif //SIC_ASSEMBLER_PASSONECONTROLLER_H

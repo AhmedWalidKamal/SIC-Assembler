@@ -14,7 +14,7 @@ Statement::Statement() {
 }
 
 bool Statement::isComment() {
-    return label->startsWithComment();
+    return Statement::statementField.front() == '.';
 }
 
 Label *Statement::getLabel() const {
@@ -75,5 +75,13 @@ void Statement::execute(int &start, int &end, int &locationCounter,
     } else {
         instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute(locationCounter);
     }
+}
+
+const std::string &Statement::getStatementField() const {
+    return statementField;
+}
+
+void Statement::setStatementField(const std::string &statementField) {
+    Statement::statementField = statementField;
 }
 
