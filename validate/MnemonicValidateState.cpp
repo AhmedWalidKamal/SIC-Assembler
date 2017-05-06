@@ -12,6 +12,10 @@ int MnemonicValidateState::validate(std::map<std::string, Instruction *> &instru
 //                                    const std::map<std::string, Directive *> &directiveTable,
                                     std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                     const int &locationCounter, Statement *statement) {
+
+      if (!statement->getMnemonic()->isValid()){
+          throw ErrorHandler::mnemonic_not_found;
+      }
     if (instructionTable.find(statement->getMnemonic()->getMnemonicField()) != instructionTable.end()) {
         //statement->setMnemonicToInstruction();
         if (instructionTable[statement->getMnemonic()->getMnemonicField()]->getNumberOfOperands() == 0) {

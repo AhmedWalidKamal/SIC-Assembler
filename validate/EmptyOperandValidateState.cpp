@@ -10,7 +10,7 @@ int EmptyOperandValidateState::validate(std::map<std::string, Instruction *> &in
 //                                        const std::map<std::string, Directive *> &directiveTable,
                                         std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                         const int &locationCounter, Statement *statement) {
-    if (!statement->getOperand()->getOperandField().empty()) {
+    if (!statement->getOperand()->isEmpty()) {
         throw ErrorHandler::invalid_operand;
     }
 }

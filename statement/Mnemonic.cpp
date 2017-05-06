@@ -19,3 +19,13 @@ void Mnemonic::setMnemonicField(const std::string &mnemonicField) {
 std::string &Mnemonic::getMnemonicField() {
     return  mnemonicField;
 }
+
+bool Mnemonic::isValid() {
+    bool Valid;
+    Valid = mnemonicField.front() != ' ';
+    if (Valid) {
+        std::size_t found = mnemonicField.find_first_of(" ");
+            mnemonicField = mnemonicField.substr(0,found);
+    }
+    return Valid;
+}

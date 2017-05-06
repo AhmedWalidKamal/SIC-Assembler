@@ -6,7 +6,7 @@
 #define SIC_ASSEMBLER_LABEL_H
 
 
-#include <string>
+#include<string>
 #include "../validate/Regex.h"
 class Label {
 public:
@@ -14,9 +14,13 @@ public:
 
     const std::string &getLabelField() const;
     bool startsWithComment();
-    // to be called in passOne before addinglabel to SymbolTable
+
+    // to be called in passOne before to check  adding label to SymbolTable
     bool isEmpty();
+
+    /// trim the spaces
     bool isValid();
+
     void setLabelField(const std::string &labelField);
 private:
     std::string labelField;

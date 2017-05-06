@@ -11,13 +11,15 @@
 class Mnemonic {
 public:
     Mnemonic(std::string mnemonicField);
+    std::string &getMnemonicField();
+    void setMnemonicField(const std::string &mnemonicField);
 
+    /// trim the spaces and check if letter found in place 10
+    bool isValid();
 private:
     std::string mnemonicField;
-public:
-     std::string &getMnemonicField();
 
-    void setMnemonicField(const std::string &mnemonicField);
+
 };
 
 

@@ -5,7 +5,7 @@
 #ifndef SIC_ASSEMBLER_OPERAND_H
 #define SIC_ASSEMBLER_OPERAND_H
 #include <string>
-
+#include "../validate/Regex.h"
 class Operand {
 
 public:
@@ -14,7 +14,7 @@ public:
     void setIntValue(int transformMethod);
     int getintValue();
     // change value to newLabel in Statement Object
-
+    bool isEmpty();
     bool isRegister();
     bool isValid(); // Checks if any operand is valid.
     bool isLabel();
@@ -30,6 +30,7 @@ public:
 
 private:
     std::string operandField;
+    Regex regex;
 //    enum type;
     int locationCounterIncrement;
 public:

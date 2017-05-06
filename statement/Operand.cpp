@@ -15,6 +15,10 @@ void Operand::setOperandField(const std::string &operandField) {
     Operand::operandField = operandField;
 }
 
+bool Operand::isEmpty() {
+    return regex_match(operandField,regex.isEmpty);
+}
+
 //bool Operand::isValid() {
 //    return isLabel() || isHexAddress() || isDecimalAddress() || isCurrentLocationCounter();
 //}

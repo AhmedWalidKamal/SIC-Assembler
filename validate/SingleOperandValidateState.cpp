@@ -9,7 +9,7 @@ int SingleOperandValidateState::validate(std::map<std::string, Instruction *> &i
 //                                         const std::map<std::string, Directive *> &directiveTable,
                                          std::map<std::string, int> &symbolTable, const int &start,
                                          const int &end, const int &locationCounter, Statement *statement) {
-    if (statement->getOperand()->getOperandField().empty()) {
+    if (statement->getOperand()->isEmpty()) {
         throw ErrorHandler::missing_operand;
     }
     if (!statement->getOperand()->isValid()) {
