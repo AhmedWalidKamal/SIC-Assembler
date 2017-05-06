@@ -3,86 +3,70 @@
 //
 
 #include <fstream>
+#include <iostream>
 #include "ObjectFileWriter.h"
 
-int fieldLength=6;
-ofstream outFile;
-
-string fillSpaces(std::string word,int size);
-
-string fillZeros(std::string word,int size);
+std::ofstream outFile;
 
 ObjectFileWriter::ObjectFileWriter(std::string objectCodeFile) {
 
     this ->objectCodeFile=objectCodeFile;
     outFile.open (objectCodeFile);
-    this->hexadecimalConverter=new Hexadecimal();
-
-
 }
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress,std::string length) {
 
     outFile<<"H"<<"^";
-    sourceName=fillSpaces(sourceName,fieldLength);
-    //write the program name.
+    sourceName=StringUtil::fillSpaces(sourceName,FIELD_LENGTH);
     outFile<<sourceName<<"^";
-    startAddress=fillZeros(startAddress,fieldLength);
-    //write the hexadecimal start address.
+    startAddress=StringUtil::fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress<<"^";
-    //write the program length.
     outFile<<length<<"\n";
-
+    newRecord=true;
+    startNewRecord(startAddress);
+    newRecord=false;
 }
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
-    recordLength=hexadecimalConverter->intToHex(3*record.length());
+    recordLength=Hexadecimal::intToHex(3*record.length());
     outFile<<recordLength<<record<<"\n";
 
 }
 
 
 /*performs writing of typical case of instruction object code*/
-void ObjectFileWriter::writeTextRecord(string objectCode,string locationCounter) {
-    objectCode=fillZeros(objectCode,fieldLength);
+void ObjectFileWriter::writeTextRecord(std::string objectCode,std::string locationCounter) {
+    objectCode=StringUtil::fillZeros(objectCode,FIELD_LENGTH);
     //check if after adding this instruction object code will fit or i need to start a new record.
-     if(objectCode.length()+record.length()>MAXRECORDLEN){
+     if(objectCode.length()+record.length()>MAX_RECORD_LEN||newRecord){
          writeTextRecord();
          startNewRecord(locationCounter);//TODO check this line
+         newRecord=false;
      }
-    record+=objectCode+SEPARATOR;
+    record+=SEPARATOR+objectCode;
 
 
 }
 
-void ObjectFileWriter::startNewRecord(string startAddress) {
-    record="";
-    outFile<<"T"<<"^";
-    outFile<<fillZeros(startAddress,fieldLength)<<"^";
+void ObjectFileWriter::startNewRecord(std::string startAddress) {
+    if(newRecord){
+     record="";
+     outFile<<"T"<<"^";
+     outFile<<StringUtil::fillZeros(startAddress,FIELD_LENGTH)<<"^";
+    }
 }
 
-void ObjectFileWriter::writeEndRecord(string startAddress) {
+void ObjectFileWriter::writeEndRecord(std::string startAddress) {
+    writeTextRecord();
     outFile<<"E"<<"^";
-    startAddress=fillZeros(startAddress,fieldLength);
-    //write address of first executable statement in the program.
+    startAddress=StringUtil::fillZeros(startAddress,FIELD_LENGTH);
     outFile<<startAddress;
     outFile.close();
 
 }
 
-/*to be implemented for SIC/XE later.*/
+/*to be implemented*/
 void ObjectFileWriter::writeModRecord() {
 
 }
 
-string fillSpaces(std::string word,int size){
-    while(word.length()<size) {
-        word+=" ";
-    }
-    return word;
-}
-string fillZeros(std::string word,int size){
-    while(word.length()<size) {
-        word="0"+word;
-    }
-    return word;
-}
+

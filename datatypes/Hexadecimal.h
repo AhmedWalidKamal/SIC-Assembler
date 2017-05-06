@@ -7,12 +7,11 @@
 
 
 #include <string>
-using namespace std;
 
 class Hexadecimal {
 public:
-    string intToHex(int number);
-    string stringToHex(string s);
+    static std::string intToHex(int number);
+    static std::string stringToHex(std::string s);
 };
 
 

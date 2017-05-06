@@ -6,6 +6,7 @@
 #define SIC_ASSEMBLER_STATEMENTBUILDER_H
 
 
+#include <string>
 #include "../Statement.h"
 
 class StatementBuilder {

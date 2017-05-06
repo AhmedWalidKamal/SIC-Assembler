@@ -94,3 +94,4 @@ void Statement::validate(const std::map<std::string, Instruction *> &instruction
 //    State *state = new LabelValidationState();
 //    return 0;
 //}
+
