@@ -52,10 +52,17 @@ private:
     const int MAX_WORD_LENGTH = 6;
     const int MAX_BYTE_LENGTH = 14;
     const int MAX_SOURCENAME_LENGTH = 6;
+    const std::string START="START";
+    const std::string END="END";
+    const std::string BYTE="BYTE";
+    const std::string WORD="WORD";
+    const std::string RESW="RESW";
+    const std::string RESB="RESB";
     const std::string objectName;
     const std::string objectExtension;
     const std::string listingName;
     const std::string listingExtension;
+
 };
 
 
