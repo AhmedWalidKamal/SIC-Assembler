@@ -8,9 +8,7 @@
 
 class Format {
 public:
-    virtual void execute() = 0;
-private:
-
+    virtual void execute(int &locationCounter) = 0;
 };
 
 

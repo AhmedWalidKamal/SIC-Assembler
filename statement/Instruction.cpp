@@ -7,10 +7,10 @@
 #include "../format/Format.h"
 
 Instruction::Instruction(std::string instructionName, int opCode, Format *format, int numberOfOperands) {
-    this->instructionName = instructionName;
-    this->opCode = opCode;
-    this->format = format;
-    this->numberOfOperands = numberOfOperands;
+    Instruction::instructionName = instructionName;
+    Instruction::opCode = opCode;
+    Instruction::format = format;
+    Instruction::numberOfOperands = numberOfOperands;
 }
 
 const std::string &Instruction::getInstructionName() const {

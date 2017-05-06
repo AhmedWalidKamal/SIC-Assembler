@@ -38,13 +38,13 @@ public:
 private:
     std::string operandField;
     Regex regex;
-    enum OperandType {Label,hexaAddress,decimalAddress,currentLocationCounter,StringConstant,HexConstant,DecimalValue,inValid};
+    enum OperandType {Label,hexaAddress,decimalAddress,
+        currentLocationCounter,StringConstant,
+        HexConstant,DecimalValue,inValid};
     OperandType type = inValid;
     int operandValue = 0;
     int LCIncrement = 0;
     bool indexed = false;
-
-
 };
 
 

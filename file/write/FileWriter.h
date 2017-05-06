@@ -6,7 +6,19 @@
 #define SIC_ASSEMBLER_FILEWRITER_H
 
 
+#include "../../error/ErrorHandler.h"
+#include "../../statement/Statement.h"
+
 class FileWriter {
+
+public:
+    virtual void writeInitialLine()=0;
+
+    virtual void writeStatement(int lineNumber, Statement *statement)=0;
+
+    virtual void writeError(ErrorHandler::Error error) = 0;
+
+    virtual void writeComment(int lineNumber, std::string line)=0;
 
 };
 

@@ -14,7 +14,7 @@ Statement::Statement() {
 }
 
 bool Statement::isComment() {
-    return label->startsWithComment();
+    return Statement::statementField.front() == '.';
 }
 
 Label *Statement::getLabel() const {
@@ -57,20 +57,6 @@ void Statement::setStatementLocationPointer(int statementLocationPointer) {
     Statement::statementLocationPointer = statementLocationPointer;
 }
 
-void Statement::execute(int &start, int &end, int &locationCounter) {
-
- //   if (statement.mnemonicIsDirective()) {
-//                 setStatementLocationPointer(dirTable[statement.getMnemonic()].execute());
-//                } else {
-//                    if (!statement.isFormatFour()) {
-//                  setStatementLocationPointer(instrTable.getFormat.updateLC());
-//                    } else {
-//
-//                    }
-//                }s
-
-}
-
 void Statement::validate(std::map<std::string, Instruction *> &instructionTable,
                          std::map<std::string, Directive *> &directiveTable,
                          std::map<std::string, int> &symbolTable, const int &start, const int &end,
@@ -79,11 +65,23 @@ void Statement::validate(std::map<std::string, Instruction *> &instructionTable,
     state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, this);
 }
 
-//int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
-//                        const std::map<std::string, Directive *> &directiveTable,
-//                        const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-//                        const int &locationCounter) {
-//    State *state = new LabelValidationState();
-//    return 0;
-//}
+void Statement::execute(int &start, int &end, int &locationCounter,
+                        std::map<std::string, Directive *> &directiveTable,
+                        std::map<std::string, Instruction *> &instructionTable) {
+    if (directiveTable.find(getMnemonic()->getMnemonicField()) != directiveTable.end()) {
+        /// Calculate increment value here.
+        locationCounter = directiveTable[getMnemonic()->getMnemonicField()]
+                ->execute(start, end, locationCounter, 3 /*insert increment value here*/);
+    } else {
+        instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute(locationCounter);
+    }
+}
+
+const std::string &Statement::getStatementField() const {
+    return statementField;
+}
+
+void Statement::setStatementField(const std::string &statementField) {
+    Statement::statementField = statementField;
+}
 

@@ -17,16 +17,27 @@
 
 class PassTwoController {
 public:
-    PassTwoController(std::vector<bool> hasLabel,std::vector<int>operandsValues,std::vector<Statement> &lines,int programLength,std::string objectFile,std::string listingFile,std::unordered_map<std::string, int > &instructionTable,std::unordered_map<std::string, int> &symbolTable);
+    PassTwoController(std::vector<bool> hasLabel, std::vector<int> operandsValues, std::vector<Statement> *statements,
+                      int programLength,
+                      const std::string &objectName, const std::string objectExtension, const std::string &listingName,
+                      const std::string listingExtension, std::unordered_map<std::string, int> &instructionTable,
+                      std::unordered_map<std::string, int> &symbolTable);
+
     void executePass2();
 
 private:
-    void executeStart(Statement statement,int i);
-    std::string executeInstruction(Statement statement,int i);
+    void executeStart(Statement *statement, int i);
+
+    std::string executeInstruction(Statement *statement, int i);
+
     void executeRES();
-    std::string executeWord(Statement statement,int i);
-    std::string executeByte(Statement statement);
-    void executeEnd(Statement statement);
+
+    std::string executeWord(Statement *statement, int i);
+
+    std::string executeByte(Statement *statement);
+
+    void executeEnd(Statement *statement);
+
     ObjectFileWriter *objectWriter;
     ListingFileWriter *listingWriter;
     Hexadecimal *hexadecimalConverter;
@@ -34,10 +45,24 @@ private:
     std::string objectCode;
     std::unordered_map<std::string, int> instructionTable;
     std::unordered_map<std::string, int> symbolTable;
-    std::vector<Statement> statements;
-    std::vector<int>operandsValues;
+    std::vector<Statement> *statements;
+    std::vector<int> operandsValues;
     std::vector<bool> hasLabel;
-    int INDEXINGVALUE=32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
+    const int INDEXINGVALUE = 32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
+    const int MAX_WORD_LENGTH = 6;
+    const int MAX_BYTE_LENGTH = 14;
+    const int MAX_SOURCENAME_LENGTH = 6;
+    const std::string START="START";
+    const std::string END="END";
+    const std::string BYTE="BYTE";
+    const std::string WORD="WORD";
+    const std::string RESW="RESW";
+    const std::string RESB="RESB";
+    const std::string objectName;
+    const std::string objectExtension;
+    const std::string listingName;
+    const std::string listingExtension;
+
 };
 
 

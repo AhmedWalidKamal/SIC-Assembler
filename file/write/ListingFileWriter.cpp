@@ -4,39 +4,49 @@
 
 
 #include "ListingFileWriter.h"
-#include "../../statement/statement.h"
-#include <fstream>
-#include <sstream>
 
-std::ofstream listFile;
 
-ListingFileWriter::ListingFileWriter( std::string fileName) {
-    ListingFileWriter::outputFileStream.open(fileName);
+ListingFileWriter::ListingFileWriter(const std::string &fileName, const std::string fileExtension)
+        : fileName(fileName), fileExtension(fileExtension) {
+    ListingFileWriter::listFileStream.open(std::string(fileName).append(fileExtension));
 }
 
 void ListingFileWriter::writeInitialLine() {
 
-  listFile<<StringUtil::fillSpaces("Line",LINE_FORMAT)<<StringUtil::fillSpaces("Loc",LOC_FORAMT);
-  listFile<<StringUtil::fillSpaces("Source Statement",STATEMENT_FORAMT)<<"Object Code"<<"\n";
-  listFile<<StringUtil::drawLine(LINE_LENGTH)<<"\n";
+    listFileStream << StringUtil::fillSpaces("Line", LINE_FORMAT) << StringUtil::fillSpaces("Loc", LOC_FORAMT);
+    listFileStream << StringUtil::fillSpaces("Source Statement", STATEMENT_FORAMT) << "Object Code" << "\n";
+    listFileStream << StringUtil::drawLine(LINE_LENGTH) << "\n";
 }
-void ListingFileWriter::writeLine(int lineNumber,Statement statement, std::string objectCode) {
 
-    std::string lineNum=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
-    std::string locationCounter=StringUtil::fillSpaces(Hexadecimal::intToHex(statement.getStatementLocationPointer()),SPACE_BOUND);
-    std::string label=StringUtil::fillSpaces(statement.getLabel()->getLabelField(),LABEL_BOUND);
-    std::string mnemonic=StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(),MNEMONIC_BOUND);
+void ListingFileWriter::writeLine(int lineNumber, Statement *statement, std::string objectCode) {
+
+    std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
+    std::string locationCounter = StringUtil::fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
+                                                         SPACE_BOUND);
+    std::string label = StringUtil::fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
+    std::string mnemonic = StringUtil::fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
     std::string operand;
-    if(statement.getOperand()->isLabel())
-         operand=statement.getOperand()->getOperandField();
+    if (statement->getOperand()->isLabel())
+        operand = statement->getOperand()->getOperandField();
     else
-        operand=statement.getOperand()->getintValue();
-    operand=StringUtil::fillSpaces(operand,OPERAND_BOUND);
-    std::string comment=StringUtil::fillSpaces(statement.getComment()->getComment(),COMMENT_BOUND);
+        operand = statement->getOperand()->getintValue();
+    operand = StringUtil::fillSpaces(operand, OPERAND_BOUND);
+    std::string comment = StringUtil::fillSpaces(statement->getComment()->getComment(), COMMENT_BOUND);
 
-    if(objectCode.length()>0)
-        objectCode=StringUtil::fillZeros(objectCode,6);
+    if (objectCode.length() > 0)
+        objectCode = StringUtil::fillZeros(objectCode, 6);
 
-    listFile<<lineNum<<locationCounter<<label<<mnemonic<<operand<<comment<<objectCode<<"\n";;
+    listFileStream << lineNum << locationCounter << label << mnemonic << operand << comment << objectCode << "\n";;
 
+}
+
+void ListingFileWriter::writeError(ErrorHandler::Error error) {
+    listFileStream << "ERROR: " ;
+    listFileStream<< ErrorHandler::errors[error] << "\n";
+}
+
+void ListingFileWriter::writeComment(int lineNumber, std::string line) {
+    // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
+    std::string lineNum=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    listFileStream<<lineNum<<line<<"\n";
 }

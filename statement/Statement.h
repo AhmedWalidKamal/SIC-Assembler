@@ -14,16 +14,21 @@
 #include "Instruction.h"
 #include "../directive/Directive.h"
 
+class Directive;
 class Statement {
 public:
     Statement();
 
     bool isComment();
-
     void validate(std::map<std::string, Instruction *> &instructionTable,
                  std::map<std::string, Directive *> &directiveTable,
                  std::map<std::string, int> &symbolTable, const int &start, const int &end,
                  const int &locationCounter);
+
+    void execute(int& start, int& end, int& locationCounter,
+                 std::map<std::string, Directive *> &directiveTable,
+                 std::map<std::string, Instruction *> &instructionTable);
+
     //bool operandIsNewLabel();
     //bool operandHasLabel();
 
@@ -47,12 +52,16 @@ public:
 
     void setStatementLocationPointer(int statementLocationPointer);
 
-    void execute(int& start, int& end, int& locationCounter);
+    const std::string &getStatementField() const;
+
+    void setStatementField(const std::string &statementField);
+
 private:
     Label *label;
     Mnemonic *mnemonic;
     Operand *operand;
     Comment *comment;
+    std::string statementField;
     int statementLocationPointer;
 };
 

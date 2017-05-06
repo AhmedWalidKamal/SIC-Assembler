@@ -15,6 +15,7 @@ void Operand::setOperandField(const std::string &operandField) {
     Operand::operandField = operandField;
 }
 
+
 int Operand::getLCIncrement() const {
     return LCIncrement;
 }
@@ -25,6 +26,10 @@ void Operand::setLCIncrement(int lcIncrement) {
 
 void Operand::setIntValue(int i) {
     operandValue = i;
+}
+
+int Operand::getintValue() {
+    return operandValue;
 }
 
 bool Operand::isEmpty() {
@@ -114,18 +119,18 @@ bool Operand::isDecimalValue() {
 }
 
 bool Operand::validateStringConstant() {
-    if (regex_match(operandField,regex.literalString)) {
+    if (regex_match(operandField, regex.literalString)) {
         type = StringConstant;
         std::size_t start = operandField.find_first_of("'");
         std::size_t end = operandField.find_last_of("'");
-        operandField= operandField.substr(start+1,(end-start-1));
+        operandField = operandField.substr(start + 1, (end - start - 1));
         setLCIncrement(operandField.length());
         return true;
     }
-    return false;
 }
 
 bool Operand::isStringConstant() {
+
     return (type==StringConstant);
 }
 
@@ -157,46 +162,4 @@ bool Operand::isHexConstant() {
 
 
 
-//bool Operand::isValid() {
-//    return isLabel() || isHexAddress() || isDecimalAddress() || isCurrentLocationCounter();
-//}
-//
-//bool Operand::isLabel() {
-//    return std::regex_match(); // insert label regex.
-//}
-//// Each one of the below, check with the regex + set the type and the int value.
-//bool Operand::isHexAddress() {
-//    return false;
-//}
-//
-//bool Operand::isDecimalAddress() {
-//    return false;
-//}
-//
-//bool Operand::isCurrentLocationCounter() {
-//    return false;
-//}
-//
-//bool Operand::isStringConstant() {
-//    return false;
-//}
-//
-//bool Operand::isHexConstant() {
-//    return false;
-//}
-//
-//bool Operand::isDecimalValue() {
-//    if (regex is true) {
-//        setIntValue(3);
-//        return  true;
-//    }
-//    return false;
-//}
-//
-//int Operand::getLocationCounterIncrement() const {
-//    return locationCounterIncrement;
-//}
-//
-//void Operand::setLocationCounterIncrement(int locationCounterIncrement) {
-//    Operand::locationCounterIncrement = locationCounterIncrement;
-//}
+

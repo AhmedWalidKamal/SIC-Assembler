@@ -4,6 +4,6 @@
 
 #include "FormatOne.h"
 
-void FormatOne::execute() {
-
+void FormatOne::execute(int &locationCounter) {
+    locationCounter += 1;
 }

@@ -10,12 +10,11 @@
 #include "../validate/Regex.h"
 class Label {
 public:
-   Label(std::string labelField);
+    Label(std::string labelField);
 
     const std::string &getLabelField() const;
-    bool startsWithComment();
 
-    // to be called in passOne before to check  adding label to SymbolTable
+    // to be called in passOne before addinglabel to SymbolTable
     bool isEmpty();
 
     /// trim the spaces

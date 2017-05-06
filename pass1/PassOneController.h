@@ -12,17 +12,19 @@
 #include "../format/Format.h"
 #include "../directive/Directive.h"
 #include "../statement/Instruction.h"
+#include "../util/Program.h"
 
 class PassOneController {
 public:
     PassOneController(std::map<std::string, Instruction *> &instructionTable,
                           std::map<std::string, Directive *> &directiveTable);
 
-    std::string execute(std::map<std::string, int> &symbolTable, FileReader *fileReader);
+    void execute(std::map<std::string, int> &symbolTable,
+                        FileReader *fileReader, Program *program);
 private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
-    int locationCounter, startAddress, endAddress;
+    int locationCounter, startAddress, endAddress, lineNumber;
 };
 
 #endif //SIC_ASSEMBLER_PASSONECONTROLLER_H

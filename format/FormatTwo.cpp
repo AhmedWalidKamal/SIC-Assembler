@@ -4,6 +4,6 @@
 
 #include "FormatTwo.h"
 
-void FormatTwo::execute() {
-
+void FormatTwo::execute(int &locationCounter) {
+ locationCounter += 2;
 }

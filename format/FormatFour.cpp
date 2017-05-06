@@ -4,6 +4,6 @@
 
 #include "FormatFour.h"
 
-void FormatFour::execute() {
-
+void FormatFour::execute(int &locationCounter) {
+    locationCounter += 4;
 }

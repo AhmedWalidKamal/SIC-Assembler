@@ -10,27 +10,36 @@
 #include <fstream>
 #include <unordered_map>
 #include "../../statement/Statement.h"
+#include "../../error/ErrorHandler.h"
+#include "FileWriter.h"
 
-class IntermediateFileWriter {
+class IntermediateFileWriter : public FileWriter {
 public:
     IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
 
 public:
     void writeInitialLine();
-    void writeLine(int lineNumber,Statement statement);
-    void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
+
+    void writeStatement(int lineNumber, Statement *statement);
+
+    void writeSymbolTable(std::map<std::string, int> &symbolTable);
+
+    void writeError(ErrorHandler::Error error);
+
+    void writeComment(int lineNumber, std::string line);
+
 private:
-    std::ofstream outputFileStream;
+    std::ofstream intermediateFileStream;
     const std::string fileName;
     const std::string fileExtension;
-    const int LABEL_BOUND=9;
-    const int MNEMONIC_BOUND=7;
-    const int OPERAND_BOUND=17;
-    const int SPACE_BOUND=8;
-    const int SYMBOLTABLE_BOUND=15;
-    const int LINE_LENGTH=80;
-    const int LINE_FORMAT=10;
-    const int LOC_FORAMT=25;
+    const int LABEL_BOUND = 9;
+    const int MNEMONIC_BOUND = 7;
+    const int OPERAND_BOUND = 17;
+    const int SPACE_BOUND = 8;
+    const int SYMBOLTABLE_BOUND = 15;
+    const int LINE_LENGTH = 80;
+    const int LINE_FORMAT = 10;
+    const int LOC_FORAMT = 25;
 
 };
 
