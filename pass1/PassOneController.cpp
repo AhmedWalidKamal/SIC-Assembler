@@ -31,6 +31,7 @@ std::string PassOneController::execute(std::map<std::string, int> &symbolTable, 
             try {
                 statement->validate(instructionTable, symbolTable, startAddress, endAddress, locationCounter);
             } catch (ErrorHandler::Error error) {
+                /// Write error in file instead of printing it to console, or both?
                 std::cerr << ErrorHandler::errors[error] << std::endl;
             }
 

@@ -15,7 +15,7 @@ public:
 private:
     std::string mnemonicField;
 public:
-    const std::string &getMnemonicField() const;
+     std::string &getMnemonicField();
 
     void setMnemonicField(const std::string &mnemonicField);
 };
