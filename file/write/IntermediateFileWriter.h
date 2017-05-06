@@ -16,7 +16,8 @@ public:
     IntermediateFileWriter(const std::string &fileName, const std::string fileExtension);
 
 public:
-    void writeLine(Statement statement);
+    void writeInitialLine();
+    void writeLine(int lineNumber,Statement statement);
     void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
 private:
     std::ofstream outputFileStream;
