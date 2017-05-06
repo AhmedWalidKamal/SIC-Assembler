@@ -18,11 +18,29 @@ static std::string Hexadecimal::intToHex(int number) {
     reverse(s.begin(), s.end());
     return s;
 }
+
 static std::string Hexadecimal::stringToHex(std::string s) {
     std::string hex;
-    for(int i=0;i<s.length();i++){
-        int ascii=(int)s[i];
-        hex+=intToHex(ascii);
+    for (int i = 0; i < s.length(); i++) {
+        int ascii = (int) s[i];
+        hex += intToHex(ascii);
     }
     return hex;
+}
+
+static unsigned long::Hexadecimal::hexToInt(std::string hex)
+{
+    unsigned long integer = 0;
+    float base=16.0;
+    for (int i=0; i<hex.length(); i++) {
+        if (hex[i]>=48 && hex[i]<=57)
+        {
+            integer += (hex[i]-48)*pow(base,hex.length()-i-1);
+        } else if (hex[i]>=65 && hex[i]<=70) {
+            integer += (hex[i]-55)*pow(base,hex.length( )-i-1);
+        } else if (hex[i]>=97 && hex[i]<=102) {
+            integer += (hex[i]-87)*pow(base,hex.length()-i-1);
+        }
+    }
+    return integer;
 }
