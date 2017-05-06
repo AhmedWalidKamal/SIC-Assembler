@@ -15,30 +15,36 @@ IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, cons
 }
 void IntermediateFileWriter::writeInitialLine() {
     //TODO check range for filling spaces
-    outputFileStream<<StringUtil::fillSpaces("Line",10)<<StringUtil::fillSpaces("Loc",25)<<StringUtil::fillSpaces("Source Statement",35)<<"\n";
-    outputFileStream<<StringUtil::drawLine(80)<<"\n";
+    outputFileStream<<StringUtil::fillSpaces("Line",LINE_FORMAT)<<StringUtil::fillSpaces("Loc",LOC_FORAMT)<<"Source Statement"<<"\n";
+    outputFileStream<<StringUtil::drawLine(LINE_LENGTH)<<"\n";
 
 }
-/// Writes line to intermediate file, uses helper functions or something.
+
+// Writes line to intermediate file "FIXED FORMAT APPLIED".
+
 void IntermediateFileWriter::writeLine(int lineNumber,Statement statement) {
-    std::string line=StringUtil::fillSpaces(StringUtil::toString(lineNumber),10);
-    std::string locationCounter=StringUtil::fillSpaces(StringUtil::toString(statement.getStatementLocationPointer()),8);
-    std::string label=StringUtil::fillSpaces(statement.getLabel()->getLabelField(),8);
-    std::string mnemonic=StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(),8);
-    std::string operand=StringUtil::fillSpaces(statement.getOperand()->getOperandField(),8);
-    outputFileStream<<line<<locationCounter<<label<<mnemonic<<operand<<"\n";
+
+    std::string line=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    std::string locationCounter=StringUtil::fillSpaces(StringUtil::toString(statement.getStatementLocationPointer()),SPACE_BOUND);
+    std::string label=StringUtil::fillSpaces(statement.getLabel()->getLabelField(),LABEL_BOUND);
+    std::string mnemonic=StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(),MNEMONIC_BOUND);
+    std::string operand=StringUtil::fillSpaces(statement.getOperand()->getOperandField(),OPERAND_BOUND);
+    std::string comment=statement.getComment()->getComment();
+    outputFileStream<<line<<locationCounter<<label<<mnemonic<<operand<<comment<<"\n";
 
 }
 void IntermediateFileWriter::writeSymbolTable(std::unordered_map<std::string, int> &symbolTable) {
-    outputFileStream<<StringUtil::drawLine(80)<<"\n";
-    outputFileStream<<StringUtil::fillSpaces("Symbol",15)<<"Assigned Address"<<"\n";
-    outputFileStream<<StringUtil::drawLine(80)<<"\n";
+
+    outputFileStream<<StringUtil::drawLine(LINE_LENGTH)<<"\n";
+    outputFileStream<<StringUtil::fillSpaces("Symbol",SYMBOLTABLE_BOUND)<<"Assigned Address"<<"\n";
+    outputFileStream<<StringUtil::drawLine(LINE_LENGTH)<<"\n";
     //TODO check the iteration over the map.
     std::unordered_map<std::string, int>::iterator it = symbolTable.begin();
+
     // Iterate over the map using iterator
     while (it != symbolTable.end())
     {
-        outputFileStream << StringUtil::fillSpaces(it->first,15) << Hexadecimal::intToHex(it->second)<< "\n";
+        outputFileStream << StringUtil::fillSpaces(it->first,SYMBOLTABLE_BOUND) << Hexadecimal::intToHex(it->second)<< "\n";
         it++;
     }
 

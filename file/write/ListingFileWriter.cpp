@@ -10,28 +10,33 @@
 
 std::ofstream listFile;
 
-ListingFileWriter::ListingFileWriter(const std::string &fileName, const std::string fileExtension) {
-    ListingFileWriter::outputFileStream.open(std::string(fileName).append(fileExtension));
+ListingFileWriter::ListingFileWriter( std::string fileName) {
+    ListingFileWriter::outputFileStream.open(fileName);
 }
+
 void ListingFileWriter::writeInitialLine() {
- listFile<<StringUtil::fillSpaces("Line",10)<<StringUtil::fillSpaces("Loc",25)<<StringUtil::fillSpaces("Source Statement",35)<<"Object Code"<<"\n";
-    listFile<<StringUtil::drawLine(80)<<"\n";
+
+  listFile<<StringUtil::fillSpaces("Line",LINE_FORMAT)<<StringUtil::fillSpaces("Loc",LOC_FORAMT);
+  listFile<<StringUtil::fillSpaces("Source Statement",STATEMENT_FORAMT)<<"Object Code"<<"\n";
+  listFile<<StringUtil::drawLine(LINE_LENGTH)<<"\n";
 }
 void ListingFileWriter::writeLine(int lineNumber,Statement statement, std::string objectCode) {
-    std::string lineNum=StringUtil::toString(lineNumber);
-    std::string locationCounter=Hexadecimal::intToHex(statement.getStatementLocationPointer());
-   // std::string label=statement.getLabel()->getLabelField();
-//    std::string mnemonic=statement.getMnemonic()->getMnemonicField();
-//    std::string operand;
-//    //if(statement.getOperand()->isLabel())
-//         operand=statement.getOperand()->getOperandField();
-//    //else
-//        //operand=statement.getOperand()->getintValue();
-//    std::string comment=statement.getComment()->getComment();
+
+    std::string lineNum=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    std::string locationCounter=StringUtil::fillSpaces(Hexadecimal::intToHex(statement.getStatementLocationPointer()),SPACE_BOUND);
+    std::string label=StringUtil::fillSpaces(statement.getLabel()->getLabelField(),LABEL_BOUND);
+    std::string mnemonic=StringUtil::fillSpaces(statement.getMnemonic()->getMnemonicField(),MNEMONIC_BOUND);
+    std::string operand;
+    if(statement.getOperand()->isLabel())
+         operand=statement.getOperand()->getOperandField();
+    else
+        operand=statement.getOperand()->getintValue();
+    operand=StringUtil::fillSpaces(operand,OPERAND_BOUND);
+    std::string comment=StringUtil::fillSpaces(statement.getComment()->getComment(),COMMENT_BOUND);
+
     if(objectCode.length()>0)
         objectCode=StringUtil::fillZeros(objectCode,6);
-    listFile<<StringUtil::fillSpaces(lineNum,10)<<StringUtil::fillSpaces(locationCounter,8)<<StringUtil::fillSpaces(objectCode,8)<<"\n";
-            //<<fillSpaces(label,8)<<
-//    <<fillSpaces(mnemonic,8)<<fillSpaces(operand,8)<<fillSpaces(comment,8);
+
+    listFile<<lineNum<<locationCounter<<label<<mnemonic<<operand<<comment<<objectCode<<"\n";;
 
 }

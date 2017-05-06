@@ -23,6 +23,14 @@ private:
     std::ofstream outputFileStream;
     const std::string fileName;
     const std::string fileExtension;
+    const int LABEL_BOUND=9;
+    const int MNEMONIC_BOUND=7;
+    const int OPERAND_BOUND=17;
+    const int SPACE_BOUND=8;
+    const int SYMBOLTABLE_BOUND=15;
+    const int LINE_LENGTH=80;
+    const int LINE_FORMAT=10;
+    const int LOC_FORAMT=25;
 
 };
 
