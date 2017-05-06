@@ -34,9 +34,7 @@ private:
     ListingFileWriter *listingFileWriter;
 
     void setSourceFileReader(std::string fileName);
-
     void initDirectiveTable(std::map<std::string, Directive *> &directiveTable);
-
     void initInstructionTable(std::map<std::string, Instruction *> &instructionTable);
 };
 

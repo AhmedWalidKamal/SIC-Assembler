@@ -41,13 +41,13 @@ void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
 }
 
 
-void IntermediateFileWriter::writeSymbolTable(std::unordered_map<std::string, int> &symbolTable) {
+void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbolTable) {
 
     intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << "\n";
     intermediateFileStream << StringUtil::fillSpaces("Symbol", SYMBOLTABLE_BOUND) << "Assigned Address" << "\n";
     intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << "\n";
     //TODO check the iteration over the map.
-    std::unordered_map<std::string, int>::iterator it = symbolTable.begin();
+    std::map<std::string, int>::iterator it = symbolTable.begin();
 
     // Iterate over the map using iterator
     while (it != symbolTable.end()) {

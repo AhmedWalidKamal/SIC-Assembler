@@ -22,7 +22,7 @@ public:
 
     void writeStatement(int lineNumber, Statement *statement);
 
-    void writeSymbolTable(std::unordered_map<std::string, int> &symbolTable);
+    void writeSymbolTable(std::map<std::string, int> &symbolTable);
 
     void writeError(ErrorHandler::Error error);
 
