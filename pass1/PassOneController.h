@@ -19,7 +19,7 @@ public:
     PassOneController(std::map<std::string, Instruction *> &instructionTable,
                           std::map<std::string, Directive *> &directiveTable);
 
-    std::string execute(std::map<std::string, int> &symbolTable,
+    void execute(std::map<std::string, int> &symbolTable,
                         FileReader *fileReader, Program *program);
 private:
     std::map<std::string, Instruction *> instructionTable;

@@ -25,7 +25,7 @@ void MainController::execute(std::string fileName) {
     Program *program = new Program();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-    std::string intermediateFile = passOne->execute(symbolTable, sourceFileReader, program);
+    passOne->execute(symbolTable, sourceFileReader, program);
     //PassTwoController *passTwo = new PassTwoController(intermediateFile); // salma takes from here.
 }
 

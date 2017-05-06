@@ -21,7 +21,7 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
     endAddress = -1; // Modified when END directive is reached.
 }
 
-std::string PassOneController::execute(std::map<std::string, int> &symbolTable,
+void PassOneController::execute(std::map<std::string, int> &symbolTable,
                                        FileReader *fileReader, Program *program) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
@@ -52,12 +52,11 @@ std::string PassOneController::execute(std::map<std::string, int> &symbolTable,
 
             /// Writing to file
             // Write current line in intermediate file.
+            program->addStatement(statement);
         }
     }
 //        std::cout << "Finished Reading!!!";
 //        exit(0);
-        //loop over symTable making sure that every label has an address
-        //if any label does not have an address
 
     /// Check this agian.
     if (startAddress == -1 && endAddress == -1) {

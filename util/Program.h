@@ -15,8 +15,7 @@ public:
     int getProgramLength() const;
     void setProgramLength(int programLength);
     const std::vector<Statement *> &getStatements() const;
-    void setStatements(const std::vector<Statement *> &statements);
-
+    void addStatement(Statement *statement);
 private:
     int programLength;
     std::vector<Statement *> statements;
