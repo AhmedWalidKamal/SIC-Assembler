@@ -6,6 +6,9 @@
 #include "../error/ErrorHandler.h"
 
 int ByteDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
+    int currentLocationCounter = locationCounter;
+    locationCounter += incrementValue;
+    return currentLocationCounter;
     return locationCounter;
 }
 
