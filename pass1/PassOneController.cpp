@@ -3,10 +3,12 @@
 //
 
 #include <iostream>
+#include <cstdlib>
 #include "PassOneController.h"
 #include "../file/write/FileWriter.h"
 #include "../format/FormatThree.h"
 #include "../file/write/IntermediateFileWriter.h"
+#include "../error/ErrorHandler.h"
 
 
 PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
@@ -18,7 +20,7 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
     endAddress = -1; // Modified when END directive is reached.
 }
 
-std::string PassOneController::execute(std::unordered_map<std::string, int> &symbolTable, FileReader *fileReader) {
+std::string PassOneController::execute(std::map<std::string, int> &symbolTable, FileReader *fileReader) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     while (!fileReader->finishedReading()) {
@@ -26,7 +28,12 @@ std::string PassOneController::execute(std::unordered_map<std::string, int> &sym
         if (statement->isComment()) {
             // write line to intermediate file.
         } else {
-//            int errorType = statement.validate(&symTable, instTable, dirTable, start, end);
+            try {
+                statement->validate(instructionTable, symbolTable, startAddress, endAddress, locationCounter);
+            } catch (ErrorHandler::Error error) {
+                std::cerr << ErrorHandler::errors[error] << std::endl;
+            }
+
 //            if (error) {
 //                write error to intermediate file
 //            } else {
@@ -49,6 +56,8 @@ std::string PassOneController::execute(std::unordered_map<std::string, int> &sym
 //                write statement to intermediate file
             }
         }
+        std::cout << "Finished Reading!!!";
+        exit(0);
 //        loop over symTable making sure that every label has an address
 //        if any label does not have an address
 //

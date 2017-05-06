@@ -29,6 +29,7 @@ Statement *FileReader::getNextStatement() {
     std::getline(sourceFileStream, currentLine);
     std::transform(currentLine.begin(), currentLine.end(), currentLine.begin(),
                    [](unsigned char c) { return std::toupper(c); }); // Clean this up and test it.
+    // Replace all tabs with spaces
     builder->buildStatement(currentLine);
     return builder->getStatement();
 }

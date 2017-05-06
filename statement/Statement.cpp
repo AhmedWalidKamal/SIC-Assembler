@@ -2,8 +2,8 @@
 // Created by Walid on 5/2/2017.
 //
 
+#include <iostream>
 #include "Statement.h"
-#include "../validate/State.h"
 #include "../validate/LabelValidationState.h"
 
 Statement::Statement() {
@@ -76,6 +76,15 @@ void Statement::execute(int &start, int &end, int &locationCounter) {
 //                    }
 //                }s
 
+}
+
+void Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
+     //                    const std::map<std::string, Directive *> &directiveTable,
+                         const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                         const int &locationCounter) {
+    LabelValidationState *state = new LabelValidationState();
+    std::cout << "hereee" << std::endl;
+    state->validate(instructionTable, symbolTable, start, end, locationCounter, this);
 }
 
 //int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,
