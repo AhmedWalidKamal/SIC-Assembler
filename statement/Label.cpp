@@ -22,13 +22,19 @@ bool Label::startsWithComment() {
 }
 
 bool Label::isEmpty() {
-    // use regex
-    return false;
+    return regex_match(labelField,regex.isEmpty);
 }
 
 bool Label::isValid() {
-    // use regex for validity || return isEmpty()
-    return false;
+    bool isEmpty = regex_match(labelField,regex.isEmpty);
+    bool isLabel = regex_match(labelField,regex.isLabel);
+    if (isLabel) {
+        /// trim the spaces, set the flag that has newLabel to be true
+        std::size_t found = labelField.find_first_of(" ");
+        labelField = labelField.substr(0,found);
+
+    }
+    return isEmpty|| isLabel;
 }
 
 

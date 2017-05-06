@@ -19,6 +19,7 @@ class Regex {
     static std::regex Indexed;
     static std::regex literalString;
     static std::regex literalHexa;
+    static std::regex star;
 };
 
 

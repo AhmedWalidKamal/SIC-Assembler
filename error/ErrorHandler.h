@@ -11,7 +11,7 @@
 class ErrorHandler {
 public:
     enum Error {duplicate_label, invalid_label, mnemonic_not_found, invalid_operand,
-        missing_operand, multiple_ends, missing_label_at_start};
+        missing_operand, multiple_ends, missing_label_at_start, label_is_mnemonic};
     static const std::string errors[];
 };
 

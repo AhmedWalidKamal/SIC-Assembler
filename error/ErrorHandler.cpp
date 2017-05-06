@@ -6,4 +6,4 @@
 
 const std::string ErrorHandler::errors[] = {"Duplicate Label!", "Invalid Label!", "Mnemonic not found!",
                                             "Invalid operand!", "Missing Operand!", "Multiple Ends!,"
-                                                    "Missing Label at Start!"};
+                                                    "Missing Label at Start!","Label is Mnemonic"};

@@ -7,18 +7,20 @@
 
 
 #include <string>
-
+#include "../validate/Regex.h"
 class Label {
 public:
    Label(std::string labelField);
 
     const std::string &getLabelField() const;
     bool startsWithComment();
+    // to be called in passOne before addinglabel to SymbolTable
     bool isEmpty();
     bool isValid();
     void setLabelField(const std::string &labelField);
 private:
     std::string labelField;
+    Regex  regex;
 };
 
 
