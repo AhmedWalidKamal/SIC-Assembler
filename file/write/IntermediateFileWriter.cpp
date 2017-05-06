@@ -36,6 +36,8 @@ void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement
 
 void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
     // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
+    std::string lineNum=StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    intermediateFileStream<<lineNum<<line<<"\n";
 }
 
 

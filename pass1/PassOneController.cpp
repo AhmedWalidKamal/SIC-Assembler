@@ -53,8 +53,9 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
 
             /// Writing to file
-            intermediateFileWriter->writeStatement(lineNumber, statement);
+            intermediateFileWriter->writeStatement(lineNumber*5, statement);
             program->addStatement(statement);
+            lineNumber++;
         }
     }
 //        std::cout << "Finished Reading!!!";
