@@ -21,7 +21,7 @@ static std::string Hexadecimal::intToHex(int number) {
 static std::string Hexadecimal::stringToHex(std::string s) {
     std::string hex;
     for(int i=0;i<s.length();i++){
-        int ascii=s[i]-'0';
+        int ascii=(int)s[i];
         hex+=intToHex(ascii);
     }
     return hex;

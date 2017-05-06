@@ -13,7 +13,7 @@ int ReserveByteDirective :: execute(int& start, int& end, int& locationCounter,i
 }
 
 void ReserveByteDirective::validate(std::map<std::string, Instruction *> &instructionTable,
-//                         const std::map<std::string, Directive *> &directiveTable,
+                                    std::map<std::string, Directive *> &directiveTable,
                                     std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                     const int &locationCounter, Statement *statement) {
     if (!statement->getOperand()->isDecimalAddress()) {

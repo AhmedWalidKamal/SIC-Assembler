@@ -13,7 +13,7 @@ class StartDirective : public Directive {
     public :
     int execute(int& start, int& end, int& locationCounter,int incrementValue);
     void validate(std::map<std::string, Instruction *> &instructionTable,
-//                         const std::map<std::string, Directive *> &directiveTable,
+                  std::map<std::string, Directive *> &directiveTable,
                   std::map<std::string, int> &symbolTable, const int &start, const int &end,
                   const int &locationCounter, Statement *statement);
 };

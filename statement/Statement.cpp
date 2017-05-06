@@ -13,13 +13,6 @@ Statement::Statement() {
     Statement::comment = new Comment("");
 }
 
-Statement::Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment) {
-    Statement::label = label;
-    Statement::mnemonic = mnemonic;
-    Statement::operand = operand;
-    Statement::comment = comment;
-}
-
 bool Statement::isComment() {
     return label->startsWithComment();
 }
@@ -79,11 +72,11 @@ void Statement::execute(int &start, int &end, int &locationCounter) {
 }
 
 void Statement::validate(std::map<std::string, Instruction *> &instructionTable,
-     //                    const std::map<std::string, Directive *> &directiveTable,
+                         std::map<std::string, Directive *> &directiveTable,
                          std::map<std::string, int> &symbolTable, const int &start, const int &end,
                          const int &locationCounter) {
     LabelValidationState *state = new LabelValidationState();
-    state->validate(instructionTable, symbolTable, start, end, locationCounter, this);
+    state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, this);
 }
 
 //int Statement::validate(const std::map<std::string, Instruction *> &instructionTable,

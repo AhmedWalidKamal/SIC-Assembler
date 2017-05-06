@@ -13,7 +13,7 @@ int StartDirective :: execute(int& start, int& end, int& locationCounter,int inc
 }
 
 void StartDirective::validate(std::map<std::string, Instruction *> &instructionTable,
-//                         const std::map<std::string, Directive *> &directiveTable,
+                              std::map<std::string, Directive *> &directiveTable,
                               std::map<std::string, int> &symbolTable, const int &start, const int &end,
                               const int &locationCounter, Statement *statement) {
     // Assumption -> Start must have a label (as per the machine)
@@ -21,7 +21,7 @@ void StartDirective::validate(std::map<std::string, Instruction *> &instructionT
         throw ErrorHandler::missing_label_at_start;
     }
     SingleOperandValidateState *state = new SingleOperandValidateState();
-    state->validate(instructionTable, symbolTable, start, end, locationCounter, statement);
+    state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
     if (statement->getOperand()->isLabel()) {
         throw ErrorHandler::undefined_symbol_at_start;
     }

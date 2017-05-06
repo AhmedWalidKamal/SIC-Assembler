@@ -17,16 +17,11 @@
 class Statement {
 public:
     Statement();
-    Statement(Label *label, Mnemonic *mnemonic, Operand *operand, Comment *comment);
 
     bool isComment();
 
-//    int validate(const std::map<std::string, Instruction *> &instructionTable,
-//                 const std::map<std::string, Directive *> &directiveTable,
-//                 const std::map<std::string, int> &symbolTable, const int &start, const int &end,
-//                 const int &locationCounter);
     void validate(std::map<std::string, Instruction *> &instructionTable,
-//                 const std::map<std::string, Directive *> &directiveTable,
+                 std::map<std::string, Directive *> &directiveTable,
                  std::map<std::string, int> &symbolTable, const int &start, const int &end,
                  const int &locationCounter);
     //bool operandIsNewLabel();
