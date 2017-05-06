@@ -7,9 +7,9 @@
 #include "../error/ErrorHandler.h"
 #include "MnemonicValidateState.h"
 
-void LabelValidationState::validate(const std::map<std::string, Instruction *> &instructionTable,
+void LabelValidationState::validate(std::map<std::string, Instruction *> &instructionTable,
                                 //const std::map<std::string, Directive *> &directiveTable,
-                                   const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                                   std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                    const int &locationCounter, Statement *statement) {
       //must be called first to trim string from space if valid, indicates this statement has new label
     if (!statement->getLabel()->isValid()) {

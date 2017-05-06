@@ -14,9 +14,9 @@
 
 class LabelValidationState {
 public:
-    void validate(const std::map<std::string, Instruction *> &instructionTable,
+    void validate(std::map<std::string, Instruction *> &instructionTable,
 //                 const std::map<std::string, Directive *> &directiveTable,
-                 const std::map<std::string, int> &symbolTable, const int &start, const int &end,
+                 std::map<std::string, int> &symbolTable, const int &start, const int &end,
                  const int &locationCounter, Statement *statement);
 
 };
