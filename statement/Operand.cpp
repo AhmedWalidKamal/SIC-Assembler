@@ -4,6 +4,8 @@
 
 #include <regex>
 #include "Operand.h"
+#include <string>
+
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
 }
@@ -156,10 +158,4 @@ bool Operand::validateHexConstant() {
 bool Operand::isHexConstant() {
     return (type == HexConstant);
 }
-
-
-
-
-
-
 

@@ -12,6 +12,7 @@
 #include "../../statement/Statement.h"
 #include "../../error/ErrorHandler.h"
 #include "FileWriter.h"
+#include "../../util/StringUtil.h"
 
 class IntermediateFileWriter {
 public:
@@ -40,7 +41,7 @@ private:
     const int LINE_LENGTH = 80;
     const int LINE_FORMAT = 10;
     const int LOC_FORAMT = 25;
-
+    StringUtil *stringUtil;
 };
 
 

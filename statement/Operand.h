@@ -6,10 +6,9 @@
 #define SIC_ASSEMBLER_OPERAND_H
 #include <string>
 #include "../validate/Regex.h"
+
 class Operand {
-
 public:
-
     Operand(std::string operandField);
     int getintValue();
     bool isEmpty();
