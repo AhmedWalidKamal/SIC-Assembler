@@ -11,34 +11,39 @@ class Operand {
 public:
 
     Operand(std::string operandField);
-    void setIntValue(int transformMethod);
     int getintValue();
-    // change value to newLabel in Statement Object
     bool isEmpty();
-    bool isRegister();
     bool isValid(); // Checks if any operand is valid.
     bool isLabel();
-    bool isHexAddress();
-    bool isDecimalAddress();
+    bool isFixedAddress();
     bool isCurrentLocationCounter();
     bool isStringConstant();
     bool isHexConstant();
     bool isDecimalValue();
-
+    bool isIndexed();
     const std::string &getOperandField() const;
     void setOperandField(const std::string &operandField);
+    int getLCIncrement() const;
 
+    void setIntValue(int i);
+    void setLCIncrement(int lcIncrement);
+    void validateIndexed();
+    void validateLabel();
+    void validateHexAddress();
+    bool validateDecimalAddress();
+    void validateCurrentLocationCounter();
+    bool validateStringConstant();
+    bool validateHexConstant();
+    bool validateDecimalValue();
 private:
     std::string operandField;
     Regex regex;
-//    enum type;
-    int locationCounterIncrement;
-public:
-    int getLocationCounterIncrement() const;
+    enum OperandType {Label,hexaAddress,decimalAddress,currentLocationCounter,StringConstant,HexConstant,DecimalValue,inValid};
+    OperandType type = inValid;
+    int operandValue = 0;
+    int LCIncrement = 0;
+    bool indexed = false;
 
-    void setLocationCounterIncrement(int locationCounterIncrement);
-
-public:
 
 };
 

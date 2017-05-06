@@ -17,11 +17,18 @@ void StartDirective::validate(std::map<std::string, Instruction *> &instructionT
                               std::map<std::string, int> &symbolTable, const int &start, const int &end,
                               const int &locationCounter, Statement *statement) {
     // Assumption -> Start must have a label (as per the machine)
+    if (locationCounter !=0 || start != -1) {
+         throw ErrorHandler::multiple_starts;
+    }
     if (statement->getLabel()->isEmpty()) {
         throw ErrorHandler::missing_label_at_start;
     }
-    SingleOperandValidateState *state = new SingleOperandValidateState();
-    state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
+
+    if (!statement->getOperand()->isEmpty()) {
+        SingleOperandValidateState *state = new SingleOperandValidateState();
+        state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
+
+    }
     if (statement->getOperand()->isLabel()) {
         throw ErrorHandler::undefined_symbol_at_start;
     }

@@ -21,7 +21,7 @@ void EndDirective::validate(std::map<std::string, Instruction *> &instructionTab
     if (!statement->getLabel()->isEmpty()) {
         throw ErrorHandler::label_at_end;
     }
-    if (!statement->getOperand()->getOperandField().empty()) {
+    if (!statement->getOperand()->isEmpty()) {
         SingleOperandValidateState *state = new SingleOperandValidateState();
         state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, statement);
     }

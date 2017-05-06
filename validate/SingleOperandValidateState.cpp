@@ -12,7 +12,18 @@ int SingleOperandValidateState::validate(std::map<std::string, Instruction *> &i
     if (statement->getOperand()->isEmpty()) {
         throw ErrorHandler::missing_operand;
     }
+
     if (!statement->getOperand()->isValid()) {
         throw ErrorHandler::invalid_operand;
     }
+
+    if (statement->getOperand()->isLabel()) {
+        if ((instructionTable.find(statement->getOperand()->getOperandField()) != instructionTable.end()) ||
+            (directiveTable.find(statement->getOperand()->getOperandField()) != directiveTable.end())){
+            throw ErrorHandler::label_is_mnemonic;
+        }
+    }
 }
+
+
+

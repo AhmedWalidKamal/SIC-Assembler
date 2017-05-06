@@ -20,6 +20,7 @@ class Regex {
     static std::regex literalString;
     static std::regex literalHexa;
     static std::regex star;
+    static std::regex isLabelOperand;
 };
 
 
