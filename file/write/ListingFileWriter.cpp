@@ -37,7 +37,7 @@ void ListingFileWriter::writeLine(int lineNumber, Statement *statement, std::str
     if (objectCode.length() > 0)
         objectCode = stringUtil->fillZeros(objectCode, 6);
 
-    listFileStream << lineNum << locationCounter << label << mnemonic << operand << comment << objectCode << std::endl;;
+    listFileStream << lineNum << locationCounter << label << mnemonic << operand << comment << objectCode << std::endl;
 
 }
 
