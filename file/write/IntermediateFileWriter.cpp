@@ -44,20 +44,21 @@ void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
 
 
 void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbolTable) {
-    //std :: cout<< "intermediate"<<symbolTable.size()<<std::endl;
+
+
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
-    intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND) << "Assigned Address" << "\n";
+    intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND) << "Assigned Address" ;
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
     //TODO check the iteration over the map.
-  //  std::map<std::string, int>::iterator it = symbolTable.begin();
 
     // Iterate over the map using iterator
-    /*for (auto curr : symbolTable) {
+    for (auto curr : symbolTable) {
         //std::cout << "hello darkness my old friend." << std::endl;
         std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
         intermediateFileStream << stringUtil->fillSpaces(curr.first, SYMBOLTABLE_BOUND)
-                               << Hexadecimal::intToHex(curr.second) << "\n";
-    }*/
+                        << Hexadecimal::intToHex(curr.second) << "\n";
+
+    }
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {

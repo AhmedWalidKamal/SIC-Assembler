@@ -18,6 +18,9 @@ public:
 
     void writeHeader(std::string sourceName, std::string startAddress, std::string length);
 
+    //writes the start of a new record
+    void startNewRecord(std::string startAddress);
+
     //writes the whole text record.
     void writeTextRecord();
 
@@ -26,9 +29,10 @@ public:
 
     void writeEndRecord(std::string startAddress);
 
-    void
-    writeModRecord();//still to see what paramters shall it take in order to be able to write the modification record
-    bool newRecord = false;
+    void writeModRecord();
+    //still to see what paramters shall it take in order to be able to write the modification record
+    //bool newRecord = false;
+    int instructionCounter=0;
 private:
     std::ofstream objectFileStream;
     StringUtil *stringUtil;
@@ -40,8 +44,6 @@ private:
     std::string SEPARATOR = "^";
     int FIELD_LENGTH = 6;
 
-    //writes the start of a new record
-    void startNewRecord(std::string startAddress);
 };
 
 

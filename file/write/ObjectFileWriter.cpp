@@ -20,15 +20,15 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
     startAddress = stringUtil->fillZeros(startAddress, FIELD_LENGTH);
     objectFileStream << startAddress << "^";
     objectFileStream << length << "\n";
-    newRecord = true;
+    //newRecord = true;
     startNewRecord(startAddress);
-    newRecord = false;
+    //newRecord = false;
 }
 
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
     recordLength = Hexadecimal::intToHex(3 * record.length());
-    objectFileStream << recordLength << record << "\n";
+    objectFileStream << recordLength <<SEPARATOR<< record << "\n";
 
 }
 
@@ -36,23 +36,26 @@ void ObjectFileWriter::writeTextRecord() {
 /*performs writing of typical case of instruction object code*/
 void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locationCounter) {
     objectCode = stringUtil->fillZeros(objectCode, FIELD_LENGTH);
+    //instructionCounter++;
     //check if after adding this instruction object code will fit or i need to start a new record.
-    if (objectCode.length() + record.length() > MAX_RECORD_LEN || newRecord) {
+    //if(instructionCounter>MAX_RECORD_LEN){
+    if (objectCode.length() + record.length() > MAX_RECORD_LEN /*|| newRecord*/) {
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
-        newRecord = false;
+        //instructionCounter=0;
+        //newRecord = false;
     }
-    record += SEPARATOR + objectCode;
+    record +=objectCode+SEPARATOR;
 
 
 }
 
 void ObjectFileWriter::startNewRecord(std::string startAddress) {
-    if (newRecord) {
-        record = "";
+    //if (newRecord) {
+        record ="";
         objectFileStream << "T" << "^";
         objectFileStream << stringUtil->fillZeros(startAddress, FIELD_LENGTH) << "^";
-    }
+    //}
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {

@@ -70,7 +70,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     if (!fileReader->finishedReading()) {
         intermediateFileWriter->writeError(ErrorHandler::code_after_end);
     }
-    
+
     intermediateFileWriter->writeSymbolTable(symbolTable);
     /// Check this agian.
     if (startAddress == -1 && endAddress == -1) {

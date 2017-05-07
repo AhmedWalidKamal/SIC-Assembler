@@ -16,7 +16,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     std::string mnemonic;
-    for (int i = 0; i < program->getStatements().size() - 1; i++) {
+    for (int i = 0; i < program->getStatements().size(); i++) {
         if (program->getStatements()[i]->isComment()) {
             listingWriter->writeComment(i*5, program->getStatements()[i]->getStatementField());}
         else{
@@ -31,8 +31,10 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     objectCode = executeWord(program->getStatements()[i]);
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     //has no object code but force the start of a new record.
-                    executeRES();
-                } else {
+                    executeRES(program->getStatements()[i]);
+                } else if (mnemonic == END) {
+                    executeEnd(program->getStatements()[i], symbolTable);
+                }else {
                     objectCode = executeInstruction(program->getStatements()[i], symbolTable);
                 }
             } catch (ErrorHandler::Error error) {
@@ -43,13 +45,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             objectCode = "";
         }
     }
-    mnemonic = program->getStatements()[program->getStatements().size() - 1]->getMnemonic()->getMnemonicField();
-    /*writes end record to object file with address of first executable instruction*/
-    if (mnemonic == END) {
-        executeEnd(program->getStatements()[program->getStatements().size() - 1], symbolTable);
-        listingWriter->writeLine(program->getStatements().size() * 5,
-                                 program->getStatements()[program->getStatements().size() - 1], objectCode);
-    }
+
 }
 
 void PassTwoController::executeStart(Statement *statement, Program *program) {
@@ -100,8 +96,10 @@ std::string PassTwoController::executeInstruction(Statement *statement,
     return objectCode;
 }
 
-void PassTwoController::executeRES() {
-    objectWriter->newRecord = true;
+void PassTwoController::executeRES(Statement *statement) {
+    //objectWriter->newRecord = true;
+    std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
+    objectWriter->startNewRecord(location);
 }
 
 std::string PassTwoController::executeWord(Statement *statement) {
