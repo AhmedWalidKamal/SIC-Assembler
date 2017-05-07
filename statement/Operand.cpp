@@ -2,11 +2,11 @@
 // Created by Walid on 5/3/2017.
 //
 
-#include <regex>
 #include "Operand.h"
 #include "../datatypes/Hexadecimal.h"
 #include <string>
 #include <iostream>
+#include <regex>
 
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
@@ -18,7 +18,6 @@ const std::string &Operand::getOperandField() const {
 void Operand::setOperandField(const std::string &operandField) {
     Operand::operandField = operandField;
 }
-
 
 int Operand::getLCIncrement() const {
     return LCIncrement;
@@ -53,7 +52,7 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateIndexed() {
-    indexed =  regex_match(operandField,regex.Indexed);
+    indexed = regex_match(operandField,regex.Indexed);
     if (indexed){
         std::size_t found = operandField.find_first_of(",");
         operandField= operandField.substr(0,found);
