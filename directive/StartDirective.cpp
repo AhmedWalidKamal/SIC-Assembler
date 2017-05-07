@@ -17,9 +17,13 @@ void StartDirective::validate(std::map<std::string, Instruction *> &instructionT
                               std::map<std::string, int> &symbolTable, const int &start, const int &end,
                               const int &locationCounter, Statement *statement) {
     // Assumption -> Start must have a label (as per the machine)
-    if (locationCounter !=0 || start != -1) {
+    if (start != -1) {
          throw ErrorHandler::multiple_starts;
     }
+    if (locationCounter !=0 ) {
+        throw ErrorHandler::code_before_start;
+    }
+
     if (statement->getLabel()->isEmpty()) {
         throw ErrorHandler::missing_label_at_start;
     }

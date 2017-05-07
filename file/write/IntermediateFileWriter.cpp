@@ -31,7 +31,7 @@ void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement
                                                          SPACE_BOUND);
     std::string label = stringUtil->fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
     std::string mnemonic = stringUtil->fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
-    std::string operand = stringUtil->fillSpaces(statement->getOperand()->getOperandField(), OPERAND_BOUND);
+    std::string operand = stringUtil->fillSpaces(statement->getOperand()->getrawInput(), OPERAND_BOUND);
     std::string comment = statement->getComment()->getComment();
     intermediateFileStream << line << locationCounter << label << mnemonic << operand << comment << std::endl;
 }

@@ -21,6 +21,7 @@ public:
     bool isDecimalValue();
     bool isIndexed();
     const std::string &getOperandField() const;
+    const std::string &getrawInput() const;
     void setOperandField(const std::string &operandField);
     int getLCIncrement() const;
 
@@ -36,6 +37,7 @@ public:
     bool validateDecimalValue();
 private:
     std::string operandField;
+    std:: string rawInput;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,
         HexConstant,DecimalValue,inValid};

@@ -10,13 +10,16 @@
 
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
+    Operand :: rawInput = operandField;
 }
 const std::string &Operand::getOperandField() const {
     return operandField;
 }
 
+
 void Operand::setOperandField(const std::string &operandField) {
     Operand::operandField = operandField;
+
 }
 
 int Operand::getLCIncrement() const {
@@ -158,5 +161,9 @@ bool Operand::validateHexConstant() {
 
 bool Operand::isHexConstant() {
     return (type == HexConstant);
+}
+
+const std::string &Operand::getrawInput() const {
+    return  rawInput;
 }
 
