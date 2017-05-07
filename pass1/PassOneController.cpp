@@ -23,21 +23,24 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
     PassOneController::endAddress = -1; // Modified when END directive is reached.
 }
 
-void PassOneController::execute(std::map<std::string, int> &symbolTable,
+bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                                        FileReader *fileReader, Program *program) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
+    bool validSourceCode = true;
     intermediateFileWriter->writeInitialLine();
     while (!fileReader->finishedReading()) {
         Statement *statement = fileReader->getNextStatement();
         if (statement->isComment()) {
             intermediateFileWriter->writeComment(lineNumber, statement->getStatementField());
+            program->addStatement(statement);
         } else {
             try {
                 statement->validate(instructionTable, directiveTable, symbolTable,
                                     startAddress, endAddress, locationCounter);
 
             } catch (ErrorHandler::Error error) {
+                validSourceCode = false;
                 intermediateFileWriter->writeError(error);
                 std::cout << ErrorHandler::errors[error] << std::endl;
                 lineNumber++;
@@ -80,5 +83,6 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     } else {
         program->setProgramLength(endAddress - startAddress);
     }
+    return validSourceCode;
 }
 

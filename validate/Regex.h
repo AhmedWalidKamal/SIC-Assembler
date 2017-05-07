@@ -22,6 +22,7 @@ class Regex {
     static std::regex star;
     static std::regex isLabelOperand;
     static std::regex asmFile;
+    static std::regex commentOrEmptyLine;
 };
 
 

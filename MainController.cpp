@@ -25,10 +25,12 @@ void MainController::execute(std::string fileName) {
     Program *program = new Program();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-    passOne->execute(symbolTable, sourceFileReader, program);
-    PassTwoController *passTwo;
-    passTwo = new PassTwoController(instructionTable);
-    passTwo->executePass2(symbolTable, program, sourceFileReader->getFileName());
+    bool validSourceCode = passOne->execute(symbolTable, sourceFileReader, program);
+    if (validSourceCode) {
+        PassTwoController *passTwo;
+        passTwo = new PassTwoController(instructionTable);
+        passTwo->executePass2(symbolTable, program, sourceFileReader->getFileName());
+    }
 }
 
 void MainController::initDirectiveTable(std::map<std::string,

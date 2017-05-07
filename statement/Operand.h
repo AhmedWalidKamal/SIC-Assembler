@@ -36,7 +36,6 @@ public:
     bool validateDecimalValue();
 private:
     std::string operandField;
-    Regex regex;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,
         HexConstant,DecimalValue,inValid};
