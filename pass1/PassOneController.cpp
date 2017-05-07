@@ -24,7 +24,7 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
 }
 
 bool PassOneController::execute(std::map<std::string, int> &symbolTable,
-                                       FileReader *fileReader, Program *program) {
+                                FileReader *fileReader, Program *program) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     bool validSourceCode = true;
@@ -46,7 +46,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-            /// If no error logic:
 
             /// Updating LC
             statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
@@ -56,7 +55,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
-           if (!statement->getLabel()->isEmpty()) {
+            if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 
             }
@@ -75,7 +74,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
 
     intermediateFileWriter->writeSymbolTable(symbolTable);
 
-    /// Check this agian.
     if (startAddress == -1 && endAddress == -1) {
         program->setProgramLength(locationCounter);
     } else if (endAddress == -1) {
@@ -83,6 +81,10 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
     } else {
         program->setProgramLength(endAddress - startAddress);
     }
+
+    if (locationCounter > MAX_MEMORY_LIMIT) {
+        intermediateFileWriter->writeError(ErrorHandler::memory_exceeded);
+        return false;
+    }
     return validSourceCode;
 }
-

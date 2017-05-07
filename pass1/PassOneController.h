@@ -25,6 +25,7 @@ private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
     int locationCounter, startAddress, endAddress, lineNumber;
+    static int MAX_MEMORY_LIMIT = 32768;
 };
 
 #endif //SIC_ASSEMBLER_PASSONECONTROLLER_H

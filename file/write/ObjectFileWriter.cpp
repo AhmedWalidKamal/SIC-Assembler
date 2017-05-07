@@ -12,8 +12,6 @@ ObjectFileWriter::ObjectFileWriter(const std::string &fileName)
     stringUtil = new StringUtil();
 }
 
-
-
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress, std::string length) {
 
     objectFileStream << "H" << "^";
@@ -29,7 +27,7 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
     recordLength = getRecordLength(record);
-    objectFileStream << recordLength << SEPARATOR<< record << std::endl;
+    objectFileStream << recordLength << SEPARATOR << record << std::endl;
 }
 
 /*performs writing of typical case of instruction object code*/

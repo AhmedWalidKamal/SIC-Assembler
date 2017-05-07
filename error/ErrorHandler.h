@@ -14,7 +14,7 @@ public:
         missing_operand, multiple_ends, missing_label_at_start,
         label_is_mnemonic, label_at_end, undefined_symbol_at_start,
         invalid_source_name, address_out_of_range, undeclared_label,
-        code_after_end, multiple_starts};
+        code_after_end, multiple_starts, memory_exceeded};
     static const std::string errors[];
 };
 
