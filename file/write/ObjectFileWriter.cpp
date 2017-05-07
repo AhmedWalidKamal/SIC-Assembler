@@ -38,13 +38,13 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
     //check if after adding this instruction object code will fit or i need to start a new record.
     instructionCounter++;
     std::string temp = record + objectCode;
-    std::string sorryForDoingThis = "";
+    std::string modifiedString = "";
     for (char myBad : temp) {
         if (myBad != '^') {
-            sorryForDoingThis.push_back(myBad);
+            modifiedString.push_back(myBad);
         }
     }
-    if(sorryForDoingThis.length() / 2 > 30) { // law el 7azawedo 7ayzeed 3an el limit
+    if(modifiedString.length() / 2 > ObjectFileWriter::MAX_RECORD_LEN) {
         std::cout << locationCounter << std::endl;
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
@@ -73,13 +73,13 @@ void ObjectFileWriter::writeModRecord() {
 }
 
 std::string ObjectFileWriter::getRecordLength(std::string record) {
-    std::string sorryForDoingThis = "";
+    std::string modifiedString = "";
     for (char myBad : record) {
         if (myBad != '^') {
-            sorryForDoingThis.push_back(myBad);
+            modifiedString.push_back(myBad);
         }
     }
-    return Hexadecimal::intToHex(sorryForDoingThis.length() / 2);
+    return Hexadecimal::intToHex(modifiedString.length() / 2);
 }
 
 
