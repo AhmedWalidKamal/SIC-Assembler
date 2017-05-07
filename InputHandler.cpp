@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
     } else {
         std::cout << "No file name was entered.";
     }*/
-    readFile("example1.asm");
+    readFile("sicEx.asm");
     return 0;
 }
 
