@@ -51,15 +51,11 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
     intermediateFileStream << "Assigned Address";
     intermediateFileStream << std::endl;
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
-    //TODO check the iteration over the map.
 
     // Iterate over the map using iterator
     for (auto curr : symbolTable) {
-        //std::cout << "hello darkness my old friend." << std::endl;
-        //std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
         intermediateFileStream << stringUtil->fillSpaces(curr.first, SYMBOLTABLE_BOUND)
                         << Hexadecimal::intToHex(curr.second) << std::endl;
-
     }
 }
 

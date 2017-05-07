@@ -8,7 +8,7 @@
 
 int EndDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
     end = locationCounter;
-    return 0;
+    return locationCounter;
 }
 
 void EndDirective::validate(std::map<std::string, Instruction *> &instructionTable,

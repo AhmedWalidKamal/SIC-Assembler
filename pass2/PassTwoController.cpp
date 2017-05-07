@@ -103,8 +103,8 @@ void PassTwoController::executeRES(Statement *statement) {
 
 std::string PassTwoController::executeWord(Statement *statement) {
     std::string address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
-    std::cout << statement->getOperand()->getintValue() << std::endl;
-    std::cout << address << std::endl;
+    //std::cout << statement->getOperand()->getintValue() << std::endl;
+    //std::cout << address << std::endl;
     //Error if word length > 3 bytes.
     if (address.length() > MAX_WORD_LENGTH) {
         throw ErrorHandler::address_out_of_range;

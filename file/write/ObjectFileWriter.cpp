@@ -37,6 +37,7 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
     instructionCounter++;
     //check if after adding this instruction object code will fit or i need to start a new record.
     if(instructionCounter>MAX_RECORD_LEN){
+        std::cout<<locationCounter<<std::endl;
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
         instructionCounter=0;
