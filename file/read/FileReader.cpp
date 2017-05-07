@@ -29,8 +29,6 @@ FileReader::FileReader(const std::string &fileName) {
 Statement *FileReader::getNextStatement() {
     std::string currentLine;
     std::getline(sourceFileStream, currentLine);
-    //std::transform(currentLine.begin(), currentLine.end(), currentLine.begin(),
-                  // [](unsigned char c) { return std::toupper(c); }); // Clean this up and test it.
     std::string formattedLine = getFormattedLine(currentLine);
     builder->buildStatement(formattedLine);
     return builder->getStatement();
