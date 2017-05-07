@@ -14,12 +14,13 @@ void readFile(std::string fileName);
 
 int main(int argc, char **argv) {
     // argv contains possible -commands or file name directly, pass it to main controller and start working.
-    if (argc > 1) {
+    /*if (argc > 1) {
         int fileNameIndex = handleOptionsArgs(argv);
         readFile(argv[fileNameIndex]);
     } else {
         std::cout << "No file name was entered.";
-    }
+    }*/
+    readFile("sicEx.asm");
     return 0;
 }
 

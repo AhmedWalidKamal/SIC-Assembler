@@ -10,6 +10,7 @@
 #include "../file/write/IntermediateFileWriter.h"
 #include "../error/ErrorHandler.h"
 #include "../util/Program.h"
+#include "../datatypes/Hexadecimal.h"
 
 
 PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
@@ -29,15 +30,21 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     intermediateFileWriter->writeInitialLine();
     while (!fileReader->finishedReading()) {
         Statement *statement = fileReader->getNextStatement();
+        //std::cout << statement->getLabel()->getLabelField() << std::endl;
+        //std::cout << statement->getMnemonic()->getMnemonicField() << std::endl;
+        //std::cout << statement->getOperand()->getOperandField() << std::endl;
+        //std::cout << statement->getComment()->getComment() << std::endl;
+
         if (statement->isComment()) {
             intermediateFileWriter->writeComment(lineNumber, statement->getStatementField());
         } else {
             try {
                 statement->validate(instructionTable, directiveTable, symbolTable,
                                     startAddress, endAddress, locationCounter);
+
             } catch (ErrorHandler::Error error) {
                 intermediateFileWriter->writeError(error);
-                std::cerr << ErrorHandler::errors[error] << std::endl;
+                std::cout << ErrorHandler::errors[error] << std::endl;
                 lineNumber++;
                 continue;
             }
@@ -47,6 +54,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable[statement->getOperand()->getOperandField()] = -1; // -1 indicating variable not declared yet.
             }
             if (!statement->getLabel()->isEmpty()) {
+                std::cout << statement->getLabel()->getLabelField() <<std::endl;
                 symbolTable[statement->getLabel()->getLabelField()] = locationCounter;
             }
             /// Updating LC
@@ -64,6 +72,12 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     }
     if (!fileReader->finishedReading()) {
         intermediateFileWriter->writeError(ErrorHandler::code_after_end);
+    }
+    std::cout<<"sym";
+    for (auto curr : symbolTable) {
+        //std::cout << "hello darkness my old friend." << std::endl;
+        std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
+
     }
     intermediateFileWriter->writeSymbolTable(symbolTable);
     /// Check this agian.

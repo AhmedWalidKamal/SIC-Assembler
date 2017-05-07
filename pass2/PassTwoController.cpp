@@ -7,11 +7,13 @@
 
 PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instructionTable) {
     PassTwoController::instructionTable = instructionTable;
+
 }
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                      Program *program, std::string fileName) {
     PassTwoController::objectWriter = new ObjectFileWriter(fileName);
+    PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     std::string mnemonic;
     for (int i = 0; i < program->getStatements().size() - 1; i++) {

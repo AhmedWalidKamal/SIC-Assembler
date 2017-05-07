@@ -4,7 +4,7 @@
 
 #include "SingleOperandValidateState.h"
 #include "../error/ErrorHandler.h"
-
+#include <iostream>
 int SingleOperandValidateState::validate(std::map<std::string, Instruction *> &instructionTable,
                                          std::map<std::string, Directive *> &directiveTable,
                                          std::map<std::string, int> &symbolTable, const int &start,

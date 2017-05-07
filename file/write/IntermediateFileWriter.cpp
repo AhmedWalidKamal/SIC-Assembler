@@ -2,6 +2,7 @@
 // Created by Walid on 5/3/2017.
 //
 
+#include <iostream>
 #include "IntermediateFileWriter.h"
 #include "../../util/StringUtil.h"
 #include "../../datatypes/Hexadecimal.h"
@@ -15,6 +16,7 @@ IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, cons
 
 void IntermediateFileWriter::writeInitialLine() {
     //TODO check range for filling spaces
+    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
     intermediateFileStream << stringUtil->fillSpaces("Line", LINE_FORMAT) << stringUtil->fillSpaces("Loc", LOC_FORAMT)
                            << "Source Statement" << "\n";
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
@@ -25,7 +27,7 @@ void IntermediateFileWriter::writeInitialLine() {
 
 void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement) {
     std::string line = stringUtil->fillSpaces(stringUtil->toString(lineNumber), SPACE_BOUND);
-    std::string locationCounter = stringUtil->fillSpaces(stringUtil->toString(statement->getStatementLocationPointer()),
+    std::string locationCounter = stringUtil->fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
                                                          SPACE_BOUND);
     std::string label = stringUtil->fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
     std::string mnemonic = stringUtil->fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
@@ -42,19 +44,20 @@ void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
 
 
 void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbolTable) {
-
+    //std :: cout<< "intermediate"<<symbolTable.size()<<std::endl;
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
     intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND) << "Assigned Address" << "\n";
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
     //TODO check the iteration over the map.
-    std::map<std::string, int>::iterator it = symbolTable.begin();
+  //  std::map<std::string, int>::iterator it = symbolTable.begin();
 
     // Iterate over the map using iterator
-    while (it != symbolTable.end()) {
-        intermediateFileStream << stringUtil->fillSpaces(it->first, SYMBOLTABLE_BOUND)
-                               << Hexadecimal::intToHex(it->second) << "\n";
-        it++;
-    }
+    /*for (auto curr : symbolTable) {
+        //std::cout << "hello darkness my old friend." << std::endl;
+        std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
+        intermediateFileStream << stringUtil->fillSpaces(curr.first, SYMBOLTABLE_BOUND)
+                               << Hexadecimal::intToHex(curr.second) << "\n";
+    }*/
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {

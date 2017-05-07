@@ -6,6 +6,7 @@
 #include "Operand.h"
 #include "../datatypes/Hexadecimal.h"
 #include <string>
+#include <iostream>
 
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
@@ -55,7 +56,7 @@ void Operand::validateIndexed() {
     indexed =  regex_match(operandField,regex.Indexed);
     if (indexed){
         std::size_t found = operandField.find_first_of(",");
-        operandField= operandField.substr(0,found-1);
+        operandField= operandField.substr(0,found);
     }
 }
 void Operand::validateLabel() {
@@ -80,6 +81,7 @@ void Operand::validateHexAddress() {
         found = operandField.find_first_of("'");
         operandField.erase (found,1);
         setLCIncrement(std::stoi(operandField, nullptr, 16));
+
     }
 }
 
