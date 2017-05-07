@@ -54,7 +54,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable[statement->getOperand()->getOperandField()] = -1; // -1 indicating variable not declared yet.
             }
             if (!statement->getLabel()->isEmpty()) {
-                std::cout << statement->getLabel()->getLabelField() <<std::endl;
+                //std::cout << statement->getLabel()->getLabelField() <<std::endl;
                 symbolTable[statement->getLabel()->getLabelField()] = locationCounter;
             }
             /// Updating LC
@@ -73,10 +73,10 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     if (!fileReader->finishedReading()) {
         intermediateFileWriter->writeError(ErrorHandler::code_after_end);
     }
-    std::cout<<"sym";
+   // std::cout<<"sym";
     for (auto curr : symbolTable) {
         //std::cout << "hello darkness my old friend." << std::endl;
-        std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
+        //std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
 
     }
     intermediateFileWriter->writeSymbolTable(symbolTable);
