@@ -12,6 +12,8 @@ ObjectFileWriter::ObjectFileWriter(const std::string &fileName)
     stringUtil = new StringUtil();
 }
 
+
+
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress, std::string length) {
 
     objectFileStream << "H" << "^";
@@ -23,10 +25,18 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
     startNewRecord(startAddress);
 }
 
+
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
-    recordLength = Hexadecimal::intToHex(3 * instructionCounter);
-    objectFileStream << recordLength <<SEPARATOR<< record << std::endl;
+    std::string sorryForDoingThis = "";
+    for (char myBad : record) {
+        if (myBad != '^') {
+            sorryForDoingThis.push_back(myBad);
+        }
+    }
+    recordLength = Hexadecimal::intToHex(sorryForDoingThis.length() / 2);
+ //   recordLength = Hexadecimal::intToHex(3 * instructionCounter);
+    objectFileStream << recordLength << SEPARATOR<< record << std::endl;
 
 }
 
@@ -40,7 +50,7 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
         std::cout<<locationCounter<<std::endl;
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
-        instructionCounter=0;
+
     }
     record +=objectCode+SEPARATOR;
 
@@ -48,12 +58,11 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
 
 void ObjectFileWriter::startNewRecord(std::string startAddress) {
 
-        //record ="";
+        record ="";
+        instructionCounter=0;
         objectFileStream << "T" << "^";
         objectFileStream << stringUtil->fillZeros(startAddress, FIELD_LENGTH) << "^";
-        if (!resFlag){
-            record="";
-        }
+
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {

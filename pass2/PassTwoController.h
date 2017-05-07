@@ -56,6 +56,7 @@ private:
     const std::string listingName;
     const std::string listingExtension;
 
+    bool checkIn = false;
 };
 
 

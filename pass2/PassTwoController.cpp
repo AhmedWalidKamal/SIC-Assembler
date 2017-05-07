@@ -25,17 +25,22 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 /*writes header to objectFile.*/
                 if (mnemonic == START) {
                     executeStart(program->getStatements()[i], program);
+                    checkIn= false;
                 } else if (mnemonic == BYTE) {
                     objectCode = executeByte(program->getStatements()[i]);
+                    checkIn= false;
                 } else if (mnemonic == WORD) {
                     objectCode = executeWord(program->getStatements()[i]);
+                    checkIn= false;
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     //has no object code but force the start of a new record.
                     executeRES(program->getStatements()[i]);
                 } else if (mnemonic == END) {
                     executeEnd(program->getStatements()[i], symbolTable);
+                    checkIn= false;
                 } else {
                     objectCode = executeInstruction(program->getStatements()[i], symbolTable);
+                    checkIn= false;
                 }
             } catch (ErrorHandler::Error error) {
                 //write the error to listing file.
@@ -97,8 +102,12 @@ std::string PassTwoController::executeInstruction(Statement *statement,
 }
 
 void PassTwoController::executeRES(Statement *statement) {
-    std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
-    objectWriter->startNewRecord(location);
+    if (!checkIn) {
+        std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
+        objectWriter->writeTextRecord();
+        objectWriter->startNewRecord(location);
+        checkIn = true;
+    }
 }
 
 std::string PassTwoController::executeWord(Statement *statement) {

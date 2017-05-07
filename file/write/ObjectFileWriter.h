@@ -28,7 +28,7 @@ public:
     void writeTextRecord(std::string objectCode, std::string locationCounter);
 
     void writeEndRecord(std::string startAddress);
-
+    void writebeforeReserve();
     void writeModRecord();
     //still to see what paramters shall it take in order to be able to write the modification record
     int instructionCounter=0;
