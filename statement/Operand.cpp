@@ -36,7 +36,7 @@ int Operand::getintValue() {
 }
 
 bool Operand::isEmpty() {
-    return regex_match(operandField,regex.isEmpty);
+    return std::regex_match(operandField, Regex::isEmpty);
 }
 
 bool Operand::isValid() {
@@ -52,7 +52,7 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateIndexed() {
-    indexed = regex_match(operandField, regex.Indexed);
+    indexed = regex_match(operandField, Regex::Indexed);
     if (indexed){
         std::size_t found = operandField.find_first_of(",");
         operandField= operandField.substr(0,found);
@@ -60,7 +60,7 @@ void Operand::validateIndexed() {
 }
 void Operand::validateLabel() {
 
-    if (regex_match(operandField,regex.isLabelOperand)){
+    if (std::regex_match(operandField, Regex::isLabelOperand)){
         std::size_t found = operandField.find_first_of(" ");
         operandField= operandField.substr(0,found);
         type = Label;
@@ -73,7 +73,7 @@ bool Operand::isLabel() {
 
 void Operand::validateHexAddress() {
 
-    if (regex_match(operandField,regex.hexaAddress)){
+    if (std::regex_match(operandField, Regex::hexaAddress)){
         type = hexaAddress;
         std::size_t found = operandField.find_first_of("'");
         operandField.erase (found,1);
@@ -85,7 +85,7 @@ void Operand::validateHexAddress() {
 }
 
 bool Operand::validateDecimalAddress() {
-    if (regex_match(operandField,regex.integerAddress)){
+    if (std::regex_match(operandField, Regex::integerAddress)){
         type = decimalAddress;
         setLCIncrement(std::stoi(operandField));
         return  true;
@@ -97,7 +97,7 @@ bool Operand::isFixedAddress() {
 }
 
 void Operand::validateCurrentLocationCounter() {
-    if (regex_match(operandField,regex.star)){
+    if (std::regex_match(operandField, Regex::star)){
         type = currentLocationCounter;
 
     }
@@ -109,7 +109,7 @@ bool Operand::isCurrentLocationCounter() {
 
 bool Operand::validateDecimalValue() {
 
-    if (regex_match(operandField,regex.integerValue)){
+    if (std::regex_match(operandField, Regex::integerValue)){
         type = DecimalValue;
         setIntValue(std::stoi(operandField));
         setLCIncrement(3);
@@ -123,7 +123,7 @@ bool Operand::isDecimalValue() {
 }
 
 bool Operand::validateStringConstant() {
-    if (regex_match(operandField, regex.literalString)) {
+    if (std::regex_match(operandField, Regex::literalString)) {
         type = StringConstant;
         std::size_t start = operandField.find_first_of("'");
         std::size_t end = operandField.find_last_of("'");
@@ -139,7 +139,7 @@ bool Operand::isStringConstant() {
 }
 
 bool Operand::validateHexConstant() {
-    if (regex_match(operandField,regex.literalHexa)) {
+    if (std::regex_match(operandField, Regex::literalHexa)) {
         type = HexConstant;
         std::size_t start = operandField.find_first_of("'");
         std::size_t end = operandField.find_last_of("'");

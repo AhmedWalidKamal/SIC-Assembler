@@ -37,6 +37,7 @@ Statement *FileReader::getNextStatement() {
     return builder->getStatement();
 }
 
+/// Assumption: tab character is equivalent to 4 space characters.
 std::string FileReader::getFormattedLine(std::string line) {
     std::string formattedString = "";
     for (char currentChar : line) {
