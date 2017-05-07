@@ -44,6 +44,7 @@ private:
     std::string SEPARATOR = "^";
     int FIELD_LENGTH = 6;
 
+    std::string getRecordLength(std::string basic_string);
 };
 
 

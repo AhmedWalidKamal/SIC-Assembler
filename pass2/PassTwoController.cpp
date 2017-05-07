@@ -24,21 +24,46 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             try {
                 /*writes header to objectFile.*/
                 if (mnemonic == START) {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                getStatementLocationPointer()));
+                    }
                     executeStart(program->getStatements()[i], program);
                     checkIn= false;
                 } else if (mnemonic == BYTE) {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                getStatementLocationPointer()));
+                    }
                     objectCode = executeByte(program->getStatements()[i]);
                     checkIn= false;
                 } else if (mnemonic == WORD) {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                getStatementLocationPointer()));
+                    }
                     objectCode = executeWord(program->getStatements()[i]);
                     checkIn= false;
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     //has no object code but force the start of a new record.
                     executeRES(program->getStatements()[i]);
                 } else if (mnemonic == END) {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                getStatementLocationPointer()));
+                    }
                     executeEnd(program->getStatements()[i], symbolTable);
                     checkIn= false;
                 } else {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                getStatementLocationPointer()));
+                    }
                     objectCode = executeInstruction(program->getStatements()[i], symbolTable);
                     checkIn= false;
                 }
@@ -103,9 +128,7 @@ std::string PassTwoController::executeInstruction(Statement *statement,
 
 void PassTwoController::executeRES(Statement *statement) {
     if (!checkIn) {
-        std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
         objectWriter->writeTextRecord();
-        objectWriter->startNewRecord(location);
         checkIn = true;
     }
 }
