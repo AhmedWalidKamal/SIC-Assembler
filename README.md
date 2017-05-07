@@ -1,1 +1,1 @@
-# SIC-Assembler
+# SicAssembler
