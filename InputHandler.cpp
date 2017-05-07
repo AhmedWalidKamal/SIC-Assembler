@@ -23,8 +23,8 @@ void readFile(std::string fileName) {
     MainController *mainController = new MainController();
     mainController->execute(fileName);
 }
-
 //int handleOptionsArgs(char **arguments) {
 //    int fileNameIndex = 1;
 //    return fileNameIndex;
 //}
+
