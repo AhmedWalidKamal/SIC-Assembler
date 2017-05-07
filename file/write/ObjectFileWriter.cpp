@@ -36,13 +36,13 @@ void ObjectFileWriter::writeTextRecord() {
 /*performs writing of typical case of instruction object code*/
 void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locationCounter) {
     objectCode = stringUtil->fillZeros(objectCode, FIELD_LENGTH);
-    //instructionCounter++;
+    instructionCounter++;
     //check if after adding this instruction object code will fit or i need to start a new record.
-    //if(instructionCounter>MAX_RECORD_LEN){
-    if (objectCode.length() + record.length() > MAX_RECORD_LEN /*|| newRecord*/) {
+    if(instructionCounter>MAX_RECORD_LEN){
+    //if (objectCode.length() + record.length() > MAX_RECORD_LEN /*|| newRecord*/) {
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
-        //instructionCounter=0;
+        instructionCounter=0;
         //newRecord = false;
     }
     record +=objectCode+SEPARATOR;
