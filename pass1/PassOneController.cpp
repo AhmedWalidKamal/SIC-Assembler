@@ -33,6 +33,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
         Statement *statement = fileReader->getNextStatement();
         if (statement->isComment()) {
             intermediateFileWriter->writeComment(lineNumber, statement->getStatementField());
+            program->addStatement(statement);
         } else {
             try {
                 statement->validate(instructionTable, directiveTable, symbolTable,
