@@ -29,7 +29,7 @@ void Initialization::initInstructionTable(std::map<std::string, Instruction *> &
     instructionTable["MUL"] = new Instruction("MUL", 32, new FormatThree(), 1);
     instructionTable["OR"] = new Instruction("OR", 68, new FormatThree(), 1);
     instructionTable["RD"] = new Instruction("RD", 216, new FormatThree(), 1);
-    instructionTable["RSUB"] = new Instruction("RSUB", 76, new FormatThree(), 0);
+    instructionTable["RSUB"] = new Instruction("RSUB", 76, new FormatThree(), 0); /// Assumption -> Rsub doens't take any operands.
     instructionTable["STA"] = new Instruction("STA", 12, new FormatThree(), 1);
     instructionTable["STCH"] = new Instruction("STCH", 84, new FormatThree(), 1);
     instructionTable["STL"] = new Instruction("STL", 20, new FormatThree(), 1);

@@ -127,6 +127,7 @@ void PassTwoController::executeRES(Statement *statement) {
     }
 }
 
+/// Assumption -> Maximum length for WORD directive's operand is 3 bytes.
 std::string PassTwoController::executeWord(Statement *statement) {
     std::string address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
     if (address.length() > MAX_WORD_LENGTH) {
@@ -137,6 +138,7 @@ std::string PassTwoController::executeWord(Statement *statement) {
     return address;
 }
 
+/// Assumption -> Maximum length for BYTE directive's operand is 15 byte or 14 Hex digits.
 std::string PassTwoController::executeByte(Statement *statement) {
     std::string address;
     if (statement->getOperand()->isHexConstant()) {

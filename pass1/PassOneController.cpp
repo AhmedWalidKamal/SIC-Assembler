@@ -11,13 +11,14 @@
 #include "../util/Program.h"
 #include "../datatypes/Hexadecimal.h"
 
-
 PassOneController::PassOneController(std::map<std::string, Instruction *> &instructionTable,
                                      std::map<std::string, Directive *> &directiveTable) {
     PassOneController::instructionTable = instructionTable;
     PassOneController::directiveTable = directiveTable;
     PassOneController::lineNumber = 1;
+    /// If no start directive is entered, location counter starts at 0.
     PassOneController::locationCounter = 0;
+    /// Assumption -> Program may get assembled without having a START or an END directives.
     PassOneController::startAddress = -1;
     PassOneController::endAddress = -1;
 }
@@ -41,7 +42,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
             } catch (ErrorHandler::Error error) {
                 validSourceCode = false;
                 intermediateFileWriter->writeError(error);
-                std::cout << ErrorHandler::errors[error] << std::endl;
                 lineNumber++;
                 continue;
             }
