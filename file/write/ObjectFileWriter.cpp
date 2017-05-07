@@ -28,41 +28,35 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
 
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
-    std::string sorryForDoingThis = "";
-    for (char myBad : record) {
-        if (myBad != '^') {
-            sorryForDoingThis.push_back(myBad);
-        }
-    }
-    recordLength = Hexadecimal::intToHex(sorryForDoingThis.length() / 2);
- //   recordLength = Hexadecimal::intToHex(3 * instructionCounter);
+    recordLength = getRecordLength(record);
     objectFileStream << recordLength << SEPARATOR<< record << std::endl;
-
 }
-
 
 /*performs writing of typical case of instruction object code*/
 void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locationCounter) {
     objectCode = stringUtil->fillZeros(objectCode, FIELD_LENGTH);
-    instructionCounter++;
     //check if after adding this instruction object code will fit or i need to start a new record.
-    if(instructionCounter>MAX_RECORD_LEN){
-        std::cout<<locationCounter<<std::endl;
+    instructionCounter++;
+    std::string temp = record + objectCode;
+    std::string modifiedString = "";
+    for (char curr : temp) {
+        if (curr != '^') {
+            modifiedString.push_back(curr);
+        }
+    }
+    if(modifiedString.length() / 2 > ObjectFileWriter::MAX_RECORD_LEN) {
+        std::cout << locationCounter << std::endl;
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
-
     }
-    record +=objectCode+SEPARATOR;
-
+    record += objectCode + SEPARATOR;
 }
 
 void ObjectFileWriter::startNewRecord(std::string startAddress) {
-
-        record ="";
-        instructionCounter=0;
+        record = "";
+        instructionCounter = 0;
         objectFileStream << "T" << "^";
         objectFileStream << stringUtil->fillZeros(startAddress, FIELD_LENGTH) << "^";
-
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {
@@ -78,4 +72,13 @@ void ObjectFileWriter::writeModRecord() {
 
 }
 
+std::string ObjectFileWriter::getRecordLength(std::string record) {
+    std::string modifiedString = "";
+    for (char curr : record) {
+        if (curr != '^') {
+            modifiedString.push_back(curr);
+        }
+    }
+    return Hexadecimal::intToHex(modifiedString.length() / 2);
+}
 

@@ -21,6 +21,7 @@ int main(int argc, char **argv) {
         std::cout << "No file name was entered.";
     }*/
     readFile("sicEx.asm");
+//    readFile("errors.asm");
     return 0;
 }
 

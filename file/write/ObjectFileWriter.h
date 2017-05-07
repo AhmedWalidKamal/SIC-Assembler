@@ -40,10 +40,11 @@ private:
     const std::string fileExtension;
     std::string record;
     std::string recordLength;
-    int MAX_RECORD_LEN = 10;
+    int MAX_RECORD_LEN = 30;
     std::string SEPARATOR = "^";
     int FIELD_LENGTH = 6;
 
+    std::string getRecordLength(std::string basic_string);
 };
 
 
