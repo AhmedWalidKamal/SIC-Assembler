@@ -19,14 +19,14 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
     objectFileStream << sourceName << "^";
     startAddress = stringUtil->fillZeros(startAddress, FIELD_LENGTH);
     objectFileStream << startAddress << "^";
-    objectFileStream << length << "\n";
+    objectFileStream << length << std::endl;
     startNewRecord(startAddress);
 }
 
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
     recordLength = Hexadecimal::intToHex(3 * record.length());
-    objectFileStream << recordLength <<SEPARATOR<< record << "\n";
+    objectFileStream << recordLength <<SEPARATOR<< record << std::endl;
 
 }
 
