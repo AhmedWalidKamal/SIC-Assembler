@@ -39,9 +39,9 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
     instructionCounter++;
     std::string temp = record + objectCode;
     std::string modifiedString = "";
-    for (char myBad : temp) {
-        if (myBad != '^') {
-            modifiedString.push_back(myBad);
+    for (char curr : temp) {
+        if (curr != '^') {
+            modifiedString.push_back(curr);
         }
     }
     if(modifiedString.length() / 2 > ObjectFileWriter::MAX_RECORD_LEN) {
@@ -74,12 +74,11 @@ void ObjectFileWriter::writeModRecord() {
 
 std::string ObjectFileWriter::getRecordLength(std::string record) {
     std::string modifiedString = "";
-    for (char myBad : record) {
-        if (myBad != '^') {
-            modifiedString.push_back(myBad);
+    for (char curr : record) {
+        if (curr != '^') {
+            modifiedString.push_back(curr);
         }
     }
     return Hexadecimal::intToHex(modifiedString.length() / 2);
 }
-
 
