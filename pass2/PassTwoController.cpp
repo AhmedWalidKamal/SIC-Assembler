@@ -18,7 +18,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     std::string mnemonic;
     for (int i = 0; i < program->getStatements().size(); i++) {
         if (program->getStatements()[i]->isComment()) {
-            listingWriter->writeComment(i*5, program->getStatements()[i]->getStatementField());}
+            listingWriter->writeComment(i, program->getStatements()[i]->getStatementField());}
         else{
             mnemonic = program->getStatements()[i]->getMnemonic()->getMnemonicField();
             try {
@@ -41,7 +41,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 //write the error to listing file.
                 listingWriter->writeError(error);
             }
-            listingWriter->writeLine(i * 5, program->getStatements()[i], objectCode);
+            listingWriter->writeLine(i, program->getStatements()[i], objectCode);
             objectCode = "";
         }
     }
@@ -97,7 +97,6 @@ std::string PassTwoController::executeInstruction(Statement *statement,
 }
 
 void PassTwoController::executeRES(Statement *statement) {
-    //objectWriter->newRecord = true;
     std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
     objectWriter->startNewRecord(location);
 }
