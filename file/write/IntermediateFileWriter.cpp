@@ -16,10 +16,10 @@ IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, cons
 
 void IntermediateFileWriter::writeInitialLine() {
     //TODO check range for filling spaces
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
+    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
     intermediateFileStream << stringUtil->fillSpaces("Line", LINE_FORMAT) << stringUtil->fillSpaces("Loc", LOC_FORAMT)
-                           << "Source Statement" << "\n";
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
+                           << "Source Statement" << std::endl;
+    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
 
 }
 
@@ -33,36 +33,38 @@ void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement
     std::string mnemonic = stringUtil->fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
     std::string operand = stringUtil->fillSpaces(statement->getOperand()->getOperandField(), OPERAND_BOUND);
     std::string comment = statement->getComment()->getComment();
-    intermediateFileStream << line << locationCounter << label << mnemonic << operand << comment << "\n";
+    intermediateFileStream << line << locationCounter << label << mnemonic << operand << comment << std::endl;
 }
 
 void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
     // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
     std::string lineNum = stringUtil->fillSpaces(stringUtil->toString(lineNumber),SPACE_BOUND);
-    intermediateFileStream<<lineNum<<line<<"\n";
+    intermediateFileStream << lineNum << line << std::endl;
 }
 
 
 void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbolTable) {
 
 
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
-    intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND) << "Assigned Address" ;
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << "\n";
+    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND);
+    intermediateFileStream << "Assigned Address";
+    intermediateFileStream << std::endl;
+    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
     //TODO check the iteration over the map.
 
     // Iterate over the map using iterator
     for (auto curr : symbolTable) {
         //std::cout << "hello darkness my old friend." << std::endl;
-        std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
+        //std::cout << curr.first << " " <<  Hexadecimal::intToHex(curr.second) << std::endl;
         intermediateFileStream << stringUtil->fillSpaces(curr.first, SYMBOLTABLE_BOUND)
-                        << Hexadecimal::intToHex(curr.second) << "\n";
+                        << Hexadecimal::intToHex(curr.second) << std::endl;
 
     }
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {
     intermediateFileStream << "ERROR: " ;
-    intermediateFileStream<< ErrorHandler::errors[error] << "\n";
+    intermediateFileStream<< ErrorHandler::errors[error] << std::endl;
 }
 

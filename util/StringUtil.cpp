@@ -13,7 +13,7 @@ std::string StringUtil::toString(int number) {
 
 std::string StringUtil::fillSpaces(std::string word, int size) {
     while (word.length() < size) {
-        word += " ";
+        word.append(" ");
     }
     return word;
 }

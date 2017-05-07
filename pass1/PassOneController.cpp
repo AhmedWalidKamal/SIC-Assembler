@@ -51,16 +51,15 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
             /// Updating SymTable
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
-                symbolTable[statement->getOperand()->getOperandField()] = -1;// -1 indicating variable not declared yet.
+                symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
            if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 
             }
             /// Writing to file
-            intermediateFileWriter->writeStatement(lineNumber*5, statement);
+            intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
-            lineNumber++;
         }
         lineNumber++;
         if (statement->getMnemonic()->getMnemonicField() == "END") {
@@ -72,6 +71,7 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
     }
 
     intermediateFileWriter->writeSymbolTable(symbolTable);
+
     /// Check this agian.
     if (startAddress == -1 && endAddress == -1) {
         program->setProgramLength(locationCounter);

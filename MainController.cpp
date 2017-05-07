@@ -28,7 +28,7 @@ void MainController::execute(std::string fileName) {
     passOne->execute(symbolTable, sourceFileReader, program);
     PassTwoController *passTwo;
     passTwo = new PassTwoController(instructionTable);
-    passTwo->executePass2(symbolTable, program, fileName); // insert file name from reader.
+    passTwo->executePass2(symbolTable, program, fileName);
 }
 
 void MainController::initDirectiveTable(std::map<std::string,
