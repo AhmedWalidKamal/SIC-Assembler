@@ -43,7 +43,6 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
         }
     }
     if(modifiedString.length() / 2 > ObjectFileWriter::MAX_RECORD_LEN) {
-        std::cout << locationCounter << std::endl;
         writeTextRecord();
         startNewRecord(locationCounter);//TODO check this line
     }
