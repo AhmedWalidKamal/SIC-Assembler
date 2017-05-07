@@ -18,8 +18,8 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     std::string mnemonic;
     for (int i = 0; i < program->getStatements().size(); i++) {
         if (program->getStatements()[i]->isComment()) {
-            listingWriter->writeComment(i, program->getStatements()[i]->getStatementField());}
-        else{
+            listingWriter->writeComment(i + 1, program->getStatements()[i]->getStatementField());}
+        else {
             mnemonic = program->getStatements()[i]->getMnemonic()->getMnemonicField();
             try {
                 /*writes header to objectFile.*/
@@ -34,14 +34,14 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     executeRES(program->getStatements()[i]);
                 } else if (mnemonic == END) {
                     executeEnd(program->getStatements()[i], symbolTable);
-                }else {
+                } else {
                     objectCode = executeInstruction(program->getStatements()[i], symbolTable);
                 }
             } catch (ErrorHandler::Error error) {
                 //write the error to listing file.
                 listingWriter->writeError(error);
             }
-            listingWriter->writeLine(i, program->getStatements()[i], objectCode);
+            listingWriter->writeLine(i + 1, program->getStatements()[i], objectCode);
             objectCode = "";
         }
     }
@@ -103,6 +103,8 @@ void PassTwoController::executeRES(Statement *statement) {
 
 std::string PassTwoController::executeWord(Statement *statement) {
     std::string address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+    std::cout << statement->getOperand()->getintValue() << std::endl;
+    std::cout << address << std::endl;
     //Error if word length > 3 bytes.
     if (address.length() > MAX_WORD_LENGTH) {
         throw ErrorHandler::address_out_of_range;

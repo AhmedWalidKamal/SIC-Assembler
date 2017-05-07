@@ -7,6 +7,9 @@
 #include "Hexadecimal.h"
 
 std::string Hexadecimal::intToHex(int number) {
+    if (number == 0) {
+        return std::string("0");
+    }
     std::ostringstream stream;
     const char *hex = "0123456789ABCDEF";
     while (number > 0) {

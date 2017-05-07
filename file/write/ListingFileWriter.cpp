@@ -26,17 +26,13 @@ void ListingFileWriter::writeLine(int lineNumber, Statement *statement, std::str
                                                          SPACE_BOUND);
     std::string label = stringUtil->fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
     std::string mnemonic = stringUtil->fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
-    std::string operand;
-    if (statement->getOperand()->isLabel())
-        operand = statement->getOperand()->getOperandField();
-    else
-        operand = stringUtil->toString(statement->getOperand()->getLCIncrement());
+    std::string operand = stringUtil->fillSpaces(statement->getOperand()->getOperandField(), OPERAND_BOUND);
     operand = stringUtil->fillSpaces(operand, OPERAND_BOUND);
     std::string comment = stringUtil->fillSpaces(statement->getComment()->getComment(), COMMENT_BOUND);
 
-    if (objectCode.length() > 0)
+    if (objectCode.length() > 0) {
         objectCode = stringUtil->fillZeros(objectCode, 6);
-
+    }
     listFileStream << lineNum << locationCounter << label << mnemonic << operand << comment << objectCode << std::endl;
 
 }
