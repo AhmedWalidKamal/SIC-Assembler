@@ -30,7 +30,7 @@ void ListingFileWriter::writeLine(int lineNumber, Statement *statement, std::str
     if (statement->getOperand()->isLabel())
         operand = statement->getOperand()->getOperandField();
     else
-        operand = statement->getOperand()->getintValue();
+        operand = stringUtil->toString(statement->getOperand()->getLCIncrement());
     operand = stringUtil->fillSpaces(operand, OPERAND_BOUND);
     std::string comment = stringUtil->fillSpaces(statement->getComment()->getComment(), COMMENT_BOUND);
 

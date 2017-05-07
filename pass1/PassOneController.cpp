@@ -58,9 +58,8 @@ void PassOneController::execute(std::map<std::string, int> &symbolTable,
 
             }
             /// Writing to file
-            intermediateFileWriter->writeStatement(lineNumber*5, statement);
+            intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
-            lineNumber++;
         }
         lineNumber++;
         if (statement->getMnemonic()->getMnemonicField() == "END") {
