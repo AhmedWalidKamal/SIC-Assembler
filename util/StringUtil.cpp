@@ -8,7 +8,7 @@
 std::string StringUtil::toString(int number) {
     std::ostringstream stream;
     stream << number;
-    return stream.str();;
+    return stream.str();
 }
 
 std::string StringUtil::fillSpaces(std::string word, int size) {
