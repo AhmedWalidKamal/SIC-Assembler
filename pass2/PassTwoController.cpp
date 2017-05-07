@@ -22,7 +22,6 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
         else {
             mnemonic = program->getStatements()[i]->getMnemonic()->getMnemonicField();
             try {
-                /*writes header to objectFile.*/
                 if (mnemonic == START) {
                     if (checkIn) {
                         objectWriter->
@@ -48,7 +47,6 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     objectCode = executeWord(program->getStatements()[i]);
                     checkIn= false;
                 } else if (mnemonic == RESW || mnemonic == RESB) {
-                    //has no object code but force the start of a new record.
                     executeRES(program->getStatements()[i]);
                 } else if (mnemonic == END) {
                     if (checkIn) {
@@ -68,7 +66,6 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     checkIn= false;
                 }
             } catch (ErrorHandler::Error error) {
-                //write the error to listing file.
                 listingWriter->writeError(error);
             }
             listingWriter->writeLine(i + 1, program->getStatements()[i], objectCode);
@@ -81,7 +78,6 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
 void PassTwoController::executeStart(Statement *statement, Program *program) {
     std::string label = statement->getLabel()->getLabelField();
     int operand = statement->getOperand()->getLCIncrement();
-    /*if source name more than 6 characters ..error*/
     if (label.length() > MAX_SOURCENAME_LENGTH) {
         throw ErrorHandler::invalid_source_name;
     }
@@ -89,7 +85,6 @@ void PassTwoController::executeStart(Statement *statement, Program *program) {
                                  Hexadecimal::intToHex(program->getProgramLength()));
 }
 
-/*typical case of instruction*/
 std::string PassTwoController::executeInstruction(Statement *statement,
                                                   std::map<std::string, int> &symbolTable) {
     std::string mnemonic;
@@ -121,7 +116,6 @@ std::string PassTwoController::executeInstruction(Statement *statement,
             }
         }
     }
-    // Rsub fails here, we need to check for it or sth.
     objectWriter->writeTextRecord(objectCode, Hexadecimal::intToHex(statement->getStatementLocationPointer()));
     return objectCode;
 }
@@ -135,7 +129,6 @@ void PassTwoController::executeRES(Statement *statement) {
 
 std::string PassTwoController::executeWord(Statement *statement) {
     std::string address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
-    //Error if word length > 3 bytes.
     if (address.length() > MAX_WORD_LENGTH) {
         throw ErrorHandler::address_out_of_range;
     }

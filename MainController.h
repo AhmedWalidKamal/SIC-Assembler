@@ -7,7 +7,6 @@
 
 #include <unordered_map>
 #include <string>
-#include "file/write/FileWriter.h"
 #include "file/read/FileReader.h"
 #include "directive/Directive.h"
 #include "pass1/PassOneController.h"

@@ -23,14 +23,11 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
     startNewRecord(startAddress);
 }
 
-
-//writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
     recordLength = getRecordLength(record);
     objectFileStream << recordLength << SEPARATOR << record << std::endl;
 }
 
-/*performs writing of typical case of instruction object code*/
 void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locationCounter) {
     objectCode = stringUtil->fillZeros(objectCode, FIELD_LENGTH);
     //check if after adding this instruction object code will fit or i need to start a new record.
@@ -65,7 +62,6 @@ void ObjectFileWriter::writeEndRecord(std::string startAddress) {
     objectFileStream.close();
 }
 
-/*to be implemented*/
 void ObjectFileWriter::writeModRecord() {
 
 }

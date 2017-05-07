@@ -9,13 +9,11 @@
 
 IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, const std::string fileExtension)
         : fileName(fileName), fileExtension(fileExtension) {
-    // Check this or change it whatever, just open a file with the file name and extension for writing.
     IntermediateFileWriter::intermediateFileStream.open(std::string(fileName).append(fileExtension));
     stringUtil = new StringUtil();
 }
 
 void IntermediateFileWriter::writeInitialLine() {
-    //TODO check range for filling spaces
     intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
     intermediateFileStream << stringUtil->fillSpaces("Line", LINE_FORMAT) << stringUtil->fillSpaces("Loc", LOC_FORAMT)
                            << "Source Statement" << std::endl;
@@ -37,7 +35,6 @@ void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement
 }
 
 void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
-    // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
     std::string lineNum = stringUtil->fillSpaces(stringUtil->toString(lineNumber),SPACE_BOUND);
     intermediateFileStream << lineNum << line << std::endl;
 }

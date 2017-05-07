@@ -11,11 +11,9 @@
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"
 #include "../../error/ErrorHandler.h"
-#include "FileWriter.h"
 
 class ListingFileWriter {
 public:
-    //constructor
     ListingFileWriter(const std::string &fileName);
 
     void writeInitialLine();

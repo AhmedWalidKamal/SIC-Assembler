@@ -43,7 +43,6 @@ void ListingFileWriter::writeError(ErrorHandler::Error error) {
 }
 
 void ListingFileWriter::writeComment(int lineNumber, std::string line) {
-    // Write comment line starting from source statement after writing line number (no loc ctr is written here i guess).
     std::string lineNum = stringUtil->fillSpaces(stringUtil->toString(lineNumber), SPACE_BOUND);
     listFileStream<<lineNum<<line<<std::endl;
 }

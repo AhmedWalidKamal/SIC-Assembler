@@ -11,7 +11,6 @@
 #include <unordered_map>
 #include "../../statement/Statement.h"
 #include "../../error/ErrorHandler.h"
-#include "FileWriter.h"
 #include "../../util/StringUtil.h"
 
 class IntermediateFileWriter {

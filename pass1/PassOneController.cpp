@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "PassOneController.h"
-#include "../file/write/FileWriter.h"
 #include "../format/FormatThree.h"
 #include "../file/write/IntermediateFileWriter.h"
 #include "../error/ErrorHandler.h"
@@ -20,7 +19,7 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
     PassOneController::lineNumber = 1;
     PassOneController::locationCounter = 0;
     PassOneController::startAddress = -1;
-    PassOneController::endAddress = -1; // Modified when END directive is reached.
+    PassOneController::endAddress = -1;
 }
 
 bool PassOneController::execute(std::map<std::string, int> &symbolTable,
@@ -46,11 +45,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-
-            /// Updating LC
             statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
-
-            /// Updating SymTable
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
@@ -59,7 +54,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 
             }
-            /// Writing to file
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }

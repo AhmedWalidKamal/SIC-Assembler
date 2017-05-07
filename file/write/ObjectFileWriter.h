@@ -13,26 +13,21 @@
 class ObjectFileWriter {
 
 public:
-    //constructor
     ObjectFileWriter(const std::string &fileName);
 
     void writeHeader(std::string sourceName, std::string startAddress, std::string length);
 
-    //writes the start of a new record
     void startNewRecord(std::string startAddress);
 
-    //writes the whole text record.
     void writeTextRecord();
 
-    //writes only one instruction to the text record.
     void writeTextRecord(std::string objectCode, std::string locationCounter);
 
     void writeEndRecord(std::string startAddress);
-    void writebeforeReserve();
+
     void writeModRecord();
-    //still to see what paramters shall it take in order to be able to write the modification record
     int instructionCounter=0;
-    bool resFlag= false;
+
 private:
     std::ofstream objectFileStream;
     StringUtil *stringUtil;

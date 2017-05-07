@@ -23,7 +23,6 @@ FileReader::FileReader(const std::string &fileName) {
     std::size_t dotPos = fileName.find_first_of(".");
     FileReader::fileName = fileName.substr (0, dotPos);
     FileReader::fileExtension = fileName.substr(dotPos);
-    // This could be changed in the future to a FreeFormatBuilder if desired.
     builder = new FixedFormatBuilder();
 }
 
