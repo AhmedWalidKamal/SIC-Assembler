@@ -11,8 +11,8 @@ class Regex {
 
  public :
 
-    static std :: regex isEmpty;
-    static std :: regex isLabel;
+    static std::regex isEmpty;
+    static std::regex isLabel;
     static std::regex integerValue;
     static std::regex integerAddress;
     static std::regex hexaAddress;
@@ -21,6 +21,7 @@ class Regex {
     static std::regex literalHexa;
     static std::regex star;
     static std::regex isLabelOperand;
+    static std::regex asmFile;
 };
 
 

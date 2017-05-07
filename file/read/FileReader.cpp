@@ -8,20 +8,23 @@
 #include <algorithm>
 #include "FileReader.h"
 #include "../../statement/util/FixedFormatBuilder.h"
+#include <regex>
 
 FileReader::FileReader(const std::string &fileName) {
     this->sourceFileStream.open(fileName);
-    FileReader::fileName = fileName;
-    /// I need to check that extension is .asm and store it in the private field.
-  //  std::cout << "File name is: " << fileName << std::endl;
     if (sourceFileStream.fail()) {
         std::cout << "Couldn't open file." << std::endl;
         exit(1);
     }
+    if (!std::regex_match(fileName, Regex::asmFile)) {
+        std::cout << "File should have asm extension." << std::endl;
+        exit(1);
+    }
+    std::size_t dotPos = fileName.find_first_of(".");
+    FileReader::fileName = fileName.substr (0, dotPos);
+    FileReader::fileExtension = fileName.substr(dotPos);
     // This could be changed in the future to a FreeFormatBuilder if desired.
     builder = new FixedFormatBuilder();
-
-    /// File prints correctly, but i think there's an error in the file reading line by line.
 }
 
 Statement *FileReader::getNextStatement() {
