@@ -25,7 +25,7 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
 
 //writes whole text record after concatenating many instructions object code to the string record.
 void ObjectFileWriter::writeTextRecord() {
-    recordLength = Hexadecimal::intToHex(3 * record.length());
+    recordLength = Hexadecimal::intToHex(3 * instructionCounter);
     objectFileStream << recordLength <<SEPARATOR<< record << std::endl;
 
 }
@@ -44,13 +44,16 @@ void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locat
     }
     record +=objectCode+SEPARATOR;
 
-
 }
 
 void ObjectFileWriter::startNewRecord(std::string startAddress) {
-        record ="";
+
+        //record ="";
         objectFileStream << "T" << "^";
         objectFileStream << stringUtil->fillZeros(startAddress, FIELD_LENGTH) << "^";
+        if (!resFlag){
+            record="";
+        }
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {
@@ -59,7 +62,6 @@ void ObjectFileWriter::writeEndRecord(std::string startAddress) {
     startAddress = stringUtil->fillZeros(startAddress, FIELD_LENGTH);
     objectFileStream << startAddress;
     objectFileStream.close();
-
 }
 
 /*to be implemented*/
