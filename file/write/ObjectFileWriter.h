@@ -31,8 +31,8 @@ public:
 
     void writeModRecord();
     //still to see what paramters shall it take in order to be able to write the modification record
-    //bool newRecord = false;
     int instructionCounter=0;
+    bool resFlag= false;
 private:
     std::ofstream objectFileStream;
     StringUtil *stringUtil;
