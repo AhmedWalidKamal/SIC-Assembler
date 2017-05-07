@@ -14,7 +14,7 @@ class ObjectFileWriter {
 
 public:
     //constructor
-    ObjectFileWriter(const std::string &fileName, const std::string fileExtension);
+    ObjectFileWriter(const std::string &fileName);
 
     void writeHeader(std::string sourceName, std::string startAddress, std::string length);
 

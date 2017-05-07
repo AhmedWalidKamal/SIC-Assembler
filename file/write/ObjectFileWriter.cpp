@@ -6,8 +6,8 @@
 #include <iostream>
 #include "ObjectFileWriter.h"
 
-ObjectFileWriter::ObjectFileWriter(const std::string &fileName, const std::string fileExtension)
-        : fileName(fileName), fileExtension(fileExtension) {
+ObjectFileWriter::ObjectFileWriter(const std::string &fileName)
+        : fileName(fileName), fileExtension(".obj") {
     ObjectFileWriter::objectFileStream.open(std::string(fileName).append(fileExtension));
     stringUtil = new StringUtil();
 }

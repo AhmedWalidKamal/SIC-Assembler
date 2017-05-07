@@ -9,7 +9,6 @@ int ByteDirective :: execute(int& start, int& end, int& locationCounter,int incr
     int currentLocationCounter = locationCounter;
     locationCounter += incrementValue;
     return currentLocationCounter;
-    return locationCounter;
 }
 
 void

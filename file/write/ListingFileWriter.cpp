@@ -6,8 +6,8 @@
 #include "ListingFileWriter.h"
 
 
-ListingFileWriter::ListingFileWriter(const std::string &fileName, const std::string fileExtension)
-        : fileName(fileName), fileExtension(fileExtension) {
+ListingFileWriter::ListingFileWriter(const std::string &fileName)
+        : fileName(fileName), fileExtension(".lst") {
     ListingFileWriter::listFileStream.open(std::string(fileName).append(fileExtension));
     stringUtil = new StringUtil();
 }

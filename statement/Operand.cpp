@@ -4,6 +4,7 @@
 
 #include <regex>
 #include "Operand.h"
+#include "../datatypes/Hexadecimal.h"
 #include <string>
 
 Operand::Operand(std::string operandField) {
@@ -151,7 +152,6 @@ bool Operand::validateHexConstant() {
             type = inValid;
             return false;
         }
-
     }
 }
 

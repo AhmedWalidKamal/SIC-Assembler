@@ -14,7 +14,6 @@ void readFile(std::string fileName);
 
 int main(int argc, char **argv) {
     // argv contains possible -commands or file name directly, pass it to main controller and start working.
-    std::cout << "Starting to make some real shit.." << std::endl;
     if (argc > 1) {
         int fileNameIndex = handleOptionsArgs(argv);
         readFile(argv[fileNameIndex]);

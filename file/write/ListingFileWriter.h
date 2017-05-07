@@ -16,7 +16,7 @@
 class ListingFileWriter {
 public:
     //constructor
-    ListingFileWriter(const std::string &fileName, const std::string fileExtension);
+    ListingFileWriter(const std::string &fileName);
 
     void writeInitialLine();
 
