@@ -52,7 +52,7 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateIndexed() {
-    indexed = regex_match(operandField,regex.Indexed);
+    indexed = regex_match(operandField, regex.Indexed);
     if (indexed){
         std::size_t found = operandField.find_first_of(",");
         operandField= operandField.substr(0,found);

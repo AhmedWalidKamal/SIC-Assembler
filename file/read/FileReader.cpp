@@ -32,9 +32,21 @@ Statement *FileReader::getNextStatement() {
     std::getline(sourceFileStream, currentLine);
     std::transform(currentLine.begin(), currentLine.end(), currentLine.begin(),
                    [](unsigned char c) { return std::toupper(c); }); // Clean this up and test it.
-    // Replace all tabs with spaces
-    builder->buildStatement(currentLine);
+    std::string formattedLine = getFormattedLine(currentLine);
+    builder->buildStatement(formattedLine);
     return builder->getStatement();
+}
+
+std::string FileReader::getFormattedLine(std::string line) {
+    std::string formattedString = "";
+    for (char currentChar : line) {
+        if (currentChar == '\t') {
+            formattedString.append("    ");
+        } else {
+            formattedString.push_back(currentChar);
+        }
+    }
+    return formattedString;
 }
 
 bool FileReader::finishedReading() {

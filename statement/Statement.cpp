@@ -14,7 +14,7 @@ Statement::Statement() {
 }
 
 bool Statement::isComment() {
-    return Statement::statementField.front() == '.';
+    return std::regex_match(Statement::statementField, Regex::commentOrEmptyLine);
 }
 
 Label *Statement::getLabel() const {

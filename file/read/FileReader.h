@@ -31,6 +31,8 @@ private:
     std::string fileName;
     std::string fileExtension;
     StatementBuilder *builder;
+
+    std::string getFormattedLine(std::string basic_string);
 };
 
 
