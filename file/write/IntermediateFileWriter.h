@@ -40,7 +40,6 @@ private:
     const int LINE_LENGTH = 80;
     const int LINE_FORMAT = 10;
     const int LOC_FORAMT = 25;
-    StringUtil *stringUtil;
 };
 
 

@@ -10,32 +10,31 @@
 IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, const std::string fileExtension)
         : fileName(fileName), fileExtension(fileExtension) {
     IntermediateFileWriter::intermediateFileStream.open(std::string(fileName).append(fileExtension));
-    stringUtil = new StringUtil();
 }
 
 void IntermediateFileWriter::writeInitialLine() {
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
-    intermediateFileStream << stringUtil->fillSpaces("Line", LINE_FORMAT) << stringUtil->fillSpaces("Loc", LOC_FORAMT)
+    intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << StringUtil::fillSpaces("Line", LINE_FORMAT) << StringUtil::fillSpaces("Loc", LOC_FORAMT)
                            << "Source Statement" << std::endl;
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
 
 }
 
 // Writes line to intermediate file "FIXED FORMAT APPLIED".
 
 void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement) {
-    std::string line = stringUtil->fillSpaces(stringUtil->toString(lineNumber), SPACE_BOUND);
-    std::string locationCounter = stringUtil->fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
+    std::string line = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
+    std::string locationCounter = StringUtil::fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
                                                          SPACE_BOUND);
-    std::string label = stringUtil->fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
-    std::string mnemonic = stringUtil->fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
-    std::string operand = stringUtil->fillSpaces(statement->getOperand()->getrawInput(), OPERAND_BOUND);
+    std::string label = StringUtil::fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
+    std::string mnemonic = StringUtil::fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
+    std::string operand = StringUtil::fillSpaces(statement->getOperand()->getrawInput(), OPERAND_BOUND);
     std::string comment = statement->getComment()->getComment();
     intermediateFileStream << line << locationCounter << label << mnemonic << operand << comment << std::endl;
 }
 
 void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
-    std::string lineNum = stringUtil->fillSpaces(stringUtil->toString(lineNumber),SPACE_BOUND);
+    std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
     intermediateFileStream << lineNum << line << std::endl;
 }
 
@@ -43,15 +42,15 @@ void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
 void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbolTable) {
 
 
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
-    intermediateFileStream << stringUtil->fillSpaces("Symbol", SYMBOLTABLE_BOUND);
+    intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << StringUtil::fillSpaces("Symbol", SYMBOLTABLE_BOUND);
     intermediateFileStream << "Assigned Address";
     intermediateFileStream << std::endl;
-    intermediateFileStream << stringUtil->drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
 
     // Iterate over the map using iterator
     for (auto curr : symbolTable) {
-        intermediateFileStream << stringUtil->fillSpaces(curr.first, SYMBOLTABLE_BOUND)
+        intermediateFileStream << StringUtil::fillSpaces(curr.first, SYMBOLTABLE_BOUND)
                         << Hexadecimal::intToHex(curr.second) << std::endl;
     }
 }

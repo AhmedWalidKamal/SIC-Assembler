@@ -37,7 +37,6 @@ private:
     const int LOC_FORAMT = 25;
     const int STATEMENT_FORAMT = 35;
     const int LINE_LENGTH = 80;
-    StringUtil *stringUtil;
 };
 
 

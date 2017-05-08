@@ -30,7 +30,6 @@ public:
 
 private:
     std::ofstream objectFileStream;
-    StringUtil *stringUtil;
     const std::string fileName;
     const std::string fileExtension;
     std::string record;
