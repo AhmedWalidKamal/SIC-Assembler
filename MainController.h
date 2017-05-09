@@ -10,7 +10,6 @@
 #include "file/read/FileReader.h"
 #include "directive/Directive.h"
 #include "pass1/PassOneController.h"
-#include "format/Format.h"
 #include "statement/Instruction.h"
 #include "file/write/ObjectFileWriter.h"
 #include "file/write/IntermediateFileWriter.h"

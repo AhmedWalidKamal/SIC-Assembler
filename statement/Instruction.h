@@ -5,23 +5,19 @@
 #ifndef SIC_ASSEMBLER_INSTRUCTION_H
 #define SIC_ASSEMBLER_INSTRUCTION_H
 
-
-#include "../format/Format.h"
-
 class Instruction {
 public:
-    Instruction(std::string instructionName, int opCode, Format *format, int numberOfOperands);
+    Instruction(std::string instructionName, int opCode, int format, int numberOfOperands);
 
     const std::string &getInstructionName() const;
     int getOpCode() const;
-    Format *getFormat() const;
     int getNumberOfOperands() const;
+    int getFormat() const;
 
 private:
     std::string instructionName;
-    int opCode;
-    Format *format;
-    int numberOfOperands;
+    int opCode, format, numberOfOperands;
+
 };
 
 

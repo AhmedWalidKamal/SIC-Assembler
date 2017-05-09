@@ -5,7 +5,6 @@
 #include <iostream>
 #include <cstdlib>
 #include "PassOneController.h"
-#include "../format/FormatThree.h"
 #include "../file/write/IntermediateFileWriter.h"
 #include "../error/ErrorHandler.h"
 #include "../util/Program.h"

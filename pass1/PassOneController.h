@@ -9,7 +9,6 @@
 #include <unordered_map>
 #include <map>
 #include "../file/read/FileReader.h"
-#include "../format/Format.h"
 #include "../directive/Directive.h"
 #include "../statement/Instruction.h"
 #include "../util/Program.h"

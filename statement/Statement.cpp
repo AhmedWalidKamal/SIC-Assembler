@@ -73,7 +73,7 @@ void Statement::execute(int &start, int &end, int &locationCounter,
                 ->execute(start, end, locationCounter, getOperand()->getLCIncrement());
     } else {
         statementLocationPointer = locationCounter;
-        instructionTable[getMnemonic()->getMnemonicField()]->getFormat()->execute(locationCounter);
+        locationCounter += instructionTable[getMnemonic()->getMnemonicField()]->getFormat();
     }
 }
 

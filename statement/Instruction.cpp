@@ -4,9 +4,8 @@
 
 #include <string>
 #include "Instruction.h"
-#include "../format/Format.h"
 
-Instruction::Instruction(std::string instructionName, int opCode, Format *format, int numberOfOperands) {
+Instruction::Instruction(std::string instructionName, int opCode, int format, int numberOfOperands) {
     Instruction::instructionName = instructionName;
     Instruction::opCode = opCode;
     Instruction::format = format;
@@ -21,10 +20,10 @@ int Instruction::getOpCode() const {
     return opCode;
 }
 
-Format *Instruction::getFormat() const {
-    return format;
-}
-
 int Instruction::getNumberOfOperands() const {
     return numberOfOperands;
+}
+
+int Instruction::getFormat() const {
+    return format;
 }

@@ -18,7 +18,8 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     std::string mnemonic;
     for (int i = 0; i < program->getStatements().size(); i++) {
         if (program->getStatements()[i]->isComment()) {
-            listingWriter->writeComment(i + 1, program->getStatements()[i]->getStatementField());}
+            listingWriter->writeComment(i + 1, program->getStatements()[i]->getStatementField());
+        }
         else {
             mnemonic = program->getStatements()[i]->getMnemonic()->getMnemonicField();
             try {
@@ -55,7 +56,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                 getStatementLocationPointer()));
                     }
                     executeEnd(program->getStatements()[i], symbolTable);
-                    checkIn= false;
+                    checkIn = false;
                 } else {
                     if (checkIn) {
                         objectWriter->
@@ -63,7 +64,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                 getStatementLocationPointer()));
                     }
                     objectCode = executeInstruction(program->getStatements()[i], symbolTable);
-                    checkIn= false;
+                    checkIn = false;
                 }
             } catch (ErrorHandler::Error error) {
                 listingWriter->writeError(error);
@@ -72,7 +73,6 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             objectCode = "";
         }
     }
-
 }
 
 void PassTwoController::executeStart(Statement *statement, Program *program) {

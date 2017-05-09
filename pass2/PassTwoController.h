@@ -10,7 +10,6 @@
 #include <unordered_map>
 #include <vector>
 #include "../file/write/ObjectFileWriter.h"
-#include "../format/Format.h"
 #include "../statement/Statement.h"
 #include "../statement/Operand.h"
 #include "../file/write/ListingFileWriter.h"
@@ -51,11 +50,6 @@ private:
     const std::string WORD="WORD";
     const std::string RESW="RESW";
     const std::string RESB="RESB";
-    const std::string objectName;
-    const std::string objectExtension;
-    const std::string listingName;
-    const std::string listingExtension;
-
     bool checkIn = false;
 };
 

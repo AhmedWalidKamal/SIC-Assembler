@@ -1,9 +1,0 @@
-//
-// Created by Walid on 5/3/2017.
-//
-
-#include "FormatOne.h"
-
-void FormatOne::execute(int &locationCounter) {
-    locationCounter += 1;
-}
