@@ -21,70 +21,60 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             listingWriter->writeComment(lineNumber, currentStatement->getStatementField());
         }
         else {
-            std::string mnemonic;
+            std::string mnemonic = "";
+            std::string objectCode = "";
             mnemonic = currentStatement->getMnemonic()->getMnemonicField();
             try {
                 if (mnemonic == START) {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(currentStatement->
-                                getStatementLocationPointer()));
-                    }
                     executeStart(currentStatement, program);
-                    checkIn= false;
                 } else if (mnemonic == END) {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(currentStatement->
-                                getStatementLocationPointer()));
-                    }
                     executeEnd(currentStatement, symbolTable);
-                    checkIn = false;
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     executeRES();
                 } else if (mnemonic == BYTE) {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(currentStatement->
-                                getStatementLocationPointer()));
-                    }
-                    objectCode = executeByte(currentStatement);
-                    checkIn= false;
+                   objectCode = executeByte(currentStatement);
                 } else if (mnemonic == WORD) {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(currentStatement->
-                                getStatementLocationPointer()));
-                    }
                     objectCode = executeWord(currentStatement);
-                    checkIn= false;
                 } else {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(currentStatement->
-                                getStatementLocationPointer()));
-                    }
                     objectCode = executeInstruction(currentStatement, symbolTable);
-                    checkIn = false;
                 }
             } catch (ErrorHandler::Error error) {
                 listingWriter->writeError(error);
             }
             listingWriter->writeLine(lineNumber, currentStatement, objectCode);
-            objectCode = "";
         }
         lineNumber++;
     }
 }
 
 void PassTwoController::executeStart(Statement *statement, Program *program) {
-    std::string label = statement->getLabel()->getLabelField();
-    int operand = statement->getOperand()->getLCIncrement();
-    if (label.length() > MAX_SOURCENAME_LENGTH) {
+    if (statement->getLabel()->getLabelField().length() > MAX_SOURCENAME_LENGTH) {
         throw ErrorHandler::invalid_source_name;
     }
-    objectWriter->writeHeader(label, Hexadecimal::intToHex(operand),
-                                 Hexadecimal::intToHex(program->getProgramLength()));
+    objectWriter->writeHeader(statement->getLabel()->getLabelField(),
+                              Hexadecimal::intToHex(statement->getOperand()->getLCIncrement()),
+                              Hexadecimal::intToHex(program->getProgramLength()));
+}
+
+void PassTwoController::executeEnd(Statement *statement, std::map<std::string, int> &symbolTable) {
+    int executableAddress = 0;
+    if (statement->getOperand()->isLabel()) {
+        if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
+            throw ErrorHandler::undeclared_label;
+        }
+        executableAddress = symbolTable[statement->getOperand()->getOperandField()];
+    } else if (statement->getOperand()->isFixedAddress()) {
+        executableAddress = statement->getOperand()->getLCIncrement();
+    } else {
+        objectWriter->writeEndRecord("");
+        return;
+    }
+    objectWriter->writeEndRecord(Hexadecimal::intToHex(executableAddress));
+}
+
+void PassTwoController::executeRES() {
+    objectWriter->writeCurrentTextRecord();
+    objectWriter->startNewTextRecord(-1);
 }
 
 std::string PassTwoController::executeInstruction(Statement *statement,
@@ -106,56 +96,42 @@ std::string PassTwoController::executeInstruction(Statement *statement,
             address = statement->getStatementLocationPointer();
         }
     }
-    objectWriter->writeTextRecord(getSicObjectCode(opCode, indexBit, address),
-                                  Hexadecimal::intToHex(statement->getStatementLocationPointer()));
+    objectWriter->addRecordToTextRecord(StringUtil::fillZeros(getSicObjectCode(opCode, indexBit, address),
+                                                              MAX_WORD_LENGTH), statement->getStatementLocationPointer());
+//    objectWriter->writeTextRecord(getSicObjectCode(opCode, indexBit, address),
+//                                  Hexadecimal::intToHex(statement->getStatementLocationPointer()));
     return getSicObjectCode(opCode, indexBit, address);
-}
-
-void PassTwoController::executeRES() {
-    if (!checkIn) {
-        objectWriter->writeTextRecord();
-        checkIn = true;
-    }
 }
 
 /// Assumption -> Maximum length for WORD directive's operand is 3 bytes.
 std::string PassTwoController::executeWord(Statement *statement) {
-    std::string address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
-    if (address.length() > MAX_WORD_LENGTH) {
+    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+    if (operand.length() > MAX_WORD_LENGTH) {
         throw ErrorHandler::address_out_of_range;
     }
-    std::string location = Hexadecimal::intToHex(statement->getStatementLocationPointer());
-    objectWriter->writeTextRecord(address, location);
-    return address;
+    objectWriter->addRecordToTextRecord(StringUtil::fillZeros(operand, MAX_WORD_LENGTH), statement->getStatementLocationPointer());
+    //objectWriter->writeTextRecord(address, location);
+    return operand;
 }
 
 /// Assumption -> Maximum length for BYTE directive's operand is 15 byte or 14 Hex digits.
 std::string PassTwoController::executeByte(Statement *statement) {
     std::string address;
     if (statement->getOperand()->isHexConstant()) {
-         address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+        address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
     } else {
         address = Hexadecimal::stringToHex(statement->getOperand()->getOperandField());
     }
     if (address.length() > MAX_BYTE_LENGTH) {
         throw ErrorHandler::address_out_of_range;
     }
-    objectWriter->writeTextRecord(address, Hexadecimal::intToHex(statement->getStatementLocationPointer()));
-    return address;
-}
-
-void PassTwoController::executeEnd(Statement *statement, std::map<std::string, int> &symbolTable) {
-    if (statement->getOperand()->isLabel()) {
-        std::string operand = statement->getOperand()->getOperandField();
-        if (symbolTable[operand] == -1)
-            throw ErrorHandler::undeclared_label;
-        objectWriter->writeEndRecord(Hexadecimal::intToHex(symbolTable[operand]));
-    } else if (statement->getOperand()->isFixedAddress()) {
-        int operand = statement->getOperand()->getLCIncrement();
-        objectWriter->writeEndRecord(Hexadecimal::intToHex(operand));
-    } else {
-        objectWriter->writeEndRecord("");
+    // Adding a 0 if the hex length was odd.
+    if (address.length() % 2 != 0) {
+        address = StringUtil::fillZeros(address, address.length() + 1);
     }
+    objectWriter->addRecordToTextRecord(address, statement->getStatementLocationPointer());
+  //  objectWriter->writeTextRecord(address, Hexadecimal::intToHex(statement->getStatementLocationPointer()));
+    return address;
 }
 
 std::string PassTwoController::getSicObjectCode(int opCode, int indexBit, int address) {

@@ -39,20 +39,17 @@ private:
 
     ObjectFileWriter *objectWriter;
     ListingFileWriter *listingWriter;
-    std::string objectCode;
 
     std::map<std::string, Instruction *> instructionTable;
-    const int INDEXINGVALUE = 32768; //TODO perform hexadecimal addition for the value of one int the leftmost bot instead of hardcoded.
     const int MAX_WORD_LENGTH = 6;
     const int MAX_BYTE_LENGTH = 15;
     const int MAX_SOURCENAME_LENGTH = 6;
-    const std::string START="START";
-    const std::string END="END";
-    const std::string BYTE="BYTE";
-    const std::string WORD="WORD";
-    const std::string RESW="RESW";
-    const std::string RESB="RESB";
-    bool checkIn = false;
+    const std::string START = "START";
+    const std::string END = "END";
+    const std::string BYTE = "BYTE";
+    const std::string WORD = "WORD";
+    const std::string RESW = "RESW";
+    const std::string RESB = "RESB";
 };
 
 

@@ -9,6 +9,7 @@
 #include <fstream>
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"
+#include "TextRecord.h"
 
 class ObjectFileWriter {
 
@@ -17,28 +18,24 @@ public:
 
     void writeHeader(std::string sourceName, std::string startAddress, std::string length);
 
-    void startNewRecord(std::string startAddress);
+    void startNewTextRecord(int address);
 
-    void writeTextRecord();
+    void addRecordToTextRecord(std::string objectCode, int address);
 
-    void writeTextRecord(std::string objectCode, std::string locationCounter);
+    void writeCurrentTextRecord();
 
     void writeEndRecord(std::string startAddress);
 
     void writeModRecord();
-    int instructionCounter=0;
 
 private:
     std::ofstream objectFileStream;
     const std::string fileName;
     const std::string fileExtension;
-    std::string record;
-    std::string recordLength;
     int MAX_RECORD_LEN = 30;
     std::string SEPARATOR = "^";
     int FIELD_LENGTH = 6;
-
-    std::string getRecordLength(std::string basic_string);
+    TextRecord *textRecord;
 };
 
 

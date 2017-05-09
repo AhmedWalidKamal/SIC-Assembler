@@ -9,6 +9,7 @@
 ObjectFileWriter::ObjectFileWriter(const std::string &fileName)
         : fileName(fileName), fileExtension(".obj") {
     ObjectFileWriter::objectFileStream.open(std::string(fileName).append(fileExtension));
+    textRecord = new TextRecord(-1);
 }
 
 void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddress, std::string length) {
@@ -18,45 +19,20 @@ void ObjectFileWriter::writeHeader(std::string sourceName, std::string startAddr
     objectFileStream << sourceName << "^";
     startAddress = StringUtil::fillZeros(startAddress, FIELD_LENGTH);
     objectFileStream << startAddress << "^";
+    int offset = FIELD_LENGTH - length.length();
+    while (offset--) {
+        objectFileStream << "0";
+    }
     objectFileStream << length << std::endl;
-    startNewRecord(startAddress);
-}
-
-void ObjectFileWriter::writeTextRecord() {
-    recordLength = getRecordLength(record);
-    objectFileStream << recordLength << SEPARATOR << record << std::endl;
-}
-
-void ObjectFileWriter::writeTextRecord(std::string objectCode, std::string locationCounter) {
-    objectCode = StringUtil::fillZeros(objectCode, FIELD_LENGTH);
-    //check if after adding this instruction object code will fit or i need to start a new record.
-    instructionCounter++;
-    std::string temp = record + objectCode;
-    std::string modifiedString = "";
-    for (char curr : temp) {
-        if (curr != '^') {
-            modifiedString.push_back(curr);
-        }
-    }
-    if(modifiedString.length() / 2 > ObjectFileWriter::MAX_RECORD_LEN) {
-        writeTextRecord();
-        startNewRecord(locationCounter);
-    }
-    record += objectCode + SEPARATOR;
-}
-
-void ObjectFileWriter::startNewRecord(std::string startAddress) {
-        record = "";
-        instructionCounter = 0;
-        objectFileStream << "T" << "^";
-        objectFileStream << StringUtil::fillZeros(startAddress, FIELD_LENGTH) << "^";
 }
 
 void ObjectFileWriter::writeEndRecord(std::string startAddress) {
-    writeTextRecord();
-    objectFileStream << "E" << "^";
-    startAddress = StringUtil::fillZeros(startAddress, FIELD_LENGTH);
-    objectFileStream << startAddress;
+    writeCurrentTextRecord();
+    objectFileStream << "E";
+    if (!startAddress.empty()) {
+        startAddress = StringUtil::fillZeros(startAddress, FIELD_LENGTH); // shouldn't this be appending 0s before the address?
+        objectFileStream << "^" << startAddress;
+    }
     objectFileStream.close();
 }
 
@@ -64,13 +40,35 @@ void ObjectFileWriter::writeModRecord() {
 
 }
 
-std::string ObjectFileWriter::getRecordLength(std::string record) {
-    std::string modifiedString = "";
-    for (char curr : record) {
-        if (curr != '^') {
-            modifiedString.push_back(curr);
+void ObjectFileWriter::writeCurrentTextRecord() {
+    if (textRecord->getStartingAddress() != -1) {
+        objectFileStream << "T^" << StringUtil::fillZeros(Hexadecimal::intToHex(textRecord->getStartingAddress()), FIELD_LENGTH);
+        objectFileStream << "^";
+        if (Hexadecimal::intToHex(textRecord->getLength()).length() < 2) {
+            objectFileStream << "0" << Hexadecimal::intToHex(textRecord->getLength());
+        } else {
+            objectFileStream << Hexadecimal::intToHex(textRecord->getLength());
         }
+
+        for (auto record : textRecord->getRecords()) {
+            objectFileStream << "^" << record;
+        }
+        objectFileStream << std::endl;
     }
-    return Hexadecimal::intToHex(modifiedString.length() / 2);
+}
+
+void ObjectFileWriter::addRecordToTextRecord(std::string objectCode, int address) {
+    if ((objectCode.length() / 2) + textRecord->getLength() <= MAX_RECORD_LEN
+        && textRecord->getStartingAddress() != -1) {
+        textRecord->addRecord(objectCode);
+    } else {
+        writeCurrentTextRecord();
+        startNewTextRecord(address);
+        textRecord->addRecord(objectCode);
+    }
+}
+
+void ObjectFileWriter::startNewTextRecord(int address) {
+    textRecord = new TextRecord(address);
 }
 
