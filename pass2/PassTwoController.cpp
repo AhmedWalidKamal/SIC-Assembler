@@ -166,3 +166,7 @@ void PassTwoController::executeEnd(Statement *statement, std::map<std::string, i
         objectWriter->writeEndRecord("");
     }
 }
+
+std::string PassTwoController::getSicObjectCode(int opCode, int indexBit, int address) {
+    return Hexadecimal::intToHex(((((opCode << 1) | indexBit) << 15) | address));
+}

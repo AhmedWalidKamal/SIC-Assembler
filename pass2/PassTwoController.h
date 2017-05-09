@@ -35,6 +35,8 @@ private:
 
     void executeEnd(Statement *statement, std::map<std::string, int> &symbolTable);
 
+    std::string getSicObjectCode(int opCode, int indexBit, int address);
+
     ObjectFileWriter *objectWriter;
     ListingFileWriter *listingWriter;
     std::string objectCode;
