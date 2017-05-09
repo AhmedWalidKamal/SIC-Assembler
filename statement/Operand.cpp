@@ -64,8 +64,8 @@ void Operand::validateIndexed() {
 void Operand::validateLabel() {
 
     if (std::regex_match(operandField, Regex::isLabelOperand)){
-        std::transform(operandField.begin(), operandField.end(), operandField.begin(),
-                       [](unsigned char c) { return std::toupper(c); });
+        //std::transform(operandField.begin(), operandField.end(), operandField.begin(),
+                      // [](unsigned char c) { return std::toupper(c); });
         std::size_t found = operandField.find_first_of(" ");
         operandField= operandField.substr(0,found);
         type = Label;

@@ -24,8 +24,8 @@ bool Label::isValid() {
     bool isEmpty = regex_match(labelField,regex.isEmpty);
     bool isLabel = regex_match(labelField,regex.isLabel);
     if (isLabel) {
-        std::transform(labelField.begin(), labelField.end(), labelField.begin(),
-        [](unsigned char c) { return std::toupper(c); });
+        //std::transform(labelField.begin(), labelField.end(), labelField.begin(),
+        //[](unsigned char c) { return std::toupper(c); });
         std::size_t found = labelField.find_first_of(" ");
         labelField = labelField.substr(0,found);
 
