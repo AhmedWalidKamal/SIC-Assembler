@@ -118,7 +118,7 @@ std::string PassTwoController::executeWord(Statement *statement) {
 std::string PassTwoController::executeByte(Statement *statement) {
     std::string address;
     if (statement->getOperand()->isHexConstant()) {
-        address = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+        address = statement->getOperand()->getOperandField();
     } else {
         address = Hexadecimal::stringToHex(statement->getOperand()->getOperandField());
     }
