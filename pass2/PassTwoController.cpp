@@ -15,63 +15,65 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     PassTwoController::objectWriter = new ObjectFileWriter(fileName);
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
-    std::string mnemonic;
-    for (int i = 0; i < program->getStatements().size(); i++) {
-        if (program->getStatements()[i]->isComment()) {
-            listingWriter->writeComment(i + 1, program->getStatements()[i]->getStatementField());
+    int lineNumber = 1;
+    for (auto currentStatement : program->getStatements()) {
+        if (currentStatement->isComment()) {
+            listingWriter->writeComment(lineNumber, currentStatement->getStatementField());
         }
         else {
-            mnemonic = program->getStatements()[i]->getMnemonic()->getMnemonicField();
+            std::string mnemonic;
+            mnemonic = currentStatement->getMnemonic()->getMnemonicField();
             try {
                 if (mnemonic == START) {
                     if (checkIn) {
                         objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                startNewRecord(Hexadecimal::intToHex(currentStatement->
                                 getStatementLocationPointer()));
                     }
-                    executeStart(program->getStatements()[i], program);
+                    executeStart(currentStatement, program);
                     checkIn= false;
+                } else if (mnemonic == END) {
+                    if (checkIn) {
+                        objectWriter->
+                                startNewRecord(Hexadecimal::intToHex(currentStatement->
+                                getStatementLocationPointer()));
+                    }
+                    executeEnd(currentStatement, symbolTable);
+                    checkIn = false;
+                } else if (mnemonic == RESW || mnemonic == RESB) {
+                    executeRES();
                 } else if (mnemonic == BYTE) {
                     if (checkIn) {
                         objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                startNewRecord(Hexadecimal::intToHex(currentStatement->
                                 getStatementLocationPointer()));
                     }
-                    objectCode = executeByte(program->getStatements()[i]);
+                    objectCode = executeByte(currentStatement);
                     checkIn= false;
                 } else if (mnemonic == WORD) {
                     if (checkIn) {
                         objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                startNewRecord(Hexadecimal::intToHex(currentStatement->
                                 getStatementLocationPointer()));
                     }
-                    objectCode = executeWord(program->getStatements()[i]);
+                    objectCode = executeWord(currentStatement);
                     checkIn= false;
-                } else if (mnemonic == RESW || mnemonic == RESB) {
-                    executeRES(program->getStatements()[i]);
-                } else if (mnemonic == END) {
-                    if (checkIn) {
-                        objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
-                                getStatementLocationPointer()));
-                    }
-                    executeEnd(program->getStatements()[i], symbolTable);
-                    checkIn = false;
                 } else {
                     if (checkIn) {
                         objectWriter->
-                                startNewRecord(Hexadecimal::intToHex(program->getStatements()[i]->
+                                startNewRecord(Hexadecimal::intToHex(currentStatement->
                                 getStatementLocationPointer()));
                     }
-                    objectCode = executeInstruction(program->getStatements()[i], symbolTable);
+                    objectCode = executeInstruction(currentStatement, symbolTable);
                     checkIn = false;
                 }
             } catch (ErrorHandler::Error error) {
                 listingWriter->writeError(error);
             }
-            listingWriter->writeLine(i + 1, program->getStatements()[i], objectCode);
+            listingWriter->writeLine(lineNumber, currentStatement, objectCode);
             objectCode = "";
         }
+        lineNumber++;
     }
 }
 
@@ -87,40 +89,29 @@ void PassTwoController::executeStart(Statement *statement, Program *program) {
 
 std::string PassTwoController::executeInstruction(Statement *statement,
                                                   std::map<std::string, int> &symbolTable) {
-    std::string mnemonic;
-    mnemonic = statement->getMnemonic()->getMnemonicField();
-    std::string objectCode = Hexadecimal::intToHex(
-            instructionTable[mnemonic]->getOpCode());
+    int opCode = instructionTable[ statement->getMnemonic()->getMnemonicField()]->getOpCode();
+    int indexBit = 0, address = 0;
     if (!statement->getOperand()->isEmpty()) {
+        if (statement->getOperand()->isIndexed()) {
+            indexBit = 1;
+        }
         if (statement->getOperand()->isLabel()) {
-            std::string operand = statement->getOperand()->getOperandField();
-            if (symbolTable[operand] == -1) {
+            if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
                 throw ErrorHandler::undeclared_label;
             }
-            if (statement->getOperand()->isIndexed()) {
-                objectCode += Hexadecimal::intToHex(symbolTable[operand] + INDEXINGVALUE);
-            } else {
-                objectCode += Hexadecimal::intToHex(symbolTable[operand]);
-            }
+            address = symbolTable[statement->getOperand()->getOperandField()];
         } else if (statement->getOperand()->isFixedAddress()) {
-            if (statement->getOperand()->isIndexed()) {
-                objectCode += Hexadecimal::intToHex(statement->getOperand()->getLCIncrement() + INDEXINGVALUE);
-            } else {
-                objectCode += Hexadecimal::intToHex(statement->getOperand()->getLCIncrement());
-            }
+            address = statement->getOperand()->getLCIncrement();
         } else {
-            if (statement->getOperand()->isIndexed()) {
-                objectCode += Hexadecimal::intToHex(statement->getStatementLocationPointer() + INDEXINGVALUE);
-            } else {
-                objectCode += Hexadecimal::intToHex(statement->getStatementLocationPointer());
-            }
+            address = statement->getStatementLocationPointer();
         }
     }
-    objectWriter->writeTextRecord(objectCode, Hexadecimal::intToHex(statement->getStatementLocationPointer()));
-    return objectCode;
+    objectWriter->writeTextRecord(getSicObjectCode(opCode, indexBit, address),
+                                  Hexadecimal::intToHex(statement->getStatementLocationPointer()));
+    return getSicObjectCode(opCode, indexBit, address);
 }
 
-void PassTwoController::executeRES(Statement *statement) {
+void PassTwoController::executeRES() {
     if (!checkIn) {
         objectWriter->writeTextRecord();
         checkIn = true;

@@ -18,7 +18,7 @@ void Mnemonic::setMnemonicField(const std::string &mnemonicField) {
 }
 
 std::string &Mnemonic::getMnemonicField() {
-    return  mnemonicField;
+    return mnemonicField;
 }
 
 bool Mnemonic::isValid() {

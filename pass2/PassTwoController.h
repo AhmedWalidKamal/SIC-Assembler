@@ -27,7 +27,7 @@ private:
 
     std::string executeInstruction(Statement *statement, std::map<std::string, int> &symbolTable);
 
-    void executeRES(Statement *statement);
+    void executeRES();
 
     std::string executeWord(Statement *statement);
 
