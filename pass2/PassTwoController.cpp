@@ -40,6 +40,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 }
             } catch (ErrorHandler::Error error) {
                 listingWriter->writeError(error);
+                break;
             }
             listingWriter->writeLine(lineNumber, currentStatement, objectCode);
         }

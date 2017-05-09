@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 //    } else {
 //        std::cout << "No file name was entered.";
 //    }
-    readFile("SIC_Example.asm");
+    readFile("shell.asm");
     return 0;
 }
 
