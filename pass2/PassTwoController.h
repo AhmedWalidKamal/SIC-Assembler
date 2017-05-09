@@ -23,6 +23,14 @@ public:
                       Program *program, std::string fileName);
 
 private:
+    void startCheck(Statement *statement);
+
+    void byteCheck(Statement *statement);
+
+    void wordCheck(Statement *statement);
+
+    void instructionCheck(Statement *statement,std::map<std::string, int> &symbolTable);
+
     void executeStart(Statement *statement, Program *program);
 
     std::string executeInstruction(Statement *statement, std::map<std::string, int> &symbolTable);

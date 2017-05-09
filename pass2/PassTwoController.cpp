@@ -5,6 +5,7 @@
 #include "PassTwoController.h"
 #include <iostream>
 
+
 PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instructionTable) {
     PassTwoController::instructionTable = instructionTable;
 
@@ -12,19 +13,42 @@ PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instr
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                      Program *program, std::string fileName) {
-    PassTwoController::objectWriter = new ObjectFileWriter(fileName);
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     int lineNumber = 1;
+    int errorFlag = false;
     for (auto currentStatement : program->getStatements()) {
         if (currentStatement->isComment()) {
             listingWriter->writeComment(lineNumber, currentStatement->getStatementField());
-        }
-        else {
+        } else {
             std::string mnemonic = "";
             std::string objectCode = "";
             mnemonic = currentStatement->getMnemonic()->getMnemonicField();
             try {
+                if (mnemonic == START) {
+                    startCheck(currentStatement);
+                } else if (mnemonic == BYTE) {
+                    byteCheck(currentStatement);
+                } else if (mnemonic == WORD) {
+                    wordCheck(currentStatement);
+                } else {
+                    instructionCheck(currentStatement, symbolTable);
+                }
+            } catch (ErrorHandler::Error error) {
+                listingWriter->writeError(error);
+                errorFlag=true;
+            }
+            listingWriter->writeLine(lineNumber, currentStatement, objectCode);
+        }
+        lineNumber++;
+    }
+    if (!errorFlag) {
+        PassTwoController::objectWriter = new ObjectFileWriter(fileName);
+        for (auto currentStatement : program->getStatements()) {
+            if (!currentStatement->isComment()) {
+                std::string mnemonic = "";
+                std::string objectCode = "";
+                mnemonic = currentStatement->getMnemonic()->getMnemonicField();
                 if (mnemonic == START) {
                     executeStart(currentStatement, program);
                 } else if (mnemonic == END) {
@@ -32,26 +56,18 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     executeRES();
                 } else if (mnemonic == BYTE) {
-                   objectCode = executeByte(currentStatement);
+                    objectCode = executeByte(currentStatement);
                 } else if (mnemonic == WORD) {
                     objectCode = executeWord(currentStatement);
                 } else {
                     objectCode = executeInstruction(currentStatement, symbolTable);
                 }
-            } catch (ErrorHandler::Error error) {
-                listingWriter->writeError(error);
-                break;
             }
-            listingWriter->writeLine(lineNumber, currentStatement, objectCode);
         }
-        lineNumber++;
     }
 }
 
 void PassTwoController::executeStart(Statement *statement, Program *program) {
-    if (statement->getLabel()->getLabelField().length() > MAX_SOURCENAME_LENGTH) {
-        throw ErrorHandler::invalid_source_name;
-    }
     objectWriter->writeHeader(statement->getLabel()->getLabelField(),
                               Hexadecimal::intToHex(statement->getOperand()->getLCIncrement()),
                               Hexadecimal::intToHex(program->getProgramLength()));
@@ -60,9 +76,6 @@ void PassTwoController::executeStart(Statement *statement, Program *program) {
 void PassTwoController::executeEnd(Statement *statement, std::map<std::string, int> &symbolTable) {
     int executableAddress = 0;
     if (statement->getOperand()->isLabel()) {
-        if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
-            throw ErrorHandler::undeclared_label;
-        }
         executableAddress = symbolTable[statement->getOperand()->getOperandField()];
     } else if (statement->getOperand()->isFixedAddress()) {
         executableAddress = statement->getOperand()->getLCIncrement();
@@ -87,9 +100,6 @@ std::string PassTwoController::executeInstruction(Statement *statement,
             indexBit = 1;
         }
         if (statement->getOperand()->isLabel()) {
-            if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
-                throw ErrorHandler::undeclared_label;
-            }
             address = symbolTable[statement->getOperand()->getOperandField()];
         } else if (statement->getOperand()->isFixedAddress()) {
             address = statement->getOperand()->getLCIncrement();
@@ -107,9 +117,6 @@ std::string PassTwoController::executeInstruction(Statement *statement,
 /// Assumption -> Maximum length for WORD directive's operand is 3 bytes.
 std::string PassTwoController::executeWord(Statement *statement) {
     std::string operand = Hexadecimal::intToHex(statement->getOperand()->getintValue());
-    if (operand.length() > MAX_WORD_LENGTH) {
-        throw ErrorHandler::address_out_of_range;
-    }
     objectWriter->addRecordToTextRecord(StringUtil::fillZeros(operand, MAX_WORD_LENGTH), statement->getStatementLocationPointer());
     //objectWriter->writeTextRecord(address, location);
     return operand;
@@ -123,9 +130,6 @@ std::string PassTwoController::executeByte(Statement *statement) {
     } else {
         address = Hexadecimal::stringToHex(statement->getOperand()->getOperandField());
     }
-    if (address.length() > MAX_BYTE_LENGTH) {
-        throw ErrorHandler::address_out_of_range;
-    }
     // Adding a 0 if the hex length was odd.
     if (address.length() % 2 != 0) {
         address = StringUtil::fillZeros(address, address.length() + 1);
@@ -137,4 +141,32 @@ std::string PassTwoController::executeByte(Statement *statement) {
 
 std::string PassTwoController::getSicObjectCode(int opCode, int indexBit, int address) {
     return Hexadecimal::intToHex(((((opCode << 1) | indexBit) << 15) | address));
+}
+
+void PassTwoController::startCheck(Statement *statement){
+    if (statement->getLabel()->getLabelField().length() > MAX_SOURCENAME_LENGTH) {
+        throw ErrorHandler::invalid_source_name;
+    }
+}
+void PassTwoController::wordCheck(Statement *statement){
+    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+    if (operand.length() > MAX_WORD_LENGTH) {
+        throw ErrorHandler::address_out_of_range;
+    }
+}
+void PassTwoController:: byteCheck(Statement *statement){
+    std::string address;
+    if (statement->getOperand()->isHexConstant()) {
+        address = statement->getOperand()->getOperandField();
+    } else {
+        address = Hexadecimal::stringToHex(statement->getOperand()->getOperandField());
+    }
+    if (address.length() > MAX_BYTE_LENGTH) {
+        throw ErrorHandler::address_out_of_range;
+    }
+}
+void PassTwoController::instructionCheck(Statement *statement,std::map<std::string, int> &symbolTable){
+    if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
+        throw ErrorHandler::undeclared_label;
+    }
 }
