@@ -63,6 +63,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
     }
     if (!fileReader->finishedReading()) {
         intermediateFileWriter->writeError(ErrorHandler::code_after_end);
+        return false;
     }
 
     intermediateFileWriter->writeSymbolTable(symbolTable);

@@ -8,7 +8,9 @@ const std::string ErrorHandler::errors[] = {"Duplicate Label!", "Invalid Label!"
                                             "Invalid operand!", "Missing Operand!", "Multiple Ends!",
                                             "Missing Label at Start!", "Label is Mnemonic!",
                                             "Label at End!", "Undefined symbol at start!",
-                                            "Invalid Source Name!","Address out of range!",
+                                            "Invalid Source Name!", "Address out of range!",
                                             "Label was not previously declared!",
-                                            "Can't Write code after END!", "Multiple Starts", "Memory Limit Exceeded!","Code before Start"};
+                                            "Can't Write code after END!", "Multiple Starts", "Memory Limit Exceeded!",
+                                            "Code before Start", "Missing Label For Equate!", "Equate Missing Value!",
+                                            "Label Before Org!"};
 

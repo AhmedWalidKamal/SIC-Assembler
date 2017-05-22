@@ -11,7 +11,7 @@ std::regex Regex :: integerValue("(\\+|-)?[0-9]+(\\s*)");
 std::regex Regex :: Indexed(".+,(\\s*)[xX]");
 std::regex Regex :: integerAddress("(\\+)?[0-9]+(\\s*)");
 std::regex Regex :: hexaAddress("0[xX]'[A-F0-9]+'(\\s*)"); // Assumption: any hexadeciaml address should be written in the format 0x'<number>'
-std::regex Regex :: literalString("[cC]'\\w+'(\\s*)");
+std::regex Regex :: literalString("[cC]'.'(\\s*)");
 std::regex Regex :: literalHexa("[xX]'[A-F0-9]+'(\\s*)");
 std::regex Regex :: star("\\*(\\s*)");
 std::regex Regex :: asmFile("(\\w+).asm");

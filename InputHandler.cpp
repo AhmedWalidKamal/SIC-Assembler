@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 //    } else {
 //        std::cout << "No file name was entered.";
 //    }
-    readFile("shell.asm");
+    readFile("2.asm");
     return 0;
 }
 

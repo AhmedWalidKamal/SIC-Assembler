@@ -31,7 +31,8 @@ void ObjectFileWriter::writeEndRecord(std::string startAddress) {
     objectFileStream << "E";
     if (!startAddress.empty()) {
         startAddress = StringUtil::fillZeros(startAddress, FIELD_LENGTH); // shouldn't this be appending 0s before the address?
-        objectFileStream << "^" << startAddress;
+        objectFileStream << "^" ;
+        objectFileStream<< startAddress;
     }
     objectFileStream.close();
 }
@@ -42,16 +43,19 @@ void ObjectFileWriter::writeModRecord() {
 
 void ObjectFileWriter::writeCurrentTextRecord() {
     if (textRecord->getStartingAddress() != -1) {
-        objectFileStream << "T^" << StringUtil::fillZeros(Hexadecimal::intToHex(textRecord->getStartingAddress()), FIELD_LENGTH);
+        objectFileStream << "T^";
+        objectFileStream<< StringUtil::fillZeros(Hexadecimal::intToHex(textRecord->getStartingAddress()), FIELD_LENGTH);
         objectFileStream << "^";
         if (Hexadecimal::intToHex(textRecord->getLength()).length() < 2) {
-            objectFileStream << "0" << Hexadecimal::intToHex(textRecord->getLength());
+            objectFileStream << "0" ;
+            objectFileStream<< Hexadecimal::intToHex(textRecord->getLength());
         } else {
             objectFileStream << Hexadecimal::intToHex(textRecord->getLength());
         }
 
         for (auto record : textRecord->getRecords()) {
-            objectFileStream << "^" << record;
+            objectFileStream << "^" ;
+            objectFileStream<< record;
         }
         objectFileStream << std::endl;
     }
