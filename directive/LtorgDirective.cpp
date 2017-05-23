@@ -11,7 +11,7 @@ int LtorgDirective::execute(int &start, int &end, int &locationCounter,
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
-            locationCounter += getLCIncrement();
+            locationCounter += literal.second.first->getLCIncrement();
         }
     }
     // Because LTORG's statement LC isn't displayed.

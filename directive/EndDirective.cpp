@@ -12,7 +12,7 @@ int EndDirective::execute(int &start, int &end, int &locationCounter,
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
-            locationCounter += getLCIncrement();
+            locationCounter += literal.second.first->getLCIncrement();
         }
     }
     end = locationCounter;
