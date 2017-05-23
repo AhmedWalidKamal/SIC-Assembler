@@ -48,6 +48,9 @@ bool Operand::isValid() {
     validateHexAddress();
     validateDecimalAddress();
     validateCurrentLocationCounter();
+    if (literal && isLabel()) {
+        return false;
+    }
     return (type != inValid);
 }
 bool Operand::isIndexed() {
@@ -185,4 +188,68 @@ const std::string &Operand::getrawInput() const {
 const std::string &Operand::getHexValue() const {
     return Operand::hexValue;
 }
+
+bool Operand ::validateExpression(std::map<std::string, int> &symbolTable) {
+
+    std::smatch m;
+
+    while(std::regex_search (operandField,m,Regex::expression)) {
+        std::vector<int> values;
+        std::vector<std::string> operands;
+        for (auto x:m) {
+            int termValue;
+            std::string beforeSign = m.prefix();
+            size_t first = beforeSign.find_first_not_of(' ');
+            size_t last = beforeSign.find_last_not_of(' ');
+            beforeSign = beforeSign.substr(first, (last - first + 1));
+            if (symbolTable.find(beforeSign) != symbolTable.end() &&
+                symbolTable[beforeSign] != -1){
+               values.push_back(symbolTable[beforeSign]);
+            } else if (std::regex_match(beforeSign,Regex::integerAddress)){
+                values.push_back(std::stoi(beforeSign));
+
+            } else {
+                type = inValid;
+                return false;
+            }
+          operands.push_back((std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) x);
+        }
+        operandField = m.suffix().str();
+        int termValue;
+        std::string beforeSign = m.prefix();
+        size_t first = beforeSign.find_first_not_of(' ');
+        size_t last = beforeSign.find_last_not_of(' ');
+        beforeSign = beforeSign.substr(first, (last - first + 1));
+        if (symbolTable.find(beforeSign) != symbolTable.end() &&
+            symbolTable[beforeSign] != -1){
+            values.push_back(symbolTable[beforeSign]);
+        } else if (std::regex_match(beforeSign,Regex::integerAddress)){
+            values.push_back(std::stoi(beforeSign));
+
+        } else {
+            type = inValid;
+            return false;
+        }
+       expressionValue = (*values.begin());
+       std::vector<std::string>::iterator it2=operands.begin();
+      for (std::vector<int>::iterator it=values.begin()+1 ; it < values.end(); it++,it++ ) {
+            if (*(it2) =="+") {
+                expressionValue += *(it);
+            }
+          else {
+                expressionValue -= *(it);
+            }
+          it2++;
+      }
+
+        return true;
+    }
+}
+
+int Operand ::getExpressionValue() {
+    return expressionValue;
+}
+
+
+
 

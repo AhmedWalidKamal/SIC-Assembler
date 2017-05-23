@@ -16,3 +16,4 @@ std::regex Regex :: literalHexa("[xX]'[A-F0-9]+'(\\s*)");
 std::regex Regex :: star("\\*(\\s*)");
 std::regex Regex :: asmFile("(\\w+).asm");
 std::regex Regex :: commentOrEmptyLine("((\\s*)(\\.+)(.*))|(\\s*)");
+std::regex Regex :: expression ("[+-]");
