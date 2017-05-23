@@ -5,8 +5,8 @@
 #include "ReserveWordDirective.h"
 #include "../error/ErrorHandler.h"
 
-int ReserveWordDirective :: execute(int& start, int& end, int& locationCounter,
-                                    Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
+int ReserveWordDirective :: execute(int &start, int &end, int &locationCounter,
+                                    Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable) {
 
     int currentLocationCounter = locationCounter;
     locationCounter += (3*operand->getLCIncrement());

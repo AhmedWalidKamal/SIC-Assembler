@@ -13,7 +13,7 @@ PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instr
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                      Program *program, std::string fileName,
-                                     std::map<int, std::pair<std::string, int> > &literalTable) {
+                                     std::map<std::string, std::pair<std::string, int> > &literalTable) {
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     int lineNumber = 1;

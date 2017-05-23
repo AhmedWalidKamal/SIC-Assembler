@@ -19,8 +19,8 @@ public:
                           std::map<std::string, Directive *> &directiveTable);
 
     bool execute(std::map<std::string, int> &symbolTable,
-                        FileReader *fileReader, Program *program,
-                 std::map<int, std::pair<std::string, int> > &literalTable);
+                 FileReader *fileReader, Program *program,
+                 std::map<std::string, std::pair<std::string, int> > &literalTable);
 private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;

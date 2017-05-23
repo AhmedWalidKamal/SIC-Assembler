@@ -6,8 +6,8 @@
 #include "../validate/SingleOperandValidateState.h"
 #include "../error/ErrorHandler.h"
 
-int StartDirective :: execute(int& start, int& end, int& locationCounter,
-                              Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
+int StartDirective :: execute(int &start, int &end, int &locationCounter,
+                              Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable) {
     start = operand->getLCIncrement();
     locationCounter = operand->getLCIncrement();
     return locationCounter;
