@@ -10,10 +10,18 @@ int OrgDirective::execute(int &start, int &end, int &locationCounter,
     /*case 1 ORG without operand resets LC*/
     if (operand->isEmpty()) {
         locationCounter = previousLC;
-    }
-        /*case 2 update the location counter with the operand of the org*/
+    }/*case 2 update the location counter with the operand of the org*/
     else {
-        locationCounter = operand->getLCIncrement();
+        if(operand->isLabel()){
+            locationCounter=operand->getLCIncrement();
+        }
+        else if(operand->isDecimalValue()){
+            locationCounter=operand->getOperandValue();
+        }
+//        else if(operand is expression){
+//            locationCounter=expression value;
+//        }
+
         previousLC = locationCounter;
 
     }

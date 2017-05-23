@@ -30,10 +30,10 @@ public:
     void setOperandValue(int i);
     void setLCIncrement(int lcIncrement);
     void validateIndexed();
-    void validateLabel();
+    bool validateLabel();
     void validateHexAddress();
     bool validateDecimalAddress();
-    void validateCurrentLocationCounter();
+    bool validateCurrentLocationCounter();
     bool validateStringConstant();
     bool validateHexConstant();
     bool validateDecimalValue();

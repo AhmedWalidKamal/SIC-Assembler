@@ -47,6 +47,7 @@ bool Operand::isValid() {
     if (literal) {
         validateHexConstant();
         validateStringConstant();
+        validateDecimalValue();
     }else {
         validateLabel();
     }
@@ -78,14 +79,16 @@ void Operand::validateIndexed() {
     }
 }
 
-void Operand::validateLabel() {
+bool Operand::validateLabel() {
     if (std::regex_match(operandField, Regex::isLabelOperand)){
         //std::transform(operandField.begin(), operandField.end(), operandField.begin(),
                       // [](unsigned char c) { return std::toupper(c); });
         std::size_t found = operandField.find_first_of(" ");
         operandField= operandField.substr(0,found);
         type = Label;
+        return true;
     }
+    return false;
 }
 
 bool Operand::isLabel() {
@@ -118,11 +121,13 @@ bool Operand::isFixedAddress() {
     return (type == (hexaAddress || decimalAddress));
 }
 
-void Operand::validateCurrentLocationCounter() {
+bool Operand::validateCurrentLocationCounter() {
     if (std::regex_match(operandField, Regex::star)){
         type = currentLocationCounter;
         // to be modified
+        return true;
     }
+    return false;
 }
 
 bool Operand::isCurrentLocationCounter() {

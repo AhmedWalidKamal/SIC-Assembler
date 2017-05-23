@@ -22,7 +22,14 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
     if (statement->getOperand()->isEmpty()) {
         throw ErrorHandler::equate_missing_value;
     }
-    if(statement->getOperand()->isLabel()&&symbolTable.find(statement->getOperand()->getOperandField())==symbolTable.end()){
+    if (statement->getOperand()->validateCurrentLocationCounter()||statement->getOperand()->validateLabel()
+        ||statement->getOperand()->validateDecimalAddress()||statement->getOperand()->validateExpression(symbolTable)) {
+        if(statement->getOperand()->isLabel()&&symbolTable[statement->getOperand()->getOperandField()]!= -1){
+            throw ErrorHandler::equate_operand;
+        }
+    }else{
         throw ErrorHandler::equate_operand;
     }
+
+
 }

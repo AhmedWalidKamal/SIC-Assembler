@@ -55,6 +55,20 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 literalTable[statement->getOperand()->getHexValue()]
                         = std::make_pair(statement->getOperand(), -1);
             }
+
+            if (statement->getMnemonic()->getMnemonicField() == "EQU") {
+
+                    if (statement->getOperand()->isCurrentLocationCounter()) {
+                        symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
+                    } else if (statement->getOperand()->isLabel()) {
+                        symbolTable[statement->getLabel()->getLabelField()]= symbolTable[statement->getOperand()->getOperandField()];
+                    } else if (statement->getOperand()->isDecimalValue()) {
+                        symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getOperandValue();
+                    } else {
+                        //symbolTable[statement->getLabel()->getLabelField()]=expressionValue;
+                    }
+            }
+
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
             }
