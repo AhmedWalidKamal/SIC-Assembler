@@ -37,12 +37,13 @@ public:
     bool validateStringConstant();
     bool validateHexConstant();
     bool validateDecimalValue();
+    void setHexValue(std::string hexValue);
     bool validateExpression(std::map<std::string, int> &symbolTable);
     int getExpressionValue();
 private:
-    std:: string operandField;
-    std:: string rawInput;
-    std:: string hexValue;
+    std::string operandField;
+    std::string rawInput;
+    std::string hexValue;
     int expressionValue;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,

@@ -45,33 +45,35 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable, literalTable);
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
             if (statement->getOperand()->isLiteral() &&
-                    literalTable.find(statement->getOperand()->getHexValue()) == literalTable.end()) {
-                literalTable[statement->getOperand()->getHexValue()]
-                        = std::make_pair(statement->getOperand(), -1);
+                literalTable.find(statement->getOperand()->getHexValue()) == literalTable.end()) {
+                if (statement->getOperand()->isCurrentLocationCounter()) {
+                    statement->getOperand()->setHexValue(Hexadecimal::intToHex(locationCounter));
+                }
+                literalTable[statement->getOperand()->getHexValue()] = std::make_pair(statement->getOperand(), -1);
             }
-
-            if (statement->getMnemonic()->getMnemonicField() == "EQU") {
-
-                    if (statement->getOperand()->isCurrentLocationCounter()) {
-                        symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
-                    } else if (statement->getOperand()->isLabel()) {
-                        symbolTable[statement->getLabel()->getLabelField()]= symbolTable[statement->getOperand()->getOperandField()];
-                    } else if (statement->getOperand()->isDecimalValue()) {
-                        symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getOperandValue();
-                    } else {
-                        //symbolTable[statement->getLabel()->getLabelField()]=expressionValue;
-                    }
-            }
+            statement->execute(startAddress, endAddress, locationCounter,
+                               directiveTable, instructionTable, literalTable);
 
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
             }
+            if (statement->getMnemonic()->getMnemonicField() == "EQU") {
+                if (statement->getOperand()->isCurrentLocationCounter()) {
+                    symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
+                } else if (statement->getOperand()->isLabel()) {
+                    symbolTable[statement->getLabel()->getLabelField()]= symbolTable[statement->getOperand()->getOperandField()];
+                } else if (statement->getOperand()->isDecimalValue()) {
+                    symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getOperandValue();
+                } else {
+                    //symbolTable[statement->getLabel()->getLabelField()]=expressionValue;
+                }
+            }
+
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }

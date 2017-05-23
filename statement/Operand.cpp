@@ -257,6 +257,10 @@ int Operand ::getExpressionValue() {
     return expressionValue;
 }
 
+void Operand::setHexValue(std::string hexValue) {
+    Operand::hexValue = hexValue;
+}
+
 
 
 
