@@ -30,11 +30,11 @@ void Operand::setLCIncrement(int lcIncrement) {
     LCIncrement = lcIncrement;
 }
 
-void Operand::setIntValue(int i) {
+void Operand::setOperandValue(int i) {
     operandValue = i;
 }
 
-int Operand::getintValue() {
+int Operand::getOperandValue() {
     return operandValue;
 }
 
@@ -56,14 +56,22 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateLiteral() {
-//    if (std::regex_match(operandField, Regex::literal)) {
-//        // Remove preceding '=' and remove quotes if found, leave only the value of the operand.
-//        type = literal;
-//    }
+    if (std::regex_match(operandField, Regex::literal)) {
+//        remove preceding '='
+//        if literal is hex constant
+//            type = hexConstLiteral;
+//            setOperandValue()
+//        else if literal is string constant
+//            type = stringConstLiteral;
+//            setOperandValue()
+//        else if literal is decimal value
+//            type = decimalLiteral;
+//            setOperandValue()
+    }
 }
 
 bool Operand::isLiteral() {
-    return type == literal;
+    return type == hexConstLiteral || stringConstLiteral || decimalLiteral;
 }
 
 void Operand::validateIndexed() {
@@ -128,7 +136,7 @@ bool Operand::validateDecimalValue() {
 
     if (std::regex_match(operandField, Regex::integerValue)){
         type = DecimalValue;
-        setIntValue(std::stoi(operandField));
+        setOperandValue(std::stoi(operandField));
         setLCIncrement(3);
         return true;
     }
@@ -163,7 +171,7 @@ bool Operand::validateHexConstant() {
         int hexDigits = operandField.length();
         if (hexDigits%2==0){
             setLCIncrement(hexDigits/2);
-            setIntValue(std::stoi(operandField, nullptr, 16));
+            setOperandValue(std::stoi(operandField, nullptr, 16));
             return true;
         } else {
             type = inValid;

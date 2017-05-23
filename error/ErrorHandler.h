@@ -30,7 +30,9 @@ public:
         code_before_start,
         equate_missing_label,
         equate_missing_value,
-        label_before_org
+        label_before_org,
+        ltorg_label,
+        ltorg_operand
     };
     static const std::string errors[];
 };

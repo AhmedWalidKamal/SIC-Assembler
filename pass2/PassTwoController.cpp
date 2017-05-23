@@ -13,7 +13,7 @@ PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instr
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                      Program *program, std::string fileName,
-                                     std::map<std::string, std::pair<int, int> > &literalTable) {
+                                     std::map<int, std::pair<std::string, int> > &literalTable) {
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     int lineNumber = 1;
@@ -124,7 +124,7 @@ void PassTwoController::writeInstructionObjectFile(std::string objCode, Statemen
 
 /// Assumption -> Maximum length for WORD directive's operand is 3 bytes.
 std::string PassTwoController::getWordObjectCode(Statement *statement) {
-    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getOperandValue());
 
     //objectWriter->writeTextRecord(address, location);
     return operand;
@@ -163,7 +163,7 @@ void PassTwoController::startCheck(Statement *statement){
     }
 }
 void PassTwoController::wordCheck(Statement *statement){
-    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getintValue());
+    std::string operand = Hexadecimal::intToHex(statement->getOperand()->getOperandValue());
     if (operand.length() > MAX_WORD_LENGTH) {
         throw ErrorHandler::address_out_of_range;
     }
