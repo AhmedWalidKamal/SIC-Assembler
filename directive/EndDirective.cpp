@@ -8,7 +8,7 @@
 
 int EndDirective::execute(int &start, int &end, int &locationCounter,
                           Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
-    for (auto literal : literalTable) {
+    for (auto &literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
