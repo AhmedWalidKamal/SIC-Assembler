@@ -178,12 +178,16 @@ void PassTwoController:: byteCheck(Statement *statement){
     std::string address;
     if (statement->getOperand()->isHexConstant()) {
         address = statement->getOperand()->getOperandField();
+        if (address.length() > MAX_BYTE_LENGTH) {
+            throw ErrorHandler::address_out_of_range;
+        }
     } else {
         address = Hexadecimal::stringToHex(statement->getOperand()->getOperandField());
+        if (address.length()/2 > MAX_BYTE_LENGTH) {
+            throw ErrorHandler::address_out_of_range;
+        }
     }
-    if (address.length() > MAX_BYTE_LENGTH) {
-        throw ErrorHandler::address_out_of_range;
-    }
+
 }
 void PassTwoController::instructionCheck(Statement *statement,std::map<std::string, int> &symbolTable){
     if (symbolTable[statement->getOperand()->getOperandField()] == -1) {
