@@ -26,7 +26,7 @@ private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
     std::map<std::string, int> symbolTable;
-    std::map<std::string, std::pair<std::string, int> > literalTable;
+    std::map<std::string, std::pair<Operand *, int> > literalTable;
     FileReader *sourceFileReader;
 
     void setSourceFileReader(std::string fileName);

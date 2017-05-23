@@ -21,7 +21,7 @@ public:
 
     void executePass2(std::map<std::string, int> &symbolTable,
                       Program *program, std::string fileName,
-                      std::map<std::string, std::pair<std::string, int> > &literalTable);
+                      std::map<std::string, std::pair<Operand *, int> > &literalTable);
 
 private:
     void startCheck(Statement *statement);

@@ -5,7 +5,7 @@
 #include "../error/ErrorHandler.h"
 
 int OrgDirective::execute(int &start, int &end, int &locationCounter,
-                          Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable) {
+                          Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
 
     /*case 1 ORG without operand resets LC*/
     if (operand->isEmpty()) {

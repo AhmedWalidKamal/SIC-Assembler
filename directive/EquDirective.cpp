@@ -7,7 +7,7 @@
 #include "../error/ErrorHandler.h"
 
 int EquDirective::execute(int &start, int &end, int &locationCounter,
-                          Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable) {
+                          Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
     return locationCounter;
 }
 

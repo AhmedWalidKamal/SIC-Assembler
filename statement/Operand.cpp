@@ -56,11 +56,10 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateLiteral() {
- if (operandField.front()=='='){
+ if (operandField.front()=='=') {
      literal = true;
      operandField = operandField.substr(1,std::string::npos);
  }
-
 }
 
 

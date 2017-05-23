@@ -46,7 +46,6 @@ private:
     OperandType type = inValid;
     int operandValue = 0;
     int LCIncrement = 0;
-
     bool indexed = false;
     bool literal = false;
     void validateLiteral();

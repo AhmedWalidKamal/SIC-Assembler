@@ -24,7 +24,7 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
 
 bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                                 FileReader *fileReader, Program *program,
-                                std::map<std::string, std::pair<std::string, int> > &literalTable) {
+                                std::map<std::string, std::pair<Operand *, int> > &literalTable) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     bool validSourceCode = true;
@@ -50,25 +50,13 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
-            if (statement->getOperand()->isLiteral() &&
-                    literalTable.find(statement->getOperand()->getOperandValue()) == literalTable.end()) {
-                literalTable[statement->getOperand()->getOperandValue()]
-                        = std::make_pair(statement->getOperand()->getOperandField(), -1);
-            }
-            // Check for EQU here, assign the value of the operand to the symbol table instead of LC
-            if(statement->getMnemonic()->getMnemonicField()=="equ"){
-                /*case 1 if operand is expression*/
-                if(/*is epression*/){
-                  //symbolTable[statement->getLabel()->getLabelField()]=//expression value
-                }
-                /*case2 operand is only one value or one label */
-                else{
-                symbolTable[statement->getLabel()->getLabelField()]=statement->getOperand()->getOperandValue();
-                }
-            }
+//            if (statement->getOperand()->isLiteral() &&
+//                    literalTable.find(statement->getOperand()->getOperandValue()) == literalTable.end()) {
+//                literalTable[statement->getOperand()->getHexValue()]
+//                        = std::make_pair(statement->getOperand()->getOperandField(), -1);
+//            }
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
-
             }
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);

@@ -6,7 +6,15 @@
 #include "../error/ErrorHandler.h"
 
 int LtorgDirective::execute(int &start, int &end, int &locationCounter,
-                            Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable) {
+                            Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+    for (auto literal : literalTable) {
+        // If literal doesn't have an address
+        if (literal.second.second == -1) {
+            literal.second.second = locationCounter;
+            locationCounter += getLCIncrement();
+        }
+    }
+    // Because LTORG's statement LC isn't displayed.
     return 0;
 }
 

@@ -6,10 +6,19 @@
 #include "../validate/SingleOperandValidateState.h"
 #include "../error/ErrorHandler.h"
 
-int EndDirective :: execute(int &start, int &end, int &locationCounter,
-                            Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
+int EndDirective::execute(int &start, int &end, int &locationCounter,
+                          Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+    for (auto literal : literalTable) {
+        // If literal doesn't have an address
+        if (literal.second.second == -1) {
+            literal.second.second = locationCounter;
+            locationCounter += getLCIncrement();
+        }
+    }
     end = locationCounter;
-    return locationCounter;
+    // Because END's statement LC isn't displayed.
+    return 0;
+
 }
 
 void EndDirective::validate(std::map<std::string, Instruction *> &instructionTable,
