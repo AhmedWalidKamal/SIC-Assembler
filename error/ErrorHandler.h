@@ -33,7 +33,8 @@ public:
         label_before_org,
         ltorg_label,
         ltorg_operand,
-        equate_operand
+        equate_operand,
+        org_operand
     };
     static const std::string errors[];
 };

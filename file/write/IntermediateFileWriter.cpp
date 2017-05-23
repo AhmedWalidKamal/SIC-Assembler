@@ -65,6 +65,7 @@ void IntermediateFileWriter::writeLiteralTable(std::map<std::string, std::pair<O
     for (auto literal : literalTable) {
         intermediateFileStream <<StringUtil::fillSpaces(literal.second.first->getrawInput(), TABLE_BOUND);
         intermediateFileStream <<StringUtil::fillSpaces(literal.first, TABLE_BOUND);
+
         intermediateFileStream <<StringUtil::fillSpaces(StringUtil::toString(literal.
                                        second.first->getOperandField().length()),TABLE_BOUND);
         intermediateFileStream << Hexadecimal::intToHex(literal.second.second);

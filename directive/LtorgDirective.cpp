@@ -6,11 +6,14 @@
 #include "../error/ErrorHandler.h"
 
 int LtorgDirective::execute(int &start, int &end, int &locationCounter,
-                            Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+                            Operand *operand,
+                            std::map<std::string, int> &symbolTable,
+                            std::map<std::string, std::pair<Operand *, int>> &literalTable) {
     for (auto literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
+
             locationCounter += literal.second.first->getLCIncrement();
         }
     }

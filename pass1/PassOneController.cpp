@@ -45,7 +45,8 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable, literalTable);
+            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable,
+                               symbolTable,literalTable);
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
@@ -62,10 +63,10 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                         symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
                     } else if (statement->getOperand()->isLabel()) {
                         symbolTable[statement->getLabel()->getLabelField()]= symbolTable[statement->getOperand()->getOperandField()];
-                    } else if (statement->getOperand()->isDecimalValue()) {
-                        symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getOperandValue();
+                    } else if (statement->getOperand()->isFixedAddress()) {
+                        symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getLCIncrement();
                     } else {
-                        //symbolTable[statement->getLabel()->getLabelField()]=expressionValue;
+                        symbolTable[statement->getLabel()->getLabelField()]=statement->getOperand()->getExpressionValue();
                     }
             }
 

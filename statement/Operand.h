@@ -31,7 +31,7 @@ public:
     void setLCIncrement(int lcIncrement);
     void validateIndexed();
     bool validateLabel();
-    void validateHexAddress();
+    bool validateHexAddress();
     bool validateDecimalAddress();
     bool validateCurrentLocationCounter();
     bool validateStringConstant();

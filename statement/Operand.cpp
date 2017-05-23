@@ -45,15 +45,15 @@ bool Operand::isValid() {
     validateIndexed();
     validateLiteral();
     if (literal) {
-        validateHexConstant();
-        validateStringConstant();
-        validateDecimalValue();
+       if  (validateHexConstant()) { return true; }
+       if  (validateStringConstant())  { return true; }
+        if (validateDecimalValue())  { return true;}
     }else {
-        validateLabel();
+       if (validateLabel()) { return true;}
     }
-    validateHexAddress();
-    validateDecimalAddress();
-    validateCurrentLocationCounter();
+    if  (validateHexAddress()) { return true;}
+    if   (validateDecimalAddress()) { return true;}
+    if (validateCurrentLocationCounter()) { return true;}
     return (type != inValid);
 }
 bool Operand::isIndexed() {
@@ -95,7 +95,7 @@ bool Operand::isLabel() {
     return (type == Label);
 }
 
-void Operand::validateHexAddress() {
+bool Operand::validateHexAddress() {
 
     if (std::regex_match(operandField, Regex::hexaAddress)){
         type = hexaAddress;
@@ -105,7 +105,9 @@ void Operand::validateHexAddress() {
         operandField.erase (found,1);
         setLCIncrement(std::stoi(operandField, nullptr, 16));
         hexValue = operandField;
+        return true;
     }
+    return false;
 }
 
 bool Operand::validateDecimalAddress() {
@@ -139,6 +141,7 @@ bool Operand::validateDecimalValue() {
     if (std::regex_match(operandField, Regex::integerValue)){
         type = DecimalValue;
         setOperandValue(std::stoi(operandField));
+        hexValue = operandField;
         setLCIncrement(3);
         return true;
     }
@@ -159,6 +162,7 @@ bool Operand::validateStringConstant() {
         hexValue = Hexadecimal :: stringToHex(operandField);
         return true;
     }
+    return false;
 }
 
 bool Operand::isStringConstant() {
