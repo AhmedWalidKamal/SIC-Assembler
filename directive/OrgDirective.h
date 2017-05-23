@@ -17,6 +17,9 @@ public :
                   std::map<std::string, int> &symbolTable, const int &start, const int &end,
                   const int &locationCounter, Statement *statement);
 
+private:
+    int previousLC;
+
 };
 
 #endif //SIC_ASSEMBLER_ORGDIRECTIVE_H

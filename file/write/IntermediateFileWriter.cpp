@@ -54,6 +54,9 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
                         << Hexadecimal::intToHex(curr.second) << std::endl;
     }
 }
+void IntermediateFileWriter::writeLiteralTable(std::map<int, std::pair<std::string, int>> &literalTable) {
+    
+}
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {
     intermediateFileStream << "ERROR: " ;

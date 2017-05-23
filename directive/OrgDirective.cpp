@@ -7,8 +7,16 @@
 int OrgDirective::execute(int &start, int &end, int &locationCounter,
                           Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
 
-//update the location counter with the operand of the org or reset it back to last value before Org
-    locationCounter=operand->getLCIncrement();
+    /*case 1 ORG without operand resets LC*/
+    if (operand->isEmpty()) {
+        locationCounter = previousLC;
+    }
+        /*case 2 update the location counter with the operand of the org*/
+    else {
+        locationCounter = operand->getLCIncrement();
+        previousLC = locationCounter;
+
+    }
     return locationCounter;
 }
 
