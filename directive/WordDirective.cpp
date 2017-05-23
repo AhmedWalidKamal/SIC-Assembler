@@ -5,7 +5,8 @@
 #include "WordDirective.h"
 #include "../error/ErrorHandler.h"
 
-int WordDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
+int WordDirective :: execute(int& start, int& end, int& locationCounter,
+                             int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
     int currentLocationCounter = locationCounter;
     locationCounter += incrementValue;
     return currentLocationCounter;

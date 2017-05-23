@@ -26,10 +26,8 @@ private:
     std::map<std::string, Instruction *> instructionTable;
     std::map<std::string, Directive *> directiveTable;
     std::map<std::string, int> symbolTable;
+    std::map<int, std::pair<std::string, int> > literalTable;
     FileReader *sourceFileReader;
-    ObjectFileWriter *objectFileWriter;
-    IntermediateFileWriter *intermediateFileWriter;
-    ListingFileWriter *listingFileWriter;
 
     void setSourceFileReader(std::string fileName);
     void initDirectiveTable(std::map<std::string, Directive *> &directiveTable);

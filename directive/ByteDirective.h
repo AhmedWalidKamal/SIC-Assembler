@@ -9,7 +9,8 @@
 
 class ByteDirective : public Directive {
     public :
-    int execute(int &start, int &end, int &locationCounter, int incrementValue);
+    int execute(int &start, int &end, int &locationCounter, int incrementValue,
+                std::map<int, std::pair<std::string, int>> &literalTable);
     void validate(std::map<std::string, Instruction *> &instructionTable,
                   std::map<std::string, Directive *> &directiveTable,
                   std::map<std::string, int> &symbolTable, const int &start, const int &end,

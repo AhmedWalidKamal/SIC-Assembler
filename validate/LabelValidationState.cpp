@@ -13,7 +13,7 @@ void LabelValidationState::validate(std::map<std::string, Instruction *> &instru
                                    std::map<std::string, int> &symbolTable, const int &start, const int &end,
                                    const int &locationCounter, Statement *statement) {
 
-      //must be called first to trim string from space if valid, indicates this statement has new label
+      // Must be called first to trim string from space if valid, indicates this statement has new label
     if (!statement->getLabel()->isValid()) {
         throw ErrorHandler::invalid_label;
     }

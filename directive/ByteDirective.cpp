@@ -5,7 +5,8 @@
 #include "ByteDirective.h"
 #include "../error/ErrorHandler.h"
 
-int ByteDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
+int ByteDirective :: execute(int& start, int& end, int& locationCounter,
+                             int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
     int currentLocationCounter = locationCounter;
     locationCounter += incrementValue;
     return currentLocationCounter;

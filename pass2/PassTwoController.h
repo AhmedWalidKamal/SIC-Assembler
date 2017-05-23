@@ -20,7 +20,8 @@ public:
     PassTwoController(std::map<std::string, Instruction *> &instructionTable);
 
     void executePass2(std::map<std::string, int> &symbolTable,
-                      Program *program, std::string fileName);
+                      Program *program, std::string fileName,
+                      std::map<int, std::pair<std::string, int> > &literalTable);
 
 private:
     void startCheck(Statement *statement);
@@ -31,19 +32,25 @@ private:
 
     void instructionCheck(Statement *statement,std::map<std::string, int> &symbolTable);
 
-    void executeStart(Statement *statement, Program *program);
-
-    std::string executeInstruction(Statement *statement, std::map<std::string, int> &symbolTable);
-
-    void executeRES();
-
-    std::string executeWord(Statement *statement);
-
-    std::string executeByte(Statement *statement);
-
-    void executeEnd(Statement *statement, std::map<std::string, int> &symbolTable);
-
     std::string getSicObjectCode(int opCode, int indexBit, int address);
+
+    void writeStartObjectFile(Statement *statement, Program *program);
+
+    void writeEndObjectFile(Statement *statement, std::map<std::string, int> &symbolTable);
+
+    void writeResObjectFile();
+
+    std::string getInstructionObjectCode(Statement *statement, std::map<std::string, int> &symbolTable);
+
+    void writeInstructionObjectFile(std::string objCode, Statement *statement);
+
+    std::string getWordObjectCode(Statement *statement);
+
+    void writeWordObjectFile(std::string objCode, Statement *statement);
+
+    void writeByteObjectFile(std::string objCode, Statement *statement);
+
+    std::string getByteObjectCode(Statement *statement);
 
     ObjectFileWriter *objectWriter;
     ListingFileWriter *listingWriter;

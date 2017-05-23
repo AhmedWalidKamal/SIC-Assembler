@@ -27,8 +27,7 @@ bool Label::isValid() {
         //std::transform(labelField.begin(), labelField.end(), labelField.begin(),
         //[](unsigned char c) { return std::toupper(c); });
         std::size_t found = labelField.find_first_of(" ");
-        labelField = labelField.substr(0,found);
-
+        labelField = labelField.substr(0, found);
     }
     return isEmpty|| isLabel;
 }

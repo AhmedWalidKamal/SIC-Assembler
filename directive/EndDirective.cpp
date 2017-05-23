@@ -6,7 +6,8 @@
 #include "../validate/SingleOperandValidateState.h"
 #include "../error/ErrorHandler.h"
 
-int EndDirective :: execute(int& start, int& end, int& locationCounter,int incrementValue) {
+int EndDirective :: execute(int& start, int& end, int& locationCounter,
+                            int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
     end = locationCounter;
     return locationCounter;
 }

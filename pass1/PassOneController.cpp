@@ -23,7 +23,8 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
 }
 
 bool PassOneController::execute(std::map<std::string, int> &symbolTable,
-                                FileReader *fileReader, Program *program) {
+                                FileReader *fileReader, Program *program,
+                                std::map<int, std::pair<std::string, int> > &literalTable) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     bool validSourceCode = true;
@@ -44,11 +45,17 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable);
+            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable, literalTable);
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
+            if (statement->getOperand()->isLiteral() &&
+                    literalTable.find(statement->getOperand()->getOperandValue()) == literalTable.end()) {
+                literalTable[statement->getOperand()->getOperandValue()]
+                        = std::make_pair(statement->getOperand()->getOperandField(), -1);
+            }
+            // Check for EQU here, assign the value of the operand to the symbol table instead of LC
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 

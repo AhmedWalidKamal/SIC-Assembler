@@ -4,7 +4,9 @@
 #include "OrgDirective.h"
 #include "../error/ErrorHandler.h"
 
-int OrgDirective::execute(int &start, int &end, int &locationCounter, int incrementValue) {
+int OrgDirective::execute(int &start, int &end, int &locationCounter,
+                          int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
+
 //update the location counter with the operand of the org or reset it back to last value before Org
     locationCounter=incrementValue;
     return locationCounter;

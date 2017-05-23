@@ -10,7 +10,7 @@
 class Operand {
 public:
     Operand(std::string operandField);
-    int getintValue();
+    int getOperandValue();
     bool isEmpty();
     bool isValid(); // Checks if any operand is valid.
     bool isLabel();
@@ -18,14 +18,14 @@ public:
     bool isCurrentLocationCounter();
     bool isStringConstant();
     bool isHexConstant();
+    bool isLiteral();
     bool isDecimalValue();
     bool isIndexed();
     const std::string &getOperandField() const;
     const std::string &getrawInput() const;
     void setOperandField(const std::string &operandField);
     int getLCIncrement() const;
-
-    void setIntValue(int i);
+    void setOperandValue(int i);
     void setLCIncrement(int lcIncrement);
     void validateIndexed();
     void validateLabel();
@@ -40,11 +40,14 @@ private:
     std:: string rawInput;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,
-        HexConstant,DecimalValue,inValid};
+        HexConstant,DecimalValue,inValid, hexConstLiteral,
+        stringConstLiteral, decimalLiteral};
     OperandType type = inValid;
     int operandValue = 0;
     int LCIncrement = 0;
     bool indexed = false;
+
+    void validateLiteral();
 };
 
 

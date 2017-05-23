@@ -27,7 +27,8 @@ public:
 
     void execute(int& start, int& end, int& locationCounter,
                  std::map<std::string, Directive *> &directiveTable,
-                 std::map<std::string, Instruction *> &instructionTable);
+                 std::map<std::string, Instruction *> &instructionTable,
+                 std::map<int, std::pair<std::string, int> > &literalTable);
 
     //bool operandIsNewLabel();
     //bool operandHasLabel();

@@ -38,7 +38,7 @@
 //    s.setMnemonic(m);
 //    Operand *p;
 //    p=new Operand();
-//   //p->setIntValue(4096);
+//   //p->setOperandValue(4096);
 //    operandsValue[0]=4096;
 //    s.setOperand(p);
 //    statements.push_back(s);
