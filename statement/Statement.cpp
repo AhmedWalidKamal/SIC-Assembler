@@ -72,7 +72,7 @@ void Statement::execute(int &start, int &end, int &locationCounter,
                         std::map<int, std::pair<std::string, int>> &literalTable) {
     if (directiveTable.find(getMnemonic()->getMnemonicField()) != directiveTable.end()) {
        statementLocationPointer = directiveTable[getMnemonic()->getMnemonicField()]
-                ->execute(start, end, locationCounter, getOperand()->getLCIncrement(), literalTable);
+                ->execute(start, end, locationCounter, getOperand(), literalTable);
     } else {
         statementLocationPointer = locationCounter;
         locationCounter += instructionTable[getMnemonic()->getMnemonicField()]->getFormat();

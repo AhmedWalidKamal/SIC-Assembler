@@ -6,10 +6,10 @@
 #include "../error/ErrorHandler.h"
 
 int ReserveWordDirective :: execute(int& start, int& end, int& locationCounter,
-                                    int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
+                                    Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
 
     int currentLocationCounter = locationCounter;
-    locationCounter += (3*incrementValue);
+    locationCounter += (3*operand->getLCIncrement());
     return currentLocationCounter;
 }
 

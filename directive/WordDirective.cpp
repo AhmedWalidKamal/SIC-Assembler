@@ -6,9 +6,9 @@
 #include "../error/ErrorHandler.h"
 
 int WordDirective :: execute(int& start, int& end, int& locationCounter,
-                             int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
+                             Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
     int currentLocationCounter = locationCounter;
-    locationCounter += incrementValue;
+    locationCounter += operand->getLCIncrement();
     return currentLocationCounter;
 }
 

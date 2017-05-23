@@ -7,9 +7,9 @@
 #include "../error/ErrorHandler.h"
 
 int StartDirective :: execute(int& start, int& end, int& locationCounter,
-                              int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
-    start = incrementValue;
-    locationCounter = incrementValue;
+                              Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
+    start = operand->getLCIncrement();
+    locationCounter = operand->getLCIncrement();
     return locationCounter;
 }
 
