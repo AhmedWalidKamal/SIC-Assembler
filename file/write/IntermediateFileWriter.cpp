@@ -4,7 +4,6 @@
 
 #include <iostream>
 #include "IntermediateFileWriter.h"
-#include "../../util/StringUtil.h"
 #include "../../datatypes/Hexadecimal.h"
 
 IntermediateFileWriter::IntermediateFileWriter(const std::string &fileName, const std::string fileExtension)
@@ -24,8 +23,9 @@ void IntermediateFileWriter::writeInitialLine() {
 
 void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement) {
     std::string line = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
-    std::string locationCounter = StringUtil::fillSpaces(Hexadecimal::intToHex(statement->getStatementLocationPointer()),
-                                                         SPACE_BOUND);
+    std::string locationCounter = StringUtil::fillSpaces(
+            Hexadecimal::intToHex(statement->getStatementLocationPointer()),
+            SPACE_BOUND);
     std::string label = StringUtil::fillSpaces(statement->getLabel()->getLabelField(), LABEL_BOUND);
     std::string mnemonic = StringUtil::fillSpaces(statement->getMnemonic()->getMnemonicField(), MNEMONIC_BOUND);
     std::string operand = StringUtil::fillSpaces(statement->getOperand()->getrawInput(), OPERAND_BOUND);
@@ -34,7 +34,7 @@ void IntermediateFileWriter::writeStatement(int lineNumber, Statement *statement
 }
 
 void IntermediateFileWriter::writeComment(int lineNumber, std::string line) {
-    std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber),SPACE_BOUND);
+    std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
     intermediateFileStream << lineNum << line << std::endl;
 }
 
@@ -43,23 +43,36 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
 
 
     intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
-    intermediateFileStream << StringUtil::fillSpaces("Symbol", SYMBOLTABLE_BOUND);
+    intermediateFileStream << StringUtil::fillSpaces("Symbol", TABLE_BOUND);
     intermediateFileStream << "Assigned Address";
     intermediateFileStream << std::endl;
     intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
 
     // Iterate over the map using iterator
     for (auto curr : symbolTable) {
-        intermediateFileStream << StringUtil::fillSpaces(curr.first, SYMBOLTABLE_BOUND)
-                        << Hexadecimal::intToHex(curr.second) << std::endl;
+        intermediateFileStream << StringUtil::fillSpaces(curr.first, TABLE_BOUND)
+                               << Hexadecimal::intToHex(curr.second) << std::endl;
     }
 }
-void IntermediateFileWriter::writeLiteralTable(std::map<int, std::pair<std::string, int>> &literalTable) {
 
+void IntermediateFileWriter::writeLiteralTable(std::map<std::string, std::pair<std::string, int>> &literalTable) {
+    intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
+    intermediateFileStream << StringUtil::fillSpaces("Literal", TABLE_BOUND)
+                           << StringUtil::fillSpaces("Hex Value",TABLE_BOUND)
+                           <<StringUtil::fillSpaces("Length",TABLE_BOUND)
+                           <<"Address"<<std::endl;
+
+    for (auto curr : literalTable) {
+        intermediateFileStream <<StringUtil::fillSpaces(curr.second.first,TABLE_BOUND)
+                               <<StringUtil::fillSpaces(curr.first,TABLE_BOUND)
+                               <<StringUtil::fillSpaces(StringUtil::toString(curr.second.first.length()),TABLE_BOUND)
+                               <<Hexadecimal::intToHex(curr.second.second)
+                               <<std::endl;
+    }
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {
-    intermediateFileStream << "ERROR: " ;
-    intermediateFileStream<< ErrorHandler::errors[error] << std::endl;
+    intermediateFileStream << "ERROR: ";
+    intermediateFileStream << ErrorHandler::errors[error] << std::endl;
 }
 

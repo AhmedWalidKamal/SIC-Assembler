@@ -84,6 +84,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
     }
 
     intermediateFileWriter->writeSymbolTable(symbolTable);
+    //intermediateFileWriter->writeLiteralTable(literalTable);
 
     if (startAddress == -1 && endAddress == -1) {
         program->setProgramLength(locationCounter);

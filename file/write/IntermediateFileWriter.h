@@ -24,7 +24,7 @@ public:
 
     void writeSymbolTable(std::map<std::string, int> &symbolTable);
 
-    void writeLiteralTable(std::map<int, std::pair<std::string, int>> &literalTable);
+    void writeLiteralTable(std::map<std::string, std::pair<std::string, int>> &literalTable);
 
     void writeError(ErrorHandler::Error error);
 
@@ -38,7 +38,7 @@ private:
     const int MNEMONIC_BOUND = 7;
     const int OPERAND_BOUND = 17;
     const int SPACE_BOUND = 8;
-    const int SYMBOLTABLE_BOUND = 15;
+    const int TABLE_BOUND = 15;
     const int LINE_LENGTH = 80;
     const int LINE_FORMAT = 10;
     const int LOC_FORAMT = 25;
