@@ -7,7 +7,8 @@
 #include "../error/ErrorHandler.h"
 
 int EquDirective::execute(int &start, int &end, int &locationCounter,
-                          int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
+                          Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable) {
+
 
 }
 
@@ -21,5 +22,8 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
     }
     if (statement->getOperand()->isEmpty()) {
         throw ErrorHandler::equate_missing_value;
+    }
+    if(statement->getOperand()->isLabel()&&symbolTable.find(statement->getOperand()->getOperandField())==symbolTable.end()){
+        throw ErrorHandler::equate_operand;
     }
 }

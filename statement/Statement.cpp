@@ -65,13 +65,14 @@ void Statement::validate(std::map<std::string, Instruction *> &instructionTable,
     state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, this);
 }
 
+
 void Statement::execute(int &start, int &end, int &locationCounter,
                         std::map<std::string, Directive *> &directiveTable,
                         std::map<std::string, Instruction *> &instructionTable,
                         std::map<int, std::pair<std::string, int>> &literalTable) {
     if (directiveTable.find(getMnemonic()->getMnemonicField()) != directiveTable.end()) {
        statementLocationPointer = directiveTable[getMnemonic()->getMnemonicField()]
-                ->execute(start, end, locationCounter, getOperand()->getLCIncrement(), literalTable);
+                ->execute(start, end, locationCounter, getOperand(), literalTable);
     } else {
         statementLocationPointer = locationCounter;
         locationCounter += instructionTable[getMnemonic()->getMnemonicField()]->getFormat();

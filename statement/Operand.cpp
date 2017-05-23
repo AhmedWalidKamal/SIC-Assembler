@@ -56,7 +56,7 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateLiteral() {
-    if (std::regex_match(operandField, Regex::literal)) {
+    //if (std::regex_match(operandField, Regex::literal)) {
 //        remove preceding '='
 //        if literal is hex constant
 //            type = hexConstLiteral;
@@ -68,7 +68,7 @@ void Operand::validateLiteral() {
 //            type = decimalLiteral;
 //            setOperandValue()
     }
-}
+//}
 
 bool Operand::isLiteral() {
     return type == hexConstLiteral || stringConstLiteral || decimalLiteral;
