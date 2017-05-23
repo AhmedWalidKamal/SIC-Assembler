@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
 //    } else {
 //        std::cout << "No file name was entered.";
 //    }
-    readFile("1.asm");
+    readFile("phaseTwoTest.asm");
     return 0;
 }
 

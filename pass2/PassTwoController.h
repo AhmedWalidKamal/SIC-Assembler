@@ -42,7 +42,7 @@ private:
 
     std::string getInstructionObjectCode(Statement *statement,
                                          std::map<std::string, int> &symbolTable,
-                                         std::map<int, std::pair<std::string, int>> &literalTable);
+                                         std::map<std::string, std::pair<Operand *, int>> &literalTable);
 
     void writeInstructionObjectFile(std::string objCode, Statement *statement);
 

@@ -4,6 +4,7 @@
 
 #include "PassTwoController.h"
 #include <iostream>
+#include <set>
 
 
 PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instructionTable) {
@@ -18,6 +19,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     listingWriter->writeInitialLine();
     int lineNumber = 1;
     bool foundError = false;
+    std::set<std::string> literalPool;
     for (auto currentStatement : program->getStatements()) {
         if (currentStatement->isComment()) {
             listingWriter->writeComment(lineNumber, currentStatement->getStatementField());
@@ -101,7 +103,7 @@ void PassTwoController::writeResObjectFile() {
 std::string PassTwoController::
 getInstructionObjectCode(Statement *statement,
                          std::map<std::string, int> &symbolTable,
-                         std::map<int, std::pair<std::string, int>> &literalTable) {
+                         std::map<std::string, std::pair<Operand *, int>> &literalTable) {
     int opCode = instructionTable[statement->getMnemonic()->getMnemonicField()]->getOpCode();
     int indexBit = 0, address = 0;
     if (!statement->getOperand()->isEmpty()) {
@@ -113,7 +115,7 @@ getInstructionObjectCode(Statement *statement,
         } else if (statement->getOperand()->isFixedAddress()) {
             address = statement->getOperand()->getLCIncrement();
         } else if (statement->getOperand()->isLiteral()){
-            address = literalTable[statement->getOperand()->getOperandValue()].second;
+            address = literalTable[statement->getOperand()->getHexValue()].second;
         } else {
             address = statement->getStatementLocationPointer();
         }

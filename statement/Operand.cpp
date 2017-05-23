@@ -16,7 +16,6 @@ const std::string &Operand::getOperandField() const {
     return operandField;
 }
 
-
 void Operand::setOperandField(const std::string &operandField) {
     Operand::operandField = operandField;
 
@@ -56,12 +55,11 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateLiteral() {
- if (operandField.front()=='=') {
+ if (operandField.front() == '=') {
      literal = true;
      operandField = operandField.substr(1,std::string::npos);
  }
 }
-
 
 bool Operand::isLiteral() {
   return literal;
@@ -71,7 +69,7 @@ void Operand::validateIndexed() {
     indexed = regex_match(operandField, Regex::Indexed);
     if (indexed){
         std::size_t found = operandField.find_first_of(",");
-        operandField= operandField.substr(0,found);
+        operandField = operandField.substr(0, found);
     }
 }
 
@@ -181,6 +179,10 @@ bool Operand::isHexConstant() {
 }
 
 const std::string &Operand::getrawInput() const {
-    return  rawInput;
+    return rawInput;
+}
+
+const std::string &Operand::getHexValue() const {
+    return Operand::hexValue;
 }
 
