@@ -5,6 +5,7 @@
 #ifndef SIC_ASSEMBLER_OPERAND_H
 #define SIC_ASSEMBLER_OPERAND_H
 #include <string>
+#include <map>
 #include "../validate/Regex.h"
 
 class Operand {
@@ -36,10 +37,13 @@ public:
     bool validateStringConstant();
     bool validateHexConstant();
     bool validateDecimalValue();
+    bool validateExpression(std::map<std::string, int> &symbolTable);
+    int getExpressionValue();
 private:
     std:: string operandField;
     std:: string rawInput;
     std:: string hexValue;
+    int expressionValue;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,
         HexConstant,DecimalValue,inValid};

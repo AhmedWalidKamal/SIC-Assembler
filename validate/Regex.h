@@ -23,6 +23,7 @@ class Regex {
     static std::regex isLabelOperand;
     static std::regex asmFile;
     static std::regex commentOrEmptyLine;
+    static std::regex expression;
 };
 
 
