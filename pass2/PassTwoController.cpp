@@ -13,7 +13,7 @@ PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instr
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                      Program *program, std::string fileName,
-                                     std::map<int, std::pair<std::string, int> > &literalTable) {
+                                     std::map<std::string, std::pair<std::string, int> > &literalTable) {
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     int lineNumber = 1;
@@ -36,7 +36,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     objectCode = getWordObjectCode(currentStatement);
                 } else if (mnemonic != RESB && mnemonic != RESW && mnemonic != END){
                     instructionCheck(currentStatement, symbolTable);
-                    objectCode = getInstructionObjectCode(currentStatement, symbolTable);
+                    objectCode = getInstructionObjectCode(currentStatement, symbolTable, literalTable);
                 }
             } catch (ErrorHandler::Error error) {
                 listingWriter->writeError(error);
@@ -66,7 +66,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     objectCode = getWordObjectCode(currentStatement);
                     writeWordObjectFile(objectCode, currentStatement);
                 } else {
-                    objectCode = getInstructionObjectCode(currentStatement, symbolTable);
+                    objectCode = getInstructionObjectCode(currentStatement, symbolTable, literalTable);
                     writeInstructionObjectFile(objectCode, currentStatement);
                 }
             }
@@ -98,8 +98,10 @@ void PassTwoController::writeResObjectFile() {
     objectWriter->startNewTextRecord(-1);
 }
 
-std::string PassTwoController::getInstructionObjectCode(Statement *statement,
-                                                          std::map<std::string, int> &symbolTable) {
+std::string PassTwoController::
+getInstructionObjectCode(Statement *statement,
+                         std::map<std::string, int> &symbolTable,
+                         std::map<int, std::pair<std::string, int>> &literalTable) {
     int opCode = instructionTable[statement->getMnemonic()->getMnemonicField()]->getOpCode();
     int indexBit = 0, address = 0;
     if (!statement->getOperand()->isEmpty()) {
@@ -110,6 +112,8 @@ std::string PassTwoController::getInstructionObjectCode(Statement *statement,
             address = symbolTable[statement->getOperand()->getOperandField()];
         } else if (statement->getOperand()->isFixedAddress()) {
             address = statement->getOperand()->getLCIncrement();
+        } else if (statement->getOperand()->isLiteral()){
+            address = literalTable[statement->getOperand()->getOperandValue()].second;
         } else {
             address = statement->getStatementLocationPointer();
         }

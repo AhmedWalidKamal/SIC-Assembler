@@ -44,11 +44,11 @@ bool Operand::isEmpty() {
 
 bool Operand::isValid() {
     validateIndexed();
+    validateLiteral();
     validateLabel();
     validateHexAddress();
     validateDecimalAddress();
     validateCurrentLocationCounter();
-    validateLiteral();
     return (type != inValid);
 }
 bool Operand::isIndexed() {
@@ -56,22 +56,16 @@ bool Operand::isIndexed() {
 }
 
 void Operand::validateLiteral() {
-    //if (std::regex_match(operandField, Regex::literal)) {
-//        remove preceding '='
-//        if literal is hex constant
-//            type = hexConstLiteral;
-//            setOperandValue()
-//        else if literal is string constant
-//            type = stringConstLiteral;
-//            setOperandValue()
-//        else if literal is decimal value
-//            type = decimalLiteral;
-//            setOperandValue()
-    }
-//}
+ if (operandField.front()=='='){
+     literal = true;
+     operandField = operandField.substr(1,std::string::npos);
+ }
+
+}
+
 
 bool Operand::isLiteral() {
-    return type == hexConstLiteral || stringConstLiteral || decimalLiteral;
+  return literal;
 }
 
 void Operand::validateIndexed() {
@@ -105,7 +99,7 @@ void Operand::validateHexAddress() {
         found = operandField.find_first_of("'");
         operandField.erase (found,1);
         setLCIncrement(std::stoi(operandField, nullptr, 16));
-
+        hexValue = operandField;
     }
 }
 
@@ -113,6 +107,7 @@ bool Operand::validateDecimalAddress() {
     if (std::regex_match(operandField, Regex::integerAddress)){
         type = decimalAddress;
         setLCIncrement(std::stoi(operandField));
+        hexValue = (Hexadecimal::intToHex(std::stoi(operandField)));
         return  true;
     }
     return false;
@@ -124,7 +119,7 @@ bool Operand::isFixedAddress() {
 void Operand::validateCurrentLocationCounter() {
     if (std::regex_match(operandField, Regex::star)){
         type = currentLocationCounter;
-
+        // to be modified
     }
 }
 
@@ -154,6 +149,7 @@ bool Operand::validateStringConstant() {
         std::size_t end = operandField.find_last_of("'");
         operandField = operandField.substr(start + 1, (end - start - 1));
         setLCIncrement(operandField.length());
+        hexValue = Hexadecimal :: stringToHex(operandField);
         return true;
     }
 }
@@ -173,6 +169,7 @@ bool Operand::validateHexConstant() {
             setLCIncrement(hexDigits/2);
             setOperandValue(std::stoi(operandField, nullptr, 16));
             return true;
+            hexValue = (operandField);
         } else {
             type = inValid;
             return false;

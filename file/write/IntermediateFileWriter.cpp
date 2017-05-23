@@ -55,7 +55,7 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
     }
 }
 void IntermediateFileWriter::writeLiteralTable(std::map<int, std::pair<std::string, int>> &literalTable) {
-    
+
 }
 
 void IntermediateFileWriter::writeError(ErrorHandler::Error error) {

@@ -10,7 +10,7 @@
 class EquDirective : public Directive {
 public :
     int execute(int &start, int &end, int &locationCounter,
-                Operand *operand, std::map<int, std::pair<std::string, int>> &literalTable);
+                Operand *operand, std::map<std::string, std::pair<std::string, int>> &literalTable);
 
     void validate(std::map<std::string, Instruction *> &instructionTable,
                   std::map<std::string, Directive *> &directiveTable,

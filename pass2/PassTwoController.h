@@ -21,7 +21,7 @@ public:
 
     void executePass2(std::map<std::string, int> &symbolTable,
                       Program *program, std::string fileName,
-                      std::map<int, std::pair<std::string, int> > &literalTable);
+                      std::map<std::string, std::pair<std::string, int> > &literalTable);
 
 private:
     void startCheck(Statement *statement);
@@ -40,7 +40,9 @@ private:
 
     void writeResObjectFile();
 
-    std::string getInstructionObjectCode(Statement *statement, std::map<std::string, int> &symbolTable);
+    std::string getInstructionObjectCode(Statement *statement,
+                                         std::map<std::string, int> &symbolTable,
+                                         std::map<int, std::pair<std::string, int>> &literalTable);
 
     void writeInstructionObjectFile(std::string objCode, Statement *statement);
 
