@@ -7,6 +7,7 @@
 #include "../error/ErrorHandler.h"
 
 int EquDirective::execute(int &start, int &end, int &locationCounter, int incrementValue) {
+    
 
 }
 

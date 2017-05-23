@@ -5,7 +5,9 @@
 #include "../error/ErrorHandler.h"
 
 int OrgDirective::execute(int &start, int &end, int &locationCounter, int incrementValue) {
-
+//update the location counter with the operand of the org or reset it back to last value before Org
+    locationCounter=incrementValue;
+    return locationCounter;
 }
 
 void OrgDirective::validate(std::map<std::string, Instruction *> &instructionTable,
