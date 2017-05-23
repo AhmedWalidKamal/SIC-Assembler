@@ -6,15 +6,17 @@
 #include "../error/ErrorHandler.h"
 
 int LtorgDirective::execute(int &start, int &end, int &locationCounter,
-                            Operand *operand,
-                            std::map<std::string, int> &symbolTable,
+                            Operand *operand,std::map<std::string, int> &symbolTable,
                             std::map<std::string, std::pair<Operand *, int>> &literalTable) {
-    for (auto literal : literalTable) {
+    for (auto &literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
-
-            locationCounter += literal.second.first->getLCIncrement();
+            if (operand->isHexConstant() || operand->isStringConstant()) {
+                locationCounter += literal.second.first->getLCIncrement();
+            } else {
+                locationCounter += 3;
+            }
         }
     }
     // Because LTORG's statement LC isn't displayed.

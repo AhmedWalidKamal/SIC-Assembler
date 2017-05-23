@@ -5,8 +5,9 @@
 #include "ReserveByteDirective.h"
 #include "../error/ErrorHandler.h"
 
-int ReserveByteDirective :: execute(int &start, int &end, int &locationCounter,
-                                    Operand *operand,   std::map<std::string, int> &symbolTable,std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+int ReserveByteDirective :: execute(int &start, int &end, int &locationCounter, Operand *operand,
+                                    std::map<std::string, int> &symbolTable,std::map<std::string,
+                                    std::pair<Operand *, int>> &literalTable) {
 
     int currentLocationCounter = locationCounter;
     locationCounter += operand->getLCIncrement();

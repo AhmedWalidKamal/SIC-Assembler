@@ -45,15 +45,29 @@ bool Operand::isValid() {
     validateIndexed();
     validateLiteral();
     if (literal) {
-       if  (validateHexConstant()) { return true; }
-       if  (validateStringConstant())  { return true; }
-        if (validateDecimalValue())  { return true;}
-    }else {
-       if (validateLabel()) { return true;}
+       if  (validateHexConstant()) {
+           return true;
+       }
+       if  (validateStringConstant())  {
+           return true;
+       }
+        if (validateDecimalValue())  {
+            return true;
+        }
+    } else {
+       if (validateLabel()) {
+           return true;
+       }
     }
-    if  (validateHexAddress()) { return true;}
-    if   (validateDecimalAddress()) { return true;}
-    if (validateCurrentLocationCounter()) { return true;}
+    if  (validateHexAddress()) {
+        return true;
+    }
+    if   (validateDecimalAddress()) {
+        return true;
+    }
+    if (validateCurrentLocationCounter()) {
+        return true;
+    }
     return (type != inValid);
 }
 bool Operand::isIndexed() {
@@ -259,6 +273,10 @@ bool Operand ::validateExpression(std::map<std::string, int> &symbolTable) {
 
 int Operand ::getExpressionValue() {
     return expressionValue;
+}
+
+void Operand::setHexValue(std::string hexValue) {
+    Operand::hexValue = hexValue;
 }
 
 

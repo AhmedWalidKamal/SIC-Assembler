@@ -11,7 +11,9 @@ class WordDirective : public Directive {
 
 public :
     int execute(int &start, int &end, int &locationCounter,
-                Operand *operand,std::map<std::string, int> &symbolTable,std::map<std::string, std::pair<Operand *, int>> &literalTable);
+                Operand *operand, std::map<std::string, int> &symbolTable,
+                std::map<std::string, std::pair<Operand *, int>> &literalTable);
+
     void validate(std::map<std::string, Instruction *> &instructionTable,
                   std::map<std::string, Directive *> &directiveTable,
                   std::map<std::string, int> &symbolTable, const int &start, const int &end,
