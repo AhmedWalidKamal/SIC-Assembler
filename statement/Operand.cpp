@@ -44,13 +44,15 @@ bool Operand::isEmpty() {
 bool Operand::isValid() {
     validateIndexed();
     validateLiteral();
-    validateLabel();
+    if (literal) {
+        validateHexConstant();
+        validateStringConstant();
+    }else {
+        validateLabel();
+    }
     validateHexAddress();
     validateDecimalAddress();
     validateCurrentLocationCounter();
-    if (literal && isLabel()) {
-        return false;
-    }
     return (type != inValid);
 }
 bool Operand::isIndexed() {
