@@ -40,11 +40,15 @@ private:
     std:: string rawInput;
     enum OperandType {Label,hexaAddress,decimalAddress,
         currentLocationCounter,StringConstant,
-        HexConstant,DecimalValue,inValid};
+        HexConstant,DecimalValue,inValid, literal};
     OperandType type = inValid;
     int operandValue = 0;
     int LCIncrement = 0;
     bool indexed = false;
+
+    void validateLiteral();
+
+    bool isLiteral();
 };
 
 

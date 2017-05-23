@@ -22,14 +22,15 @@ void MainController::setSourceFileReader(std::string fileName) {
 void MainController::execute(std::string fileName) {
     setSourceFileReader(fileName);
     symbolTable.clear();
+    literalTable.clear();
     Program *program = new Program();
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
-    bool validSourceCode = passOne->execute(symbolTable, sourceFileReader, program);
+    bool validSourceCode = passOne->execute(symbolTable, sourceFileReader, program, literalTable);
     if (validSourceCode) {
         PassTwoController *passTwo;
         passTwo = new PassTwoController(instructionTable);
-        passTwo->executePass2(symbolTable, program, sourceFileReader->getFileName());
+        passTwo->executePass2(symbolTable, program, sourceFileReader->getFileName(), literalTable);
     }
 }
 

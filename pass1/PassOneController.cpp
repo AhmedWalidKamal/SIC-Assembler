@@ -23,7 +23,8 @@ PassOneController::PassOneController(std::map<std::string, Instruction *> &instr
 }
 
 bool PassOneController::execute(std::map<std::string, int> &symbolTable,
-                                FileReader *fileReader, Program *program) {
+                                FileReader *fileReader, Program *program,
+                                std::map<std::string, std::pair<int, int> > &literalTable) {
     IntermediateFileWriter *intermediateFileWriter = new IntermediateFileWriter(fileReader->getFileName(),
                                                                                 std::string(".int"));
     bool validSourceCode = true;

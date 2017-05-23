@@ -20,7 +20,8 @@ public:
     PassTwoController(std::map<std::string, Instruction *> &instructionTable);
 
     void executePass2(std::map<std::string, int> &symbolTable,
-                      Program *program, std::string fileName);
+                      Program *program, std::string fileName,
+                      std::map<std::string, std::pair<int, int> > &literalTable);
 
 private:
     void startCheck(Statement *statement);

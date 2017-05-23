@@ -48,10 +48,22 @@ bool Operand::isValid() {
     validateHexAddress();
     validateDecimalAddress();
     validateCurrentLocationCounter();
+    validateLiteral();
     return (type != inValid);
 }
 bool Operand::isIndexed() {
     return indexed;
+}
+
+void Operand::validateLiteral() {
+//    if (std::regex_match(operandField, Regex::literal)) {
+//        // Remove preceding '=' and remove quotes if found, leave only the value of the operand.
+//        type = literal;
+//    }
+}
+
+bool Operand::isLiteral() {
+    return type == literal;
 }
 
 void Operand::validateIndexed() {
@@ -61,8 +73,8 @@ void Operand::validateIndexed() {
         operandField= operandField.substr(0,found);
     }
 }
-void Operand::validateLabel() {
 
+void Operand::validateLabel() {
     if (std::regex_match(operandField, Regex::isLabelOperand)){
         //std::transform(operandField.begin(), operandField.end(), operandField.begin(),
                       // [](unsigned char c) { return std::toupper(c); });
@@ -139,8 +151,7 @@ bool Operand::validateStringConstant() {
 }
 
 bool Operand::isStringConstant() {
-
-    return (type==StringConstant);
+    return type == StringConstant;
 }
 
 bool Operand::validateHexConstant() {

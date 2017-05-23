@@ -12,7 +12,8 @@ PassTwoController::PassTwoController(std::map<std::string, Instruction *> &instr
 }
 
 void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
-                                     Program *program, std::string fileName) {
+                                     Program *program, std::string fileName,
+                                     std::map<std::string, std::pair<int, int> > &literalTable) {
     PassTwoController::listingWriter = new ListingFileWriter(fileName);
     listingWriter->writeInitialLine();
     int lineNumber = 1;
