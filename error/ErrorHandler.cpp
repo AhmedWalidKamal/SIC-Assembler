@@ -13,5 +13,6 @@ const std::string ErrorHandler::errors[] = {"Duplicate Label!", "Invalid Label!"
                                             "Can't Write code after END!", "Multiple Starts", "Memory Limit Exceeded!",
                                             "Code before Start", "Missing Label For Equate!", "Equate Missing Value!",
                                             "Label Before Org!", "LTORG Directive can't have a label.",
-                                             "LTORG directive can't have an operand."};
+                                            "LTORG directive can't have an operand.",
+                                            "EQU operand must be previously defined!"};
 

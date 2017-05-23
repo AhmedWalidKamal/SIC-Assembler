@@ -56,6 +56,10 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                         = std::make_pair(statement->getOperand()->getOperandField(), -1);
             }
             // Check for EQU here, assign the value of the operand to the symbol table instead of LC
+            if(statement->getMnemonic()->getMnemonicField()=="equ"){
+                //Note : expressions are not handled.
+                symbolTable[statement->getLabel()->getLabelField()]=statement->getOperand()->getOperandValue();
+            }
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 

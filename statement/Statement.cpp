@@ -65,6 +65,7 @@ void Statement::validate(std::map<std::string, Instruction *> &instructionTable,
     state->validate(instructionTable, directiveTable, symbolTable, start, end, locationCounter, this);
 }
 
+
 void Statement::execute(int &start, int &end, int &locationCounter,
                         std::map<std::string, Directive *> &directiveTable,
                         std::map<std::string, Instruction *> &instructionTable,

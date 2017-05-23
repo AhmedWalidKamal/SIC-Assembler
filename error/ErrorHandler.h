@@ -32,7 +32,8 @@ public:
         equate_missing_value,
         label_before_org,
         ltorg_label,
-        ltorg_operand
+        ltorg_operand,
+        equate_operand
     };
     static const std::string errors[];
 };

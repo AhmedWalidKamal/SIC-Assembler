@@ -23,4 +23,7 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
     if (statement->getOperand()->isEmpty()) {
         throw ErrorHandler::equate_missing_value;
     }
+    if(statement->getOperand()->isLabel()&&symbolTable.find(statement->getOperand()->getOperandField())==symbolTable.end()){
+        throw ErrorHandler::equate_operand;
+    }
 }
