@@ -55,18 +55,19 @@ void IntermediateFileWriter::writeSymbolTable(std::map<std::string, int> &symbol
     }
 }
 
-void IntermediateFileWriter::writeLiteralTable(std::map<std::string, std::pair<std::string, int>> &literalTable) {
+void IntermediateFileWriter::writeLiteralTable(std::map<std::string, std::pair<Operand *, int>> &literalTable) {
     intermediateFileStream << StringUtil::drawLine(LINE_LENGTH) << std::endl;
     intermediateFileStream << StringUtil::fillSpaces("Literal", TABLE_BOUND)
                            << StringUtil::fillSpaces("Hex Value",TABLE_BOUND)
                            <<StringUtil::fillSpaces("Length",TABLE_BOUND)
                            <<"Address"<<std::endl;
 
-    for (auto curr : literalTable) {
-        intermediateFileStream <<StringUtil::fillSpaces(curr.second.first,TABLE_BOUND)
-                               <<StringUtil::fillSpaces(curr.first,TABLE_BOUND)
-                               <<StringUtil::fillSpaces(StringUtil::toString(curr.second.first.length()),TABLE_BOUND)
-                               <<Hexadecimal::intToHex(curr.second.second)
+    for (auto literal : literalTable) {
+        intermediateFileStream <<StringUtil::fillSpaces(literal.second.first->getOperandField(), TABLE_BOUND)
+                               <<StringUtil::fillSpaces(literal.first, TABLE_BOUND)
+                               <<StringUtil::fillSpaces(StringUtil::toString(literal.
+                                       second.first->getOperandField().length()),TABLE_BOUND)
+                               <<Hexadecimal::intToHex(literal.second.second)
                                <<std::endl;
     }
 }

@@ -24,7 +24,7 @@ public:
 
     void writeSymbolTable(std::map<std::string, int> &symbolTable);
 
-    void writeLiteralTable(std::map<std::string, std::pair<std::string, int>> &literalTable);
+    void writeLiteralTable(std::map<std::string, std::pair<Operand *, int>> &literalTable);
 
     void writeError(ErrorHandler::Error error);
 

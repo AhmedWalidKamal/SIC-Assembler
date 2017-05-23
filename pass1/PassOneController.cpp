@@ -50,11 +50,11 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
-//            if (statement->getOperand()->isLiteral() &&
-//                    literalTable.find(statement->getOperand()->getOperandValue()) == literalTable.end()) {
-//                literalTable[statement->getOperand()->getHexValue()]
-//                        = std::make_pair(statement->getOperand()->getOperandField(), -1);
-//            }
+            if (statement->getOperand()->isLiteral() &&
+                    literalTable.find(statement->getOperand()->getHexValue()) == literalTable.end()) {
+                literalTable[statement->getOperand()->getHexValue()]
+                        = std::make_pair(statement->getOperand(), -1);
+            }
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
             }
@@ -72,7 +72,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
     }
 
     intermediateFileWriter->writeSymbolTable(symbolTable);
-    //intermediateFileWriter->writeLiteralTable(literalTable);
+    intermediateFileWriter->writeLiteralTable(literalTable);
 
     if (startAddress == -1 && endAddress == -1) {
         program->setProgramLength(locationCounter);
