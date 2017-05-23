@@ -6,7 +6,9 @@
 #include "../error/ErrorHandler.h"
 
 int ByteDirective :: execute(int &start, int &end, int &locationCounter,
-                             Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+                             Operand *operand,
+                             std::map<std::string, int> &symbolTable,
+                             std::map<std::string, std::pair<Operand *, int>> &literalTable) {
     int currentLocationCounter = locationCounter;
     locationCounter += operand->getLCIncrement();
     return currentLocationCounter;

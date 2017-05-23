@@ -5,13 +5,15 @@
 #include "../error/ErrorHandler.h"
 
 int OrgDirective::execute(int &start, int &end, int &locationCounter,
-                          Operand *operand, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+                          Operand *operand,  std::map<std::string, int> &symbolTable, std::map<std::string, std::pair<Operand *, int>> &literalTable) {
 
     /*case 1 ORG without operand resets LC*/
-    if (operand->isEmpty()) {
+    if (operand->isEmpty() && previousLC!= -1) {
         locationCounter = previousLC;
     }/*case 2 update the location counter with the operand of the org*/
-    else {
+    else if (previousLC == -1){
+       locationCounter = locationCounter;
+    }else{
         if(operand->isLabel()){
             locationCounter=operand->getLCIncrement();
         }
@@ -34,5 +36,19 @@ void OrgDirective::validate(std::map<std::string, Instruction *> &instructionTab
                             const int &locationCounter, Statement *statement) {
     if (!statement->getLabel()->isEmpty()) {
         throw ErrorHandler::label_before_org;
+    }
+
+
+    if (statement->getOperand()->validateCurrentLocationCounter()||statement->getOperand()->validateLabel()
+        ||statement->getOperand()->validateDecimalAddress()||statement->getOperand()->validateHexAddress()
+        ||statement->getOperand()->validateExpression(symbolTable)) {
+        if(statement->getOperand()->isLabel()){
+        if (symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()
+                ||symbolTable[statement->getOperand()->getOperandField()] == -1 ){
+                throw ErrorHandler::org_operand;
+            }
+        }
+    }else{
+        throw ErrorHandler::org_operand;
     }
 }
