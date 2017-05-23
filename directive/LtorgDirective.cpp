@@ -5,7 +5,8 @@
 #include "LtorgDirective.h"
 #include "../error/ErrorHandler.h"
 
-int LtorgDirective::execute(int &start, int &end, int &locationCounter, int incrementValue) {
+int LtorgDirective::execute(int &start, int &end, int &locationCounter,
+                            int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
     return 0;
 }
 

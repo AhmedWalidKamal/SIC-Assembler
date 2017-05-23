@@ -4,7 +4,8 @@
 #include "OrgDirective.h"
 #include "../error/ErrorHandler.h"
 
-int OrgDirective::execute(int &start, int &end, int &locationCounter, int incrementValue) {
+int OrgDirective::execute(int &start, int &end, int &locationCounter,
+                          int incrementValue, std::map<int, std::pair<std::string, int>> &literalTable) {
 
 }
 
