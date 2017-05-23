@@ -49,6 +49,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
             }
+            // Check for EQU here, assign the value of the operand to the symbol table instead of LC
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
 

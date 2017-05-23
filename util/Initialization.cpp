@@ -10,6 +10,9 @@
 #include "../directive/ByteDirective.h"
 #include "../directive/ReserveByteDirective.h"
 #include "../directive/ReserveWordDirective.h"
+#include "../directive/EquDirective.h"
+#include "../directive/OrgDirective.h"
+#include "../directive/LtorgDirective.h"
 
 void Initialization::initInstructionTable(std::map<std::string, Instruction *> &instructionTable) {
     instructionTable["ADD"] = new Instruction("ADD", 24,3, 1);
@@ -46,4 +49,7 @@ void Initialization::initDirectiveTable(std::map<std::string, Directive *> &dire
     directiveTable["BYTE"] = new ByteDirective();
     directiveTable["RESB"] = new ReserveByteDirective();
     directiveTable["RESW"] = new ReserveWordDirective();
+    directiveTable["EQU"] = new EquDirective();
+    directiveTable["ORG"] = new OrgDirective();
+    directiveTable["LTORG"] = new LtorgDirective();
 }
