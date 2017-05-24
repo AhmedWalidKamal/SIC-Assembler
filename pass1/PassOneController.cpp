@@ -70,10 +70,11 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                     symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
                 } else if (statement->getOperand()->isLabel()) {
                     symbolTable[statement->getLabel()->getLabelField()]= symbolTable[statement->getOperand()->getOperandField()];
-                } else if (statement->getOperand()->isDecimalValue()) {
-                    symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getOperandValue();
+                } else if (statement->getOperand()->isFixedAddress()) {
+                    symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getLCIncrement();
                 } else {
-                    //symbolTable[statement->getLabel()->getLabelField()]=expressionValue;
+                    std::cout<<" here4";
+                    symbolTable[statement->getLabel()->getLabelField()]= statement->getOperand()->getExpressionValue();
                 }
             }
 

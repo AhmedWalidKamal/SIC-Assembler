@@ -14,15 +14,15 @@ int OrgDirective::execute(int &start, int &end, int &locationCounter,
     else if (previousLC == -1){
        locationCounter = locationCounter;
     }else{
-        if(operand->isLabel()){
-            locationCounter=operand->getLCIncrement();
+        if (operand->isCurrentLocationCounter()) {
+            locationCounter = locationCounter;
+        } else if (operand->isLabel()) {
+            locationCounter = symbolTable[operand->getOperandField()];
+        } else if (operand->isFixedAddress()) {
+            locationCounter = operand->getLCIncrement();
+        } else {
+            locationCounter = operand->getExpressionValue();
         }
-        else if(operand->isDecimalValue()){
-            locationCounter=operand->getOperandValue();
-        }
-//        else if(operand is expression){
-//            locationCounter=expression value;
-//        }
 
         previousLC = locationCounter;
 

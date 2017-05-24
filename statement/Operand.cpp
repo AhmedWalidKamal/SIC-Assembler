@@ -279,6 +279,8 @@ void Operand::setHexValue(std::string hexValue) {
     Operand::hexValue = hexValue;
 }
 
-
+/*OperandType Operand ::getType() {
+    return type;
+}*/
 
 
