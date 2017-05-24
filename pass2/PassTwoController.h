@@ -67,6 +67,9 @@ private:
     const std::string WORD = "WORD";
     const std::string RESW = "RESW";
     const std::string RESB = "RESB";
+    const std::string ORG = "ORG";
+    const std::string EQU = "EQU";
+    const std::string LTORG = "LTORG";
 };
 
 

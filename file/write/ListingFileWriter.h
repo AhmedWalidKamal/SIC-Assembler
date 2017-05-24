@@ -7,6 +7,7 @@
 
 #include <string>
 #include <fstream>
+#include <set>
 #include "../../statement/Statement.h"
 #include "../../datatypes/Hexadecimal.h"
 #include "../../util/StringUtil.h"

@@ -45,3 +45,4 @@ void ListingFileWriter::writeComment(int lineNumber, std::string line) {
     std::string lineNum = StringUtil::fillSpaces(StringUtil::toString(lineNumber), SPACE_BOUND);
     listFileStream<<lineNum<<line<<std::endl;
 }
+
