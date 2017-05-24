@@ -45,8 +45,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 lineNumber++;
                 continue;
             }
-            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable,
-                               symbolTable, literalTable);
             if (statement->getOperand()->isLabel() &&
                 symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()) {
                 symbolTable[statement->getOperand()->getOperandField()] = -1;
@@ -57,11 +55,7 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                     statement->getOperand()->setHexValue(Hexadecimal::intToHex(locationCounter));
                 }
                 literalTable[statement->getOperand()->getHexValue()] = std::make_pair(statement->getOperand(), -1);
-
             }
-            statement->execute(startAddress, endAddress, locationCounter,
-                               directiveTable, instructionTable, symbolTable, literalTable);
-
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
             }
@@ -76,6 +70,8 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                     symbolTable[statement->getLabel()->getLabelField()]= statement->getOperand()->getExpressionValue();
                 }
             }
+            statement->execute(startAddress, endAddress, locationCounter, directiveTable, instructionTable,
+                               symbolTable, literalTable);
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }

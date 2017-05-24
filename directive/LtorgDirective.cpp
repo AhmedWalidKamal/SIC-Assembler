@@ -7,22 +7,22 @@
 #include "../error/ErrorHandler.h"
 
 int LtorgDirective::execute(int &start, int &end, int &locationCounter,
-                            Operand *operand,std::map<std::string, int> &symbolTable,
+                            Operand *operand, std::map<std::string, int> &symbolTable,
                             std::map<std::string, std::pair<Operand *, int>> &literalTable) {
-    int  current = locationCounter;
+    int initLocCtr = locationCounter;
     for (auto &literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
-            if (operand->isHexConstant() || operand->isStringConstant()) {
+            if (literal.second.first->isHexConstant() || literal.second.first->isStringConstant()) {
                 locationCounter += literal.second.first->getLCIncrement();
             } else {
                 locationCounter += 3;
             }
         }
     }
-    // Because LTORG's statement LC isn't displayed.
-    return current;
+
+    return initLocCtr;
 }
 
 void LtorgDirective::validate(std::map<std::string, Instruction *> &instructionTable,
