@@ -27,6 +27,9 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             std::string mnemonic = "";
             std::string objectCode = "";
             mnemonic = currentStatement->getMnemonic()->getMnemonicField();
+            if (!currentStatement->getOperand()->isEmpty() && currentStatement->getOperand()->isLiteral()) {
+                literalPool.insert(currentStatement->getOperand()->getHexValue());
+            }
             try {
                 if (mnemonic == START) {
                     startCheck(currentStatement);
@@ -36,7 +39,8 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 } else if (mnemonic == WORD) {
                     wordCheck(currentStatement);
                     objectCode = getWordObjectCode(currentStatement);
-                } else if (mnemonic != RESB && mnemonic != RESW && mnemonic != END){
+                } else if (mnemonic != RESB && mnemonic != RESW &&
+                        mnemonic != END && mnemonic != ORG && mnemonic != EQU && mnemonic != LTORG) {
                     instructionCheck(currentStatement, symbolTable);
                     objectCode = getInstructionObjectCode(currentStatement, symbolTable, literalTable);
                 }
@@ -45,6 +49,25 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 foundError = true;
             }
             listingWriter->writeLine(lineNumber, currentStatement, objectCode);
+            if (mnemonic == LTORG || mnemonic == END) {
+                int currentLocCtr = currentStatement->getStatementLocationPointer();
+                for (auto literal : literalPool) {
+                    Statement *statement = new Statement();
+                    statement->setLabel(new Label("*"));
+                    statement->setMnemonic(new Mnemonic(literalTable[literal].first->getrawInput()));
+                    statement->setStatementLocationPointer(currentLocCtr);
+
+                    listingWriter->writeLine(lineNumber, statement, objectCode); // e3mel el obj code sa7.
+                    if (literalTable[literal].first->isHexConstant() || literalTable[literal].first->isStringConstant()) {
+                        currentLocCtr += literal.second.first->getLCIncrement();
+                    } else {
+                        currentLocCtr += 3;
+                    }
+                    lineNumber++;
+                }
+                lineNumber--;
+                literalPool.clear();
+            }
         }
         lineNumber++;
     }

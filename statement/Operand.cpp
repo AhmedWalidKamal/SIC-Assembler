@@ -10,7 +10,7 @@
 
 Operand::Operand(std::string operandField) {
     Operand::operandField = operandField;
-    Operand :: rawInput = operandField;
+    Operand::rawInput = operandField;
 }
 const std::string &Operand::getOperandField() const {
     return operandField;
