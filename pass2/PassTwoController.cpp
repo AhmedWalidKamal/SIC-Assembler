@@ -88,7 +88,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                                               currentStatement->getStatementLocationPointer(), literalTable);
                     literalPool.clear();
                     writeEndObjectFile(currentStatement, symbolTable);
-                } else if (mnemonic == RESW || mnemonic == RESB) {
+                } else if (mnemonic == RESW || mnemonic == RESB || mnemonic == ORG) {
                     writeResObjectFile();
                 } else if (mnemonic == BYTE) {
                     objectCode = getByteObjectCode(currentStatement);
@@ -100,7 +100,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     writeLiteralsInObjectFile(literalPool,
                                               currentStatement->getStatementLocationPointer(), literalTable);
                     literalPool.clear();
-                } else if (mnemonic != ORG && mnemonic != EQU){
+                } else if (mnemonic != EQU){
                     objectCode = getInstructionObjectCode(currentStatement, symbolTable, literalTable);
                     writeInstructionObjectFile(objectCode, currentStatement);
                 }
