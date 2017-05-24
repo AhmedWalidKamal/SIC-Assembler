@@ -2,12 +2,14 @@
 // Created by Walid on 5/23/2017.
 //
 
+#include <iostream>
 #include "LtorgDirective.h"
 #include "../error/ErrorHandler.h"
 
 int LtorgDirective::execute(int &start, int &end, int &locationCounter,
                             Operand *operand,std::map<std::string, int> &symbolTable,
                             std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+    int  current = locationCounter;
     for (auto &literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
@@ -20,7 +22,7 @@ int LtorgDirective::execute(int &start, int &end, int &locationCounter,
         }
     }
     // Because LTORG's statement LC isn't displayed.
-    return 0;
+    return current;
 }
 
 void LtorgDirective::validate(std::map<std::string, Instruction *> &instructionTable,
