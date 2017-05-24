@@ -40,6 +40,7 @@ public:
     void setHexValue(std::string hexValue);
     bool validateExpression(std::map<std::string, int> &symbolTable);
     int getExpressionValue();
+
 private:
     std::string operandField;
     std::string rawInput;
@@ -54,6 +55,9 @@ private:
     bool indexed = false;
     bool literal = false;
     void validateLiteral();
+
+/*public:
+    OperandType getType();*/
 };
 
 
