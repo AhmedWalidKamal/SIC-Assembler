@@ -26,25 +26,17 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
         throw ErrorHandler::equate_missing_value;
     }
 
-    if (statement->getOperand()->validateCurrentLocationCounter()||statement->getOperand()->validateLabel()
-        ||statement->getOperand()->validateDecimalAddress()||statement->getOperand()->validateHexAddress()
-       ) {
-        if (statement->getOperand()->validateDecimalAddress()){
-            std::cout<<"here"<<std::endl;
-        }
-        std::cout<<"equ"<<std::endl;
-        std::cout<<statement->getOperand()->isFixedAddress()<<std::endl;
-        std::cout<<statement->getOperand()->isLabel()<<std::endl;
-        std::cout<<statement->getOperand()->isCurrentLocationCounter()<<std::endl;
-
-
+    if (statement->getOperand()->validateCurrentLocationCounter() || statement->getOperand()->validateLabel()
+            ||statement->getOperand()->validateDecimalAddress() ||
+            statement->getOperand()->validateHexAddress() ||
+            statement->getOperand()->validateExpression(symbolTable)) {
         if(statement->getOperand()->isLabel()){
             if (symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()
                 ||symbolTable[statement->getOperand()->getOperandField()] == -1 ){
                 throw ErrorHandler::equate_operand;
             }
         }
-    }else{
+    } else {
         throw ErrorHandler::equate_operand;
     }
     }
