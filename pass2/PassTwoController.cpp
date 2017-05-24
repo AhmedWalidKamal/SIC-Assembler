@@ -52,6 +52,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
             if (mnemonic == LTORG || mnemonic == END) {
                 int currentLocCtr = currentStatement->getStatementLocationPointer();
                 for (auto literal : literalPool) {
+                    lineNumber++;
                     Statement *statement = new Statement();
                     statement->setLabel(new Label("*"));
                     statement->setMnemonic(new Mnemonic(literalTable[literal].first->getrawInput()));
@@ -63,9 +64,7 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     } else {
                         currentLocCtr += 3;
                     }
-                    lineNumber++;
                 }
-                lineNumber--;
                 literalPool.clear();
             }
         }

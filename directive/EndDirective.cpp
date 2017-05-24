@@ -9,19 +9,19 @@
 int EndDirective::execute(int &start, int &end, int &locationCounter,
                           Operand *operand,std::map<std::string, int> &symbolTable,
                           std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+    int initLocCtr = locationCounter;
     for (auto &literal : literalTable) {
         // If literal doesn't have an address
         if (literal.second.second == -1) {
             literal.second.second = locationCounter;
-            if (operand->isHexConstant() || operand->isStringConstant()) {
+            if (literal.second.first->isHexConstant() || literal.second.first->isStringConstant()) {
                 locationCounter += literal.second.first->getLCIncrement();
             } else {
                 locationCounter += 3;
             }
         }
     }
-    return locationCounter;
-
+    return initLocCtr;
 }
 
 void EndDirective::validate(std::map<std::string, Instruction *> &instructionTable,

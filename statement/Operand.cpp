@@ -111,12 +111,11 @@ bool Operand::isLabel() {
 
 bool Operand::validateHexAddress() {
 
-    if (std::regex_match(operandField, Regex::hexaAddress)){
+    if (std::regex_match(operandField, Regex::hexaAddress)) {
         type = hexaAddress;
-        std::size_t found = operandField.find_first_of("'");
-        operandField.erase (found,1);
-        found = operandField.find_first_of("'");
-        operandField.erase (found,1);
+        std::size_t start = operandField.find_first_of("'");
+        std::size_t end = operandField.find_last_of("'");
+        operandField = operandField.substr(start + 1, (end - start - 1));
         setLCIncrement(std::stoi(operandField, nullptr, 16));
         hexValue = operandField;
         return true;
@@ -151,11 +150,10 @@ bool Operand::isCurrentLocationCounter() {
 }
 
 bool Operand::validateDecimalValue() {
-
     if (std::regex_match(operandField, Regex::integerValue)){
         type = DecimalValue;
         setOperandValue(std::stoi(operandField));
-        hexValue = operandField;
+        hexValue = Hexadecimal::intToHex(std::stoi(operandField));
         setLCIncrement(3);
         return true;
     }
@@ -163,7 +161,7 @@ bool Operand::validateDecimalValue() {
 }
 
 bool Operand::isDecimalValue() {
-    return (type == DecimalValue);
+    return type == DecimalValue;
 }
 
 bool Operand::validateStringConstant() {
