@@ -27,11 +27,11 @@ void MainController::execute(std::string fileName) {
     PassOneController *passOne;
     passOne = new PassOneController(instructionTable, directiveTable);
     bool validSourceCode = passOne->execute(symbolTable, sourceFileReader, program, literalTable);
-    /*if (validSourceCode) {
+    if (validSourceCode) {
         PassTwoController *passTwo;
         passTwo = new PassTwoController(instructionTable);
         passTwo->executePass2(symbolTable, program, sourceFileReader->getFileName(), literalTable);
-    }*/
+    }
 }
 
 void MainController::initDirectiveTable(std::map<std::string,

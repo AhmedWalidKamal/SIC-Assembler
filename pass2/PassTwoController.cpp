@@ -56,10 +56,9 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     statement->setLabel(new Label("*"));
                     statement->setMnemonic(new Mnemonic(literalTable[literal].first->getrawInput()));
                     statement->setStatementLocationPointer(currentLocCtr);
-
-                    listingWriter->writeLine(lineNumber, statement, objectCode); // e3mel el obj code sa7.
+                    listingWriter->writeLine(lineNumber, statement, literal);
                     if (literalTable[literal].first->isHexConstant() || literalTable[literal].first->isStringConstant()) {
-                        currentLocCtr += literal.second.first->getLCIncrement();
+                        currentLocCtr += literalTable[literal].first->getLCIncrement();
                     } else {
                         currentLocCtr += 3;
                     }

@@ -77,7 +77,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                     symbolTable[statement->getLabel()->getLabelField()]= statement->getOperand()->getExpressionValue();
                 }
             }
-
             intermediateFileWriter->writeStatement(lineNumber, statement);
             program->addStatement(statement);
         }

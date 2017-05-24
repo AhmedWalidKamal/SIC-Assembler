@@ -134,7 +134,7 @@ bool Operand::validateDecimalAddress() {
     return false;
 }
 bool Operand::isFixedAddress() {
-    return (type == (hexaAddress || decimalAddress));
+    return type == hexaAddress || type == decimalAddress;
 }
 
 bool Operand::validateCurrentLocationCounter() {
@@ -193,8 +193,8 @@ bool Operand::validateHexConstant() {
         if (hexDigits%2==0){
             setLCIncrement(hexDigits/2);
             setOperandValue(std::stoi(operandField, nullptr, 16));
-            return true;
             hexValue = (operandField);
+            return true;
         } else {
             type = inValid;
             return false;
