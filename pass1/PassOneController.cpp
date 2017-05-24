@@ -59,8 +59,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 literalTable[statement->getOperand()->getHexValue()] = std::make_pair(statement->getOperand(), -1);
 
             }
-            statement->execute(startAddress, endAddress, locationCounter,
-                               directiveTable, instructionTable, symbolTable, literalTable);
 
             if (!statement->getLabel()->isEmpty()) {
                 symbolTable[statement->getLabel()->getLabelField()] = statement->getStatementLocationPointer();
@@ -73,7 +71,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 } else if (statement->getOperand()->isFixedAddress()) {
                     symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getLCIncrement();
                 } else {
-                    std::cout<<" here4";
                     symbolTable[statement->getLabel()->getLabelField()]= statement->getOperand()->getExpressionValue();
                 }
             }
