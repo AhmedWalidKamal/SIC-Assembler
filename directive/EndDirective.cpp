@@ -20,7 +20,6 @@ int EndDirective::execute(int &start, int &end, int &locationCounter,
             }
         }
     }
-    // Because END's statement LC isn't displayed.
     return locationCounter;
 
 }

@@ -70,6 +70,9 @@ private:
     const std::string ORG = "ORG";
     const std::string EQU = "EQU";
     const std::string LTORG = "LTORG";
+
+    void writeLiteralsInObjectFile(std::set<std::string> literalPool, int locationCounter,
+                                   std::map<std::string, std::pair<Operand *, int>> &literalTable);
 };
 
 

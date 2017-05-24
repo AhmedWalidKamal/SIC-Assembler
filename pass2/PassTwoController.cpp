@@ -57,7 +57,8 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                     statement->setMnemonic(new Mnemonic(literalTable[literal].first->getrawInput()));
                     statement->setStatementLocationPointer(currentLocCtr);
                     listingWriter->writeLine(lineNumber, statement, literal);
-                    if (literalTable[literal].first->isHexConstant() || literalTable[literal].first->isStringConstant()) {
+                    if (literalTable[literal].first->isHexConstant() ||
+                            literalTable[literal].first->isStringConstant()) {
                         currentLocCtr += literalTable[literal].first->getLCIncrement();
                     } else {
                         currentLocCtr += 3;
@@ -72,14 +73,21 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
     }
     if (!foundError) {
         PassTwoController::objectWriter = new ObjectFileWriter(fileName);
+        std::set<std::string> literalPool;
         for (auto currentStatement : program->getStatements()) {
             if (!currentStatement->isComment()) {
                 std::string mnemonic = "";
                 std::string objectCode = "";
+                if (!currentStatement->getOperand()->isEmpty() && currentStatement->getOperand()->isLiteral()) {
+                    literalPool.insert(currentStatement->getOperand()->getHexValue());
+                }
                 mnemonic = currentStatement->getMnemonic()->getMnemonicField();
                 if (mnemonic == START) {
                     writeStartObjectFile(currentStatement, program);
                 } else if (mnemonic == END) {
+                    writeLiteralsInObjectFile(literalPool,
+                                              currentStatement->getStatementLocationPointer(), literalTable);
+                    literalPool.clear();
                     writeEndObjectFile(currentStatement, symbolTable);
                 } else if (mnemonic == RESW || mnemonic == RESB) {
                     writeResObjectFile();
@@ -89,7 +97,11 @@ void PassTwoController::executePass2(std::map<std::string, int> &symbolTable,
                 } else if (mnemonic == WORD) {
                     objectCode = getWordObjectCode(currentStatement);
                     writeWordObjectFile(objectCode, currentStatement);
-                } else {
+                } else if (mnemonic == LTORG) {
+                    writeLiteralsInObjectFile(literalPool,
+                                              currentStatement->getStatementLocationPointer(), literalTable);
+                    literalPool.clear();
+                } else if (mnemonic != ORG && mnemonic != EQU){
                     objectCode = getInstructionObjectCode(currentStatement, symbolTable, literalTable);
                     writeInstructionObjectFile(objectCode, currentStatement);
                 }
@@ -145,9 +157,34 @@ getInstructionObjectCode(Statement *statement,
     return getSicObjectCode(opCode, indexBit, address);
 }
 
+void PassTwoController::writeLiteralsInObjectFile(std::set<std::string> literalPool, int locationCounter,
+                                                  std::map<std::string, std::pair<Operand *, int>> &literalTable) {
+    for (auto literal : literalPool) {
+        if (literalTable[literal].first->isHexConstant() ||
+            literalTable[literal].first->isStringConstant()) {
+            objectWriter->addRecordToTextRecord(literal, locationCounter);
+            locationCounter += literalTable[literal].first->getLCIncrement();
+
+        } else {
+            objectWriter->addRecordToTextRecord(StringUtil::fillZeros(literal, MAX_WORD_LENGTH), locationCounter);
+            locationCounter += 3;
+        }
+    }
+}
+
 void PassTwoController::writeInstructionObjectFile(std::string objCode, Statement *statement) {
     objectWriter->addRecordToTextRecord(StringUtil::fillZeros(objCode,
                                                               MAX_WORD_LENGTH), statement->getStatementLocationPointer());
+}
+
+void PassTwoController::writeWordObjectFile(std::string objCode, Statement *statement) {
+    objectWriter->addRecordToTextRecord(StringUtil::fillZeros(objCode, MAX_WORD_LENGTH),
+                                        statement->getStatementLocationPointer());
+}
+
+/// Assumption -> Maximum length for BYTE directive's operand is 15 byte or 14 Hex digits.
+void PassTwoController::writeByteObjectFile(std::string objCode, Statement *statement) {
+    objectWriter->addRecordToTextRecord(objCode, statement->getStatementLocationPointer());
 }
 
 /// Assumption -> Maximum length for WORD directive's operand is 3 bytes.
@@ -156,15 +193,6 @@ std::string PassTwoController::getWordObjectCode(Statement *statement) {
 
     //objectWriter->writeTextRecord(address, location);
     return operand;
-}
-
-void PassTwoController::writeWordObjectFile(std::string objCode, Statement *statement) {
-    objectWriter->addRecordToTextRecord(StringUtil::fillZeros(objCode, MAX_WORD_LENGTH),
-                                        statement->getStatementLocationPointer());
-}
-/// Assumption -> Maximum length for BYTE directive's operand is 15 byte or 14 Hex digits.
-void PassTwoController::writeByteObjectFile(std::string objCode, Statement *statement) {
-    objectWriter->addRecordToTextRecord(objCode, statement->getStatementLocationPointer());
 }
 
 std::string PassTwoController::getByteObjectCode(Statement *statement) {
@@ -216,4 +244,3 @@ void PassTwoController::instructionCheck(Statement *statement,std::map<std::stri
         throw ErrorHandler::undeclared_label;
     }
 }
-

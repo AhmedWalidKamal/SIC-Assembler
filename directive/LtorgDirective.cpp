@@ -19,8 +19,7 @@ int LtorgDirective::execute(int &start, int &end, int &locationCounter,
             }
         }
     }
-    // Because LTORG's statement LC isn't displayed.
-    return 0;
+    return locationCounter;
 }
 
 void LtorgDirective::validate(std::map<std::string, Instruction *> &instructionTable,
