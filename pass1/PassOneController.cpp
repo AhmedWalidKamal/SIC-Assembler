@@ -73,7 +73,6 @@ bool PassOneController::execute(std::map<std::string, int> &symbolTable,
                 } else if (statement->getOperand()->isFixedAddress()) {
                     symbolTable[statement->getLabel()->getLabelField()] = statement->getOperand()->getLCIncrement();
                 } else {
-                    std::cout<<" here4";
                     symbolTable[statement->getLabel()->getLabelField()]= statement->getOperand()->getExpressionValue();
                 }
             }

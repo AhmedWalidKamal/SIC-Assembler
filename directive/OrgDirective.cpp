@@ -1,6 +1,7 @@
 //
 // Created by Salma.Ahmed on 22/05/2017.
 //
+#include <iostream>
 #include "OrgDirective.h"
 #include "../error/ErrorHandler.h"
 
@@ -11,10 +12,11 @@ int OrgDirective::execute(int &start, int &end, int &locationCounter,
     if (operand->isEmpty() && previousLC!= -1) {
         locationCounter = previousLC;
     }/*case 2 update the location counter with the operand of the org*/
-    else if (previousLC == -1){
-       locationCounter = locationCounter;
-    }else{
-        if (operand->isCurrentLocationCounter()) {
+    else{
+        if (operand->isEmpty()){
+           locationCounter= locationCounter;
+        }
+        else if (operand->isCurrentLocationCounter()) {
             locationCounter = locationCounter;
         } else if (operand->isLabel()) {
             locationCounter = symbolTable[operand->getOperandField()];

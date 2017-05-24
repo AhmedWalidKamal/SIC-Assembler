@@ -134,7 +134,7 @@ bool Operand::validateDecimalAddress() {
     return false;
 }
 bool Operand::isFixedAddress() {
-    return (type == (hexaAddress || decimalAddress));
+    return type == hexaAddress || type == decimalAddress;
 }
 
 bool Operand::validateCurrentLocationCounter() {
@@ -193,8 +193,8 @@ bool Operand::validateHexConstant() {
         if (hexDigits%2==0){
             setLCIncrement(hexDigits/2);
             setOperandValue(std::stoi(operandField, nullptr, 16));
-            return true;
             hexValue = (operandField);
+            return true;
         } else {
             type = inValid;
             return false;
@@ -217,49 +217,58 @@ const std::string &Operand::getHexValue() const {
 bool Operand ::validateExpression(std::map<std::string, int> &symbolTable) {
 
     std::smatch m;
-
+    std::vector<int> values;
+    std::vector<std::string> operands;
     while(std::regex_search (operandField,m,Regex::expression)) {
-        std::vector<int> values;
-        std::vector<std::string> operands;
         for (auto x:m) {
-            int termValue;
             std::string beforeSign = m.prefix();
+            if (beforeSign.empty()){
+                type = inValid;
+                return  false;
+            }
             size_t first = beforeSign.find_first_not_of(' ');
             size_t last = beforeSign.find_last_not_of(' ');
+
             beforeSign = beforeSign.substr(first, (last - first + 1));
             if (symbolTable.find(beforeSign) != symbolTable.end() &&
-                symbolTable[beforeSign] != -1){
-               values.push_back(symbolTable[beforeSign]);
-            } else if (std::regex_match(beforeSign,Regex::integerAddress)){
+                symbolTable[beforeSign] != -1) {
+                values.push_back(symbolTable[beforeSign]);
+            } else if (std::regex_match(beforeSign, Regex::integerAddress)) {
                 values.push_back(std::stoi(beforeSign));
 
             } else {
                 type = inValid;
                 return false;
             }
-          operands.push_back((std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) x);
+            operands.push_back((std::basic_string<char, std::char_traits<char>, std::allocator<char>> &&) x);
         }
         operandField = m.suffix().str();
-        int termValue;
-        std::string beforeSign = m.prefix();
-        size_t first = beforeSign.find_first_not_of(' ');
-        size_t last = beforeSign.find_last_not_of(' ');
-        beforeSign = beforeSign.substr(first, (last - first + 1));
-        if (symbolTable.find(beforeSign) != symbolTable.end() &&
-            symbolTable[beforeSign] != -1){
-            values.push_back(symbolTable[beforeSign]);
-        } else if (std::regex_match(beforeSign,Regex::integerAddress)){
-            values.push_back(std::stoi(beforeSign));
+    }
+       if (operandField.empty()){
+        type = inValid;
+        return  false;
+        }
+        size_t first = operandField.find_first_not_of(' ');
+        size_t last = operandField.find_last_not_of(' ');
+        operandField = operandField.substr(first, (last - first + 1));
+        if (symbolTable.find(operandField) != symbolTable.end() &&
+            symbolTable[operandField] != -1){
+            values.push_back(symbolTable[operandField]);
+        } else if (std::regex_match(operandField,Regex::integerAddress)){
+            values.push_back(std::stoi(operandField));
 
         } else {
             type = inValid;
             return false;
         }
        expressionValue = (*values.begin());
+       std::cout<<"expressionValue" << expressionValue<<std::endl;
        std::vector<std::string>::iterator it2=operands.begin();
-      for (std::vector<int>::iterator it=values.begin()+1 ; it < values.end(); it++,it++ ) {
+      for (std::vector<int>::iterator it=values.begin()+1 ; it < values.end(); it++) {
             if (*(it2) =="+") {
+               std::cout<<"expressionTerm" << *it<<std::endl;
                 expressionValue += *(it);
+
             }
           else {
                 expressionValue -= *(it);
@@ -268,7 +277,7 @@ bool Operand ::validateExpression(std::map<std::string, int> &symbolTable) {
       }
 
         return true;
-    }
+
 }
 
 int Operand ::getExpressionValue() {

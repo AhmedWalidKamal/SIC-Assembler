@@ -28,16 +28,7 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
 
     if (statement->getOperand()->validateCurrentLocationCounter()||statement->getOperand()->validateLabel()
         ||statement->getOperand()->validateDecimalAddress()||statement->getOperand()->validateHexAddress()
-       ) {
-        if (statement->getOperand()->validateDecimalAddress()){
-            std::cout<<"here"<<std::endl;
-        }
-        std::cout<<"equ"<<std::endl;
-        std::cout<<statement->getOperand()->isFixedAddress()<<std::endl;
-        std::cout<<statement->getOperand()->isLabel()<<std::endl;
-        std::cout<<statement->getOperand()->isCurrentLocationCounter()<<std::endl;
-
-
+      || statement->getOperand()->validateExpression(symbolTable) ) {
         if(statement->getOperand()->isLabel()){
             if (symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()
                 ||symbolTable[statement->getOperand()->getOperandField()] == -1 ){
