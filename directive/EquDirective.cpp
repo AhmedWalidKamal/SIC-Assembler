@@ -26,10 +26,9 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
         throw ErrorHandler::equate_missing_value;
     }
 
-    if (statement->getOperand()->validateCurrentLocationCounter() || statement->getOperand()->validateLabel()
-            ||statement->getOperand()->validateDecimalAddress() ||
-            statement->getOperand()->validateHexAddress() ||
-            statement->getOperand()->validateExpression(symbolTable)) {
+    if (statement->getOperand()->validateCurrentLocationCounter()||statement->getOperand()->validateLabel()
+        ||statement->getOperand()->validateDecimalAddress()||statement->getOperand()->validateHexAddress()
+      || statement->getOperand()->validateExpression(symbolTable) ) {
         if(statement->getOperand()->isLabel()){
             if (symbolTable.find(statement->getOperand()->getOperandField()) == symbolTable.end()
                 ||symbolTable[statement->getOperand()->getOperandField()] == -1 ){
@@ -39,5 +38,5 @@ void EquDirective::validate(std::map<std::string, Instruction *> &instructionTab
     } else {
         throw ErrorHandler::equate_operand;
     }
-    }
+}
 

@@ -2,6 +2,7 @@
 // Created by Walid on 5/23/2017.
 //
 
+#include <iostream>
 #include "LtorgDirective.h"
 #include "../error/ErrorHandler.h"
 
@@ -20,6 +21,7 @@ int LtorgDirective::execute(int &start, int &end, int &locationCounter,
             }
         }
     }
+
     return initLocCtr;
 }
 
